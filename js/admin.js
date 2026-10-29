@@ -44,6 +44,99 @@ function showAdminToast(message, type = 'success') {
   }, 3000);
 }
 
+// ==========================================
+// 0. AUTHENTICATION & SECURITY (PHÂN QUYỀN CHỦ SHOP)
+// ==========================================
+function getAdminCredentials() {
+  const stored = localStorage.getItem('theopro_admin_creds');
+  if (stored) {
+    try {
+      return JSON.parse(stored);
+    } catch (e) {}
+  }
+  const defaultCreds = { username: 'admin', password: 'admin123' };
+  localStorage.setItem('theopro_admin_creds', JSON.stringify(defaultCreds));
+  return defaultCreds;
+}
+
+function checkAdminAuth() {
+  const isAuth = sessionStorage.getItem('theopro_admin_auth') === 'true';
+  const loginScreen = document.getElementById('admin-login-screen');
+  const appLayout = document.getElementById('admin-app-layout');
+
+  if (isAuth) {
+    if (loginScreen) loginScreen.classList.add('hidden');
+    if (appLayout) appLayout.classList.remove('hidden');
+    return true;
+  } else {
+    if (loginScreen) loginScreen.classList.remove('hidden');
+    if (appLayout) appLayout.classList.add('hidden');
+    return false;
+  }
+}
+
+function handleAdminLogin(e) {
+  e.preventDefault();
+  const user = document.getElementById('admin-user-input')?.value.trim();
+  const pass = document.getElementById('admin-pass-input')?.value.trim();
+  const errorMsg = document.getElementById('login-error-msg');
+  const creds = getAdminCredentials();
+
+  if (user === creds.username && pass === creds.password) {
+    sessionStorage.setItem('theopro_admin_auth', 'true');
+    if (errorMsg) errorMsg.classList.add('hidden');
+    checkAdminAuth();
+    loadAdminData();
+    switchTab('dashboard');
+    showAdminToast('Đăng nhập thành công! Chào mừng chủ shop.', 'success');
+  } else {
+    if (errorMsg) errorMsg.classList.remove('hidden');
+    const passInput = document.getElementById('admin-pass-input');
+    if (passInput) {
+      passInput.value = '';
+      passInput.focus();
+    }
+  }
+}
+
+function handleAdminLogout() {
+  sessionStorage.removeItem('theopro_admin_auth');
+  checkAdminAuth();
+  showAdminToast('Đã đăng xuất khỏi tài khoản quản trị!', 'info');
+}
+
+function handleChangeAdminPassword(e) {
+  e.preventDefault();
+  const oldPass = document.getElementById('old-pass')?.value.trim();
+  const newPass = document.getElementById('new-pass')?.value.trim();
+  const confirmPass = document.getElementById('confirm-pass')?.value.trim();
+  const creds = getAdminCredentials();
+
+  if (oldPass !== creds.password) {
+    showAdminToast('Mật khẩu hiện tại không chính xác!', 'error');
+    return;
+  }
+
+  if (!newPass || newPass.length < 6) {
+    showAdminToast('Mật khẩu mới phải từ 6 ký tự trở lên!', 'error');
+    return;
+  }
+
+  if (newPass !== confirmPass) {
+    showAdminToast('Xác nhận mật khẩu mới không khớp!', 'error');
+    return;
+  }
+
+  creds.password = newPass;
+  localStorage.setItem('theopro_admin_creds', JSON.stringify(creds));
+
+  document.getElementById('old-pass').value = '';
+  document.getElementById('new-pass').value = '';
+  document.getElementById('confirm-pass').value = '';
+
+  showAdminToast('Đã đổi mật khẩu chủ shop thành công! Vui lòng ghi nhớ mật khẩu mới.', 'success');
+}
+
 // Load data
 function loadAdminData() {
   adminState.products = getStoredProducts();
@@ -710,9 +803,11 @@ function setupAdminSearch() {
 
 // Init Admin
 document.addEventListener('DOMContentLoaded', () => {
-  loadAdminData();
-  switchTab('dashboard');
   setupAdminSearch();
+  if (checkAdminAuth()) {
+    loadAdminData();
+    switchTab('dashboard');
+  }
   lucide.createIcons();
 });
 
