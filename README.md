@@ -14,6 +14,9 @@ npm run dev
 Máy chủ sẽ tự động khởi động tại cổng `3000` và mở trình duyệt cho bạn:
 * 🌐 **Trang Bán Hàng (Client)**: [http://localhost:3000/index.html](http://localhost:3000/index.html)
 * 🔑 **Trang Quản Trị Admin**: [http://localhost:3000/admin.html](http://localhost:3000/admin.html)
+  * Tài khoản mặc định: `admin`
+  * Mật khẩu mặc định: `admin123`
+  * *(Có thể đổi mật khẩu bất kỳ lúc nào trong tab **Cài Đặt Cửa Hàng**)*
 * 📡 **REST API Backend**: [http://localhost:3000/api/products](http://localhost:3000/api/products)
 
 ---
