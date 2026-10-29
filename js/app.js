@@ -4,7 +4,7 @@
 
 // Application State
 const state = {
-  theme: localStorage.getItem('theopro_theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'),
+  theme: localStorage.getItem('theopro_theme') || 'dark',
   cart: JSON.parse(localStorage.getItem('theopro_cart') || '[]'),
   wishlist: JSON.parse(localStorage.getItem('theopro_wishlist') || '[]'),
   userReviews: JSON.parse(localStorage.getItem('theopro_reviews') || '[]'),
@@ -1651,6 +1651,17 @@ function toggleSidebarDrawer(open) {
   }
 }
 
+// Helper an toàn khi gọi Lucide Icons
+function safeCreateIcons(options) {
+  if (window.lucide && typeof window.lucide.createIcons === 'function') {
+    try {
+      window.lucide.createIcons(options);
+    } catch (e) {
+      console.warn('Lucide icon warning:', e);
+    }
+  }
+}
+
 // Theme Toggle (Light / Dark Mode)
 function applyTheme(theme) {
   state.theme = theme;
@@ -1671,7 +1682,7 @@ function applyTheme(theme) {
       btn.title = 'Chuyển sang giao diện Tối';
     });
   }
-  lucide.createIcons();
+  safeCreateIcons();
 }
 
 function toggleTheme() {
@@ -1702,5 +1713,5 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSearch();
   setupSort();
   initRecentSalesNotification();
-  lucide.createIcons();
+  safeCreateIcons();
 });

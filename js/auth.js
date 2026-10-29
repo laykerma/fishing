@@ -375,8 +375,10 @@ function updateHeaderUserUI() {
     }
   });
 
-  if (window.lucide) {
-    lucide.createIcons();
+  if (window.lucide && typeof lucide.createIcons === 'function') {
+    try {
+      lucide.createIcons();
+    } catch (e) {}
   }
 }
 
