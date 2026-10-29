@@ -12,8 +12,8 @@
 
 body {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  color: #1e293b;
-  background-color: #f8fafc;
+  color: #f1f5f9;
+  background-color: #0b1120;
   overflow-x: hidden;
   transition: background-color 0.3s ease, color 0.3s ease;
 }

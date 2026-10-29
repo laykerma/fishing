@@ -1692,7 +1692,13 @@ function toggleTheme() {
 }
 
 function initTheme() {
-  applyTheme(state.theme);
+  // Luôn đặt Dark Mode làm theme chuẩn mặc định cho thương hiệu Vua Thẻo Câu PRO
+  let savedTheme = localStorage.getItem('theopro_theme');
+  if (!savedTheme || savedTheme === 'light') {
+    savedTheme = 'dark';
+    localStorage.setItem('theopro_theme', 'dark');
+  }
+  applyTheme(savedTheme);
 }
 
 // Init
