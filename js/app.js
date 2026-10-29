@@ -1619,6 +1619,27 @@ function setupSort() {
   });
 }
 
+// Sidebar Drawer Toggle (Thanh Dọc Bên Trái)
+function toggleSidebarDrawer(open) {
+  const backdrop = document.getElementById('sidebar-drawer-backdrop');
+  const drawer = document.getElementById('sidebar-drawer');
+  if (!backdrop || !drawer) return;
+
+  if (open) {
+    backdrop.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      backdrop.classList.remove('opacity-0');
+      drawer.classList.remove('-translate-x-full');
+    });
+  } else {
+    backdrop.classList.add('opacity-0');
+    drawer.classList.add('-translate-x-full');
+    setTimeout(() => {
+      backdrop.classList.add('hidden');
+    }, 300);
+  }
+}
+
 // Theme Toggle (Light / Dark Mode)
 function applyTheme(theme) {
   state.theme = theme;
@@ -1629,18 +1650,14 @@ function applyTheme(theme) {
   if (theme === 'dark') {
     root.classList.add('dark');
     toggleBtns.forEach(btn => {
-      btn.innerHTML = `
-        <i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>
-        <span class="hidden xl:inline text-xs font-bold text-amber-300">Bật Sáng</span>
-      `;
+      btn.innerHTML = `<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>`;
+      btn.title = 'Chuyển sang giao diện Sáng';
     });
   } else {
     root.classList.remove('dark');
     toggleBtns.forEach(btn => {
-      btn.innerHTML = `
-        <i data-lucide="moon" class="w-4 h-4 text-slate-700"></i>
-        <span class="hidden xl:inline text-xs font-bold text-slate-700">Bật Tối</span>
-      `;
+      btn.innerHTML = `<i data-lucide="moon" class="w-4 h-4 text-slate-700"></i>`;
+      btn.title = 'Chuyển sang giao diện Tối';
     });
   }
   lucide.createIcons();

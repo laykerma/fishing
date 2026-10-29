@@ -361,10 +361,16 @@ function updateHeaderUserUI() {
       `;
     } else {
       slot.innerHTML = `
-        <a href="login.html" class="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-sky-500/40 bg-sky-50/50 dark:bg-sky-950/40 hover:bg-sky-500 hover:text-white text-sky-600 dark:text-sky-400 text-xs font-bold transition-all shadow-sm">
-          <i data-lucide="user" class="w-4 h-4"></i>
-          <span class="hidden sm:inline">Đăng Nhập</span>
-        </a>
+        <div class="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <a href="login.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all shadow-sm">
+            <i data-lucide="log-in" class="w-3.5 h-3.5 text-sky-500"></i>
+            <span>Đăng Nhập</span>
+          </a>
+          <a href="register.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 hover:from-sky-500 hover:to-teal-400 text-white text-xs font-black transition-all shadow-md shadow-sky-600/20">
+            <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Đăng Ký</span>
+          </a>
+        </div>
       `;
     }
   });
@@ -388,3 +394,4 @@ function logoutUser() {
 document.addEventListener('DOMContentLoaded', () => {
   updateHeaderUserUI();
 });
+

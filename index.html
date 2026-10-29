@@ -37,139 +37,249 @@
 </head>
 <body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
 
-  <!-- Top Announcement Bar -->
-  <header class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
-    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Ưu Đãi Hôm Nay</span>
-        <span class="text-slate-300">Tặng bảng quấn thẻo mini cho đơn từ 200k • FREESHIP toàn quốc từ 250k</span>
+  <!-- ========================================== -->
+  <!-- SIDEBAR DRAWER (THANH DỌC BÊN TRÁI ĐÓNG/MỞ) -->
+  <!-- ========================================== -->
+  <div id="sidebar-drawer-backdrop" class="hidden fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm transition-opacity opacity-0" onclick="toggleSidebarDrawer(false)"></div>
+  <aside id="sidebar-drawer" class="fixed top-0 left-0 bottom-0 z-50 w-80 max-w-[85vw] bg-white dark:bg-slate-950 border-r border-slate-200 dark:border-slate-800 shadow-2xl flex flex-col justify-between transform -translate-x-full transition-transform duration-300 ease-in-out">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30">
+          <i data-lucide="anchor" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <div class="font-black text-sm tracking-tight text-slate-900 dark:text-white font-heading">
+            VUA THẺO CÂU <span class="text-[9px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.2 rounded uppercase">PRO</span>
+          </div>
+          <div class="text-[10px] text-slate-500 font-semibold">
+            Danh Mục & Tiện Ích Cần Thủ
+          </div>
+        </div>
       </div>
-      <div class="flex items-center gap-4 text-slate-300">
-        <a href="admin.html" target="_blank" class="hover:text-amber-300 text-amber-400 font-bold flex items-center gap-1 transition-colors text-xs">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Trang Admin
+      <button onclick="toggleSidebarDrawer(false)" class="p-2 rounded-xl text-slate-400 hover:text-slate-600 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Drawer Body (Cuộn được) -->
+    <div class="flex-1 overflow-y-auto p-4 space-y-4 text-xs">
+      
+      <!-- Khối Ưu Đãi Đã Chuyển Vào Thanh Dọc -->
+      <div class="p-3.5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-sky-500/10 to-teal-500/10 border border-amber-500/20 text-slate-800 dark:text-slate-200 space-y-1.5">
+        <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-xs">
+          <i data-lucide="gift" class="w-4 h-4"></i>
+          <span>Ưu Đãi Hôm Nay</span>
+        </div>
+        <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
+          Tặng bảng quấn thẻo mini cho đơn từ <strong>200k</strong> • <strong>FREESHIP</strong> toàn quốc từ <strong>250k</strong>
+        </p>
+        <div class="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold flex items-center gap-1 pt-0.5">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Đồng kiểm trước khi thanh toán
+        </div>
+      </div>
+
+      <!-- Danh Sách Chức Năng Tiện Ích Cần Thủ -->
+      <div class="space-y-1">
+        <div class="px-2 pb-1 text-[10px] font-black uppercase tracking-wider text-slate-400">Chức Năng Tiện Ích</div>
+
+        <a 
+          href="#xuong-tu-tom" 
+          onclick="toggleSidebarDrawer(false)"
+          class="flex items-center justify-between p-3 rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-400 font-bold transition-colors border border-amber-500/20"
+        >
+          <span class="flex items-center gap-3">
+            <i data-lucide="wrench" class="w-4 h-4 text-amber-500"></i>
+            <span>Tự Tóm Thẻo Theo Yêu Cầu</span>
+          </span>
+          <span class="text-[9px] bg-amber-500 text-slate-950 px-1.5 py-0.5 rounded font-black uppercase">DIY</span>
         </a>
-        <span class="text-slate-600">|</span>
-        <span class="header-user-slot"></span>
-        <span class="text-slate-600">|</span>
-        <button onclick="openOrderTrackingModal()" class="hover:text-amber-400 flex items-center gap-1 transition-colors text-xs font-semibold">
-          <i data-lucide="truck" class="w-3.5 h-3.5 text-sky-400"></i> Tra Cứu Đơn
+
+        <a 
+          href="#advisor-section" 
+          onclick="toggleSidebarDrawer(false)"
+          class="flex items-center justify-between p-3 rounded-2xl bg-sky-500/10 hover:bg-sky-500/20 text-sky-700 dark:text-sky-400 font-bold transition-colors border border-sky-500/20"
+        >
+          <span class="flex items-center gap-3">
+            <i data-lucide="compass" class="w-4 h-4 text-sky-500"></i>
+            <span>Trợ Lý Chọn Size Thẻo</span>
+          </span>
+          <span class="text-[9px] bg-sky-500 text-white px-1.5 py-0.5 rounded font-black uppercase">Gợi Ý</span>
+        </a>
+
+        <a 
+          href="#flash-sale" 
+          onclick="toggleSidebarDrawer(false)"
+          class="flex items-center gap-3 p-3 rounded-2xl hover:bg-red-500/10 text-red-600 dark:text-red-400 font-bold transition-colors"
+        >
+          <i data-lucide="flame" class="w-4 h-4 text-red-500 fill-current"></i>
+          <span>Flash Sale Giờ Vàng</span>
+        </a>
+
+        <a 
+          href="#san-pham" 
+          onclick="toggleSidebarDrawer(false)"
+          class="flex items-center gap-3 p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold transition-colors"
+        >
+          <i data-lucide="grid" class="w-4 h-4 text-sky-600"></i>
+          <span>Tất Cả Sản Phẩm & Phụ Kiện</span>
+        </a>
+
+        <a 
+          href="#bang-size" 
+          onclick="toggleSidebarDrawer(false)"
+          class="flex items-center gap-3 p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold transition-colors"
+        >
+          <i data-lucide="table" class="w-4 h-4 text-teal-600"></i>
+          <span>Bảng Tra Cứu Trục & Thẻo Đài</span>
+        </a>
+
+        <a 
+          href="#cam-nang" 
+          onclick="toggleSidebarDrawer(false)"
+          class="flex items-center gap-3 p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold transition-colors"
+        >
+          <i data-lucide="book-open" class="w-4 h-4 text-indigo-500"></i>
+          <span>Cẩm Nang & Kỹ Thuật Tóm Thẻo</span>
+        </a>
+      </div>
+
+      <!-- Tiện ích Tra cứu & Quản lý -->
+      <div class="space-y-1 pt-2 border-t border-slate-100 dark:border-slate-800">
+        <div class="px-2 pb-1 text-[10px] font-black uppercase tracking-wider text-slate-400">Quản Lý & Hỗ Trợ</div>
+
+        <button 
+          onclick="toggleSidebarDrawer(false); openOrderTrackingModal();" 
+          class="w-full flex items-center justify-between p-3 rounded-2xl hover:bg-slate-100 dark:hover:bg-slate-900 text-slate-700 dark:text-slate-200 font-semibold transition-colors text-left"
+        >
+          <span class="flex items-center gap-3">
+            <i data-lucide="truck" class="w-4 h-4 text-sky-500"></i>
+            <span>Tra Cứu Hành Trình Đơn Hàng</span>
+          </span>
+          <i data-lucide="chevron-right" class="w-3.5 h-3.5 text-slate-400"></i>
         </button>
-        <span class="hidden md:inline text-slate-600">|</span>
-        <a href="tel:0988776655" class="hover:text-amber-400 flex items-center gap-1 transition-colors">
-          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-sky-400"></i> Hotline: <strong>0988.776.655</strong>
+
+        <a 
+          href="admin.html" 
+          target="_blank"
+          class="flex items-center justify-between p-3 rounded-2xl hover:bg-amber-500/10 text-amber-600 dark:text-amber-400 font-bold transition-colors"
+        >
+          <span class="flex items-center gap-3">
+            <i data-lucide="shield-check" class="w-4 h-4 text-amber-500"></i>
+            <span>Cổng Quản Trị Shop (Admin)</span>
+          </span>
+          <i data-lucide="external-link" class="w-3.5 h-3.5 text-amber-500"></i>
         </a>
+      </div>
+
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50 space-y-2 text-xs">
+      <div class="flex items-center justify-between">
+        <span class="text-slate-500 text-[11px]">Hotline / Zalo tư vấn:</span>
+        <a href="tel:0988776655" class="font-extrabold text-sky-600 dark:text-sky-400 flex items-center gap-1">
+          <i data-lucide="phone-call" class="w-3 h-3"></i> 0988.776.655
+        </a>
+      </div>
+      <div class="text-[10px] text-slate-400 text-center">
+        Xưởng tóm thẻo mở cửa: 7h30 - 22h00
       </div>
     </div>
-  </header>
 
-  <!-- Main Navigation Header -->
-  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+  </aside>
+
+  <!-- ========================================== -->
+  <!-- MAIN NAVIGATION HEADER (TINH GỌN, SẠCH SẼ) -->
+  <!-- ========================================== -->
+  <nav class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-colors">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20 gap-4">
+      <div class="flex items-center justify-between h-20 gap-3 sm:gap-4">
         
-        <!-- Logo -->
-        <a href="#" class="flex items-center gap-3 group flex-shrink-0">
-          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-700 via-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 group-hover:scale-105 transition-transform">
-            <i data-lucide="anchor" class="w-7 h-7"></i>
-          </div>
-          <div>
-            <div class="font-black text-xl md:text-2xl tracking-tight text-slate-900 flex items-center gap-1.5 font-heading">
-              VUA THẺO CÂU <span class="text-[10px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.5 rounded uppercase">PRO</span>
-            </div>
-            <div class="text-[11px] text-slate-500 font-semibold tracking-wide">
-              Thẻo Buộc Sẵn & Đồ Câu Chuyên Nghiệp
-            </div>
-          </div>
-        </a>
+        <!-- Cụm Bên Trái: Nút Hamburger Menu + Logo Shop -->
+        <div class="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+          <!-- Nút Mở Thanh Dọc Bên Trái -->
+          <button 
+            onclick="toggleSidebarDrawer(true)"
+            class="p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 hover:border-sky-300 dark:hover:border-sky-700 transition-all shadow-sm flex items-center justify-center group"
+            title="Mở Danh Mục Tiện Ích"
+            aria-label="Mở Menu Tiện Ích"
+          >
+            <i data-lucide="menu" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+          </button>
 
-        <!-- Search Bar -->
-        <div class="hidden md:flex flex-1 max-w-md mx-4">
+          <!-- Logo Brand -->
+          <a href="#" class="flex items-center gap-2.5 group flex-shrink-0">
+            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-700 via-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 group-hover:scale-105 transition-transform">
+              <i data-lucide="anchor" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <div class="font-black text-xl tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5 font-heading">
+                VUA THẺO CÂU <span class="text-[9px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.2 rounded uppercase">PRO</span>
+              </div>
+              <div class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold tracking-wide hidden sm:block">
+                Thẻo Buộc Sẵn Chuyên Nghiệp
+              </div>
+            </div>
+          </a>
+        </div>
+
+        <!-- Cụm Giữa: Ô Tìm Kiếm Rộng Rãi -->
+        <div class="hidden md:flex flex-1 max-w-lg mx-4">
           <div class="relative w-full">
             <input 
               type="text" 
               id="search-input" 
-              placeholder="Tìm kiếm: Sode, BKK, Trắm đen, Rô phi, Toray, Hạt chặn..." 
-              class="w-full pl-10 pr-4 py-2.5 rounded-full border border-slate-200 bg-slate-50 text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all shadow-inner"
+              placeholder="Tìm thẻo: Sode, BKK Titan, Trắm đen, Rô phi, Toray, Hạt chặn..." 
+              class="w-full pl-10 pr-4 py-2.5 rounded-full border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-xs text-slate-800 dark:text-white placeholder-slate-400 focus:bg-white dark:focus:bg-slate-950 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all shadow-inner"
             />
             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
           </div>
         </div>
 
-        <!-- Quick Nav & Actions -->
-        <div class="flex items-center gap-2.5">
-          <!-- DIY Rig shortcut -->
-          <a href="#xuong-tu-tom" class="hidden xl:flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3.5 py-2.5 rounded-xl transition-colors">
-            <i data-lucide="wrench" class="w-4 h-4 text-amber-600"></i>
-            <span>Tự Tóm Thẻo</span>
-          </a>
-
-          <!-- Rig Advisor shortcut -->
-          <a href="#advisor-section" class="hidden lg:flex items-center gap-1.5 text-xs font-bold text-sky-700 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 px-3.5 py-2.5 rounded-xl transition-colors border border-sky-100">
-            <i data-lucide="compass" class="w-4 h-4 text-sky-600"></i>
-            <span>Chọn Size Thẻo</span>
-          </a>
-
-          <!-- Theme Toggle Button (Light / Dark mode) -->
+        <!-- Cụm Bên Phải: Nút Sáng/Tối -> Nút Yêu Thích -> Giỏ Hàng -> Đăng Nhập & Đăng Ký (ngoài cùng) -->
+        <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
+          
+          <!-- Nút Đổi Sáng / Tối (Chỉ Logo Icon, Không Có Chữ) -->
           <button 
             onclick="toggleTheme()"
-            class="theme-toggle-btn flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition-colors shadow-sm"
+            class="theme-toggle-btn p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm flex items-center justify-center"
             title="Chuyển chế độ Sáng / Tối"
           >
             <i data-lucide="moon" class="w-4 h-4"></i>
-            <span class="hidden xl:inline text-xs font-bold">Bật Tối</span>
           </button>
 
-          <!-- Wishlist Button -->
+          <!-- Nút Sản Phẩm Yêu Thích -->
           <button 
             onclick="setPriceFilter('all'); state.activeCategory = 'all'; renderCategories(); setCategory('all'); showToast('Hiển thị các sản phẩm đã yêu thích!', 'info');"
-            class="relative p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-red-500 hover:border-red-200 bg-white transition-colors"
+            class="relative p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:text-red-500 hover:border-red-200 bg-white dark:bg-slate-900 transition-colors shadow-sm hidden sm:flex items-center justify-center"
             title="Sản phẩm yêu thích"
           >
             <i data-lucide="heart" class="w-4 h-4"></i>
-            <span id="wishlist-badge" class="hidden absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+            <span id="wishlist-badge" class="hidden absolute -top-1 -right-1 bg-red-500 text-white text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">
               0
             </span>
           </button>
 
-          <!-- User Account Slot (Login / Avatar Profile) -->
-          <div class="header-user-slot"></div>
-
-          <!-- Cart Trigger Button -->
+          <!-- Giỏ Hàng (Nằm Bên Trái Đăng Nhập) -->
           <button 
             onclick="toggleCartDrawer(true)"
-            class="relative flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition-all shadow-md shadow-slate-900/20"
+            class="relative flex items-center gap-2 bg-slate-900 dark:bg-sky-600 hover:bg-slate-800 dark:hover:bg-sky-500 text-white px-3.5 py-2.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-slate-900/15"
+            title="Xem giỏ hàng"
           >
             <i data-lucide="shopping-cart" class="w-4 h-4"></i>
             <span class="hidden sm:inline">Giỏ Hàng</span>
-            <span class="cart-badge hidden bg-amber-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center -ml-1">
+            <span class="cart-badge hidden bg-amber-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center -ml-0.5">
               0
             </span>
           </button>
-        </div>
-      </div>
 
-      <!-- Quick Nav Sub-bar -->
-      <div class="hidden md:flex items-center justify-between py-2 border-t border-slate-100 text-xs font-semibold text-slate-600">
-        <div class="flex items-center gap-6">
-          <a href="#san-pham" class="hover:text-sky-600 transition-colors flex items-center gap-1">
-            <i data-lucide="grid" class="w-3.5 h-3.5 text-sky-600"></i> Tất Cả Sản Phẩm
-          </a>
-          <a href="#flash-sale" class="hover:text-red-600 text-red-600 font-bold transition-colors flex items-center gap-1">
-            <i data-lucide="flame" class="w-3.5 h-3.5 text-red-500 fill-current"></i> Flash Sale Giờ Vàng
-          </a>
-          <a href="#xuong-tu-tom" class="hover:text-amber-700 transition-colors flex items-center gap-1">
-            <i data-lucide="sliders" class="w-3.5 h-3.5 text-amber-500"></i> Đặt Tóm Theo Yêu Cầu
-          </a>
-          <a href="#bang-size" class="hover:text-sky-600 transition-colors flex items-center gap-1">
-            <i data-lucide="table" class="w-3.5 h-3.5 text-teal-600"></i> Bảng Tra Cứu Trục & Thẻo
-          </a>
-          <a href="#cam-nang" class="hover:text-sky-600 transition-colors flex items-center gap-1">
-            <i data-lucide="book-open" class="w-3.5 h-3.5 text-indigo-500"></i> Cẩm Nang Câu Đài
-          </a>
+          <!-- Đăng Nhập & Đăng Ký (Ở BÊN PHẢI CÙNG CỦA HEADER) -->
+          <div class="header-user-slot"></div>
+
         </div>
-        <div class="text-[11px] text-emerald-700 font-bold flex items-center gap-1 bg-emerald-50 px-2.5 py-1 rounded-full">
-          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i> Đồng kiểm trước khi thanh toán
-        </div>
+
       </div>
     </div>
   </nav>
@@ -292,7 +402,8 @@
             <div class="relative rounded-3xl overflow-hidden border border-white/20 bg-slate-900/60 backdrop-blur-xl p-4 shadow-2xl">
               <div class="relative h-64 rounded-2xl overflow-hidden bg-slate-800">
                 <img 
-                  src="https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=800&q=80" 
+                  src="https://images.unsplash.com/photo-1516245834210-c4c142787335?auto=format&fit=crop&w=800&q=80" 
+                  onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1529230117010-b6c436154f25?auto=format&fit=crop&w=800&q=80';"
                   alt="Thẻo câu cá buộc sẵn" 
                   class="w-full h-full object-cover"
                 />
