@@ -551,8 +551,13 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   let reqUrl = pathname;
   if (reqUrl === '/') reqUrl = '/index.html';
+  if (!path.extname(reqUrl)) reqUrl += '.html';
 
-  const filePath = path.join(__dirname, reqUrl);
+  let filePath = path.join(__dirname, reqUrl);
+  if (!fs.existsSync(filePath)) {
+    filePath = path.join(process.cwd(), reqUrl);
+  }
+
   const ext = path.extname(filePath).toLowerCase();
   const contentType = MIME_TYPES[ext] || 'application/octet-stream';
 

@@ -4,8 +4,7 @@
   "type": "module",
   "description": "Website Vua Thẻo Câu",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "node server.js"
   }
 }
 
