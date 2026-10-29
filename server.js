@@ -6,6 +6,7 @@
 import http from 'http';
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 import { fileURLToPath } from 'url';
 import { exec } from 'child_process';
 
@@ -13,6 +14,50 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 3000;
 const DB_FILE = path.join(__dirname, 'data', 'database.json');
+const JWT_SECRET = 'VUA_THEO_CAU_PRO_SUPER_SECRET_KEY_2026';
+
+// Password Security Helpers using PBKDF2 with SHA-512 and random Salt
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  return `${salt}:${hash}`;
+}
+
+function verifyPassword(password, storedCombined) {
+  if (!storedCombined || !storedCombined.includes(':')) return false;
+  const [salt, originalHash] = storedCombined.split(':');
+  const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  try {
+    return crypto.timingSafeEqual(Buffer.from(hash, 'hex'), Buffer.from(originalHash, 'hex'));
+  } catch (e) {
+    return false;
+  }
+}
+
+function generateToken(user) {
+  const payload = Buffer.from(JSON.stringify({
+    userId: user.id,
+    email: user.email,
+    role: user.role,
+    exp: Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days
+  })).toString('base64url');
+  const signature = crypto.createHmac('sha256', JWT_SECRET).update(payload).digest('base64url');
+  return `${payload}.${signature}`;
+}
+
+function verifyToken(token) {
+  if (!token || !token.includes('.')) return null;
+  const [payload, signature] = token.split('.');
+  const expectedSig = crypto.createHmac('sha256', JWT_SECRET).update(payload).digest('base64url');
+  if (signature !== expectedSig) return null;
+  try {
+    const data = JSON.parse(Buffer.from(payload, 'base64url').toString('utf-8'));
+    if (data.exp && Date.now() > data.exp) return null;
+    return data;
+  } catch (e) {
+    return null;
+  }
+}
 
 // MIME Types
 const MIME_TYPES = {
@@ -98,6 +143,168 @@ const server = http.createServer(async (req, res) => {
   // ==========================================
   // BACKEND REST APIs (/api/...)
   // ==========================================
+
+  // 0. AUTHENTICATION APIs (/api/auth/...)
+  if (pathname === '/api/auth/register' && req.method === 'POST') {
+    const body = await getRequestBody(req);
+    const { name, email, phone, password } = body;
+
+    if (!name || !email || !password) {
+      return sendJSON(res, 400, { success: false, message: 'Họ tên, email và mật khẩu là bắt buộc' });
+    }
+
+    if (password.length < 6) {
+      return sendJSON(res, 400, { success: false, message: 'Mật khẩu phải từ 6 ký tự trở lên' });
+    }
+
+    const db = readDB();
+    if (!db.users) db.users = [];
+
+    const normEmail = email.trim().toLowerCase();
+    const existing = db.users.find(u => u.email === normEmail || (phone && u.phone === phone));
+    if (existing) {
+      return sendJSON(res, 400, { success: false, message: 'Email hoặc Số điện thoại này đã được đăng ký!' });
+    }
+
+    const hashedPassword = hashPassword(password);
+    const newUser = {
+      id: Date.now(),
+      name: name.trim(),
+      email: normEmail,
+      phone: (phone || '').trim(),
+      passwordHash: hashedPassword,
+      role: 'customer',
+      avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`,
+      createdAt: new Date().toLocaleString('vi-VN')
+    };
+
+    db.users.push(newUser);
+    writeDB(db);
+
+    const safeUser = { ...newUser };
+    delete safeUser.passwordHash;
+    const token = generateToken(safeUser);
+
+    return sendJSON(res, 201, {
+      success: true,
+      message: 'Đăng ký tài khoản cần thủ thành công!',
+      token,
+      user: safeUser
+    });
+  }
+
+  if (pathname === '/api/auth/login' && req.method === 'POST') {
+    const body = await getRequestBody(req);
+    const { email, password } = body;
+
+    if (!email || !password) {
+      return sendJSON(res, 400, { success: false, message: 'Vui lòng nhập email/SĐT và mật khẩu' });
+    }
+
+    const db = readDB();
+    if (!db.users) db.users = [];
+
+    const normInput = email.trim().toLowerCase();
+
+    // Tài khoản admin hệ thống mặc định
+    if ((normInput === 'admin' || normInput === 'admin@theocau.pro') && password === 'admin123') {
+      const adminUser = {
+        id: 9999,
+        name: 'Chủ Shop Admin',
+        email: 'admin@theocau.pro',
+        phone: '0988776655',
+        role: 'admin',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+      };
+      const token = generateToken(adminUser);
+      return sendJSON(res, 200, { success: true, message: 'Đăng nhập thành công với quyền Chủ Shop!', token, user: adminUser });
+    }
+
+    const user = db.users.find(u => u.email === normInput || u.phone === normInput);
+    if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
+      return sendJSON(res, 401, { success: false, message: 'Tài khoản hoặc mật khẩu không chính xác' });
+    }
+
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+    const token = generateToken(safeUser);
+
+    return sendJSON(res, 200, {
+      success: true,
+      message: 'Đăng nhập thành công!',
+      token,
+      user: safeUser
+    });
+  }
+
+  if (pathname === '/api/auth/google' && req.method === 'POST') {
+    const body = await getRequestBody(req);
+    const { email, name, avatar, googleId } = body;
+
+    if (!email) {
+      return sendJSON(res, 400, { success: false, message: 'Thông tin Google không hợp lệ' });
+    }
+
+    const db = readDB();
+    if (!db.users) db.users = [];
+
+    const normEmail = email.trim().toLowerCase();
+    let user = db.users.find(u => u.email === normEmail);
+
+    if (!user) {
+      user = {
+        id: Date.now(),
+        name: name || 'Cần Thủ Google',
+        email: normEmail,
+        phone: '',
+        role: 'customer',
+        avatar: avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+        authProvider: 'google',
+        googleId: googleId || '',
+        createdAt: new Date().toLocaleString('vi-VN')
+      };
+      db.users.push(user);
+      writeDB(db);
+    }
+
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+    const token = generateToken(safeUser);
+
+    return sendJSON(res, 200, {
+      success: true,
+      message: 'Đăng nhập bằng Google thành công!',
+      token,
+      user: safeUser
+    });
+  }
+
+  if (pathname === '/api/auth/me' && req.method === 'GET') {
+    const authHeader = req.headers['authorization'] || '';
+    const token = authHeader.replace(/^Bearer\s+/, '');
+    const decoded = verifyToken(token);
+
+    if (!decoded) {
+      return sendJSON(res, 401, { success: false, message: 'Phiên đăng nhập hết hạn hoặc không hợp lệ' });
+    }
+
+    const db = readDB();
+    const user = (db.users || []).find(u => u.id === decoded.userId);
+    if (!user && decoded.userId === 9999) {
+      return sendJSON(res, 200, {
+        success: true,
+        user: { id: 9999, name: 'Chủ Shop Admin', email: 'admin@theocau.pro', role: 'admin' }
+      });
+    }
+
+    if (!user) {
+      return sendJSON(res, 404, { success: false, message: 'Không tìm thấy người dùng' });
+    }
+
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+    return sendJSON(res, 200, { success: true, user: safeUser });
+  }
 
   // 1. PRODUCTS API
   if (pathname === '/api/products' && req.method === 'GET') {

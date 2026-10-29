@@ -3,15 +3,45 @@
  */
 import fs from 'fs';
 import path from 'path';
+import crypto from 'crypto';
 
 const DB_FILE = path.join(process.cwd(), 'data', 'database.json');
+const JWT_SECRET = 'VUA_THEO_CAU_PRO_SUPER_SECRET_KEY_2026';
+
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16).toString('hex');
+  const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  return `${salt}:${hash}`;
+}
+
+function verifyPassword(password, storedCombined) {
+  if (!storedCombined || !storedCombined.includes(':')) return false;
+  const [salt, originalHash] = storedCombined.split(':');
+  const hash = crypto.pbkdf2Sync(password, salt, 10000, 64, 'sha512').toString('hex');
+  try {
+    return crypto.timingSafeEqual(Buffer.from(hash, 'hex'), Buffer.from(originalHash, 'hex'));
+  } catch (e) {
+    return false;
+  }
+}
+
+function generateToken(user) {
+  const payload = Buffer.from(JSON.stringify({
+    userId: user.id,
+    email: user.email,
+    role: user.role,
+    exp: Date.now() + 7 * 24 * 60 * 60 * 1000
+  })).toString('base64url');
+  const signature = crypto.createHmac('sha256', JWT_SECRET).update(payload).digest('base64url');
+  return `${payload}.${signature}`;
+}
 
 function readDB() {
   try {
-    if (!fs.existsSync(DB_FILE)) return { products: [], orders: [], settings: {} };
+    if (!fs.existsSync(DB_FILE)) return { products: [], orders: [], users: [], settings: {} };
     return JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
   } catch (err) {
-    return { products: [], orders: [], settings: {} };
+    return { products: [], orders: [], users: [], settings: {} };
   }
 }
 
@@ -26,6 +56,73 @@ export default async function handler(req, res) {
 
   const { url, method, body } = req;
   const db = readDB();
+
+  // 0. AUTH
+  if (url.includes('/api/auth/register') && method === 'POST') {
+    const { name, email, phone, password } = body || {};
+    if (!name || !email || !password || password.length < 6) {
+      return res.status(400).json({ success: false, message: 'Dữ liệu không hợp lệ hoặc mật khẩu dưới 6 ký tự' });
+    }
+    const normEmail = email.trim().toLowerCase();
+    if (!db.users) db.users = [];
+    if (db.users.find(u => u.email === normEmail)) {
+      return res.status(400).json({ success: false, message: 'Email đã tồn tại' });
+    }
+    const newUser = {
+      id: Date.now(),
+      name: name.trim(),
+      email: normEmail,
+      phone: (phone || '').trim(),
+      passwordHash: hashPassword(password),
+      role: 'customer',
+      avatar: `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`,
+      createdAt: new Date().toISOString()
+    };
+    db.users.push(newUser);
+    const safeUser = { ...newUser };
+    delete safeUser.passwordHash;
+    const token = generateToken(safeUser);
+    return res.status(201).json({ success: true, message: 'Đăng ký thành công', token, user: safeUser });
+  }
+
+  if (url.includes('/api/auth/login') && method === 'POST') {
+    const { email, password } = body || {};
+    const normInput = (email || '').trim().toLowerCase();
+    if ((normInput === 'admin' || normInput === 'admin@theocau.pro') && password === 'admin123') {
+      const adminUser = { id: 9999, name: 'Chủ Shop Admin', email: 'admin@theocau.pro', role: 'admin' };
+      return res.status(200).json({ success: true, token: generateToken(adminUser), user: adminUser });
+    }
+    const user = (db.users || []).find(u => u.email === normInput || u.phone === normInput);
+    if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
+      return res.status(401).json({ success: false, message: 'Sai email hoặc mật khẩu' });
+    }
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+    return res.status(200).json({ success: true, message: 'Đăng nhập thành công', token: generateToken(safeUser), user: safeUser });
+  }
+
+  if (url.includes('/api/auth/google') && method === 'POST') {
+    const { email, name, avatar, googleId } = body || {};
+    if (!email) return res.status(400).json({ success: false, message: 'Thiếu email' });
+    const normEmail = email.trim().toLowerCase();
+    if (!db.users) db.users = [];
+    let user = db.users.find(u => u.email === normEmail);
+    if (!user) {
+      user = {
+        id: Date.now(),
+        name: name || 'Cần Thủ Google',
+        email: normEmail,
+        role: 'customer',
+        avatar: avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80',
+        authProvider: 'google',
+        googleId: googleId || ''
+      };
+      db.users.push(user);
+    }
+    const safeUser = { ...user };
+    delete safeUser.passwordHash;
+    return res.status(200).json({ success: true, token: generateToken(safeUser), user: safeUser });
+  }
 
   // 1. PRODUCTS
   if (url.includes('/api/products') && method === 'GET') {

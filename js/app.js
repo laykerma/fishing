@@ -1445,6 +1445,17 @@ function openCheckoutModal() {
 
   modal.classList.remove('hidden');
   lucide.createIcons({ root: modalContent });
+
+  // Tự động điền thông tin nếu đã đăng nhập tài khoản cần thủ
+  if (typeof getCurrentUser === 'function') {
+    const curUser = getCurrentUser();
+    if (curUser) {
+      const nameInput = document.getElementById('order-name');
+      const phoneInput = document.getElementById('order-phone');
+      if (nameInput && curUser.name) nameInput.value = curUser.name;
+      if (phoneInput && curUser.phone) phoneInput.value = curUser.phone;
+    }
+  }
 }
 
 function closeCheckoutModal() {

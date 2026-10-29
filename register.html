@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Ký Tài Khoản Cần Thủ - Vua Thẻo Câu PRO</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Font & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased font-sans min-h-screen flex flex-col justify-between pattern-grid relative selection:bg-sky-500 selection:text-white">
+
+  <!-- Background Decorative Glowing Orbs -->
+  <div class="fixed top-1/3 left-1/5 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="fixed bottom-1/4 right-1/4 w-96 h-96 bg-sky-600/15 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Header Mini -->
+  <header class="w-full max-w-7xl mx-auto px-4 py-6 flex items-center justify-between z-10">
+    <a href="index.html" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 group-hover:scale-105 transition-transform">
+        <i data-lucide="anchor" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <div class="font-black text-lg tracking-tight text-white flex items-center gap-1.5 font-heading">
+          VUA THẺO CÂU <span class="text-[9px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.2 rounded uppercase">PRO</span>
+        </div>
+        <div class="text-[10px] text-slate-400 font-semibold">
+          Thẻo Buộc Sẵn & Đồ Câu Cao Cấp
+        </div>
+      </div>
+    </a>
+
+    <div class="flex items-center gap-3">
+      <a href="login.html" class="text-xs font-bold text-sky-400 hover:text-white transition-colors flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900/60 border border-slate-800">
+        <i data-lucide="log-in" class="w-3.5 h-3.5"></i> Đã có tài khoản? Đăng nhập
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Register Card -->
+  <main class="w-full max-w-lg mx-auto px-4 py-8 z-10">
+    <div class="bg-slate-900/90 backdrop-blur-2xl border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden space-y-6">
+      
+      <!-- Top Glow Line -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-amber-400 via-sky-500 to-teal-400"></div>
+
+      <!-- Heading -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-[11px] font-extrabold uppercase tracking-wider">
+          <i data-lucide="gift" class="w-3.5 h-3.5"></i> Quà Tặng 50K Cần Thủ Mới
+        </div>
+        <h1 class="text-2xl font-black text-white font-heading tracking-tight">
+          Đăng Ký Thành Viên Cần Thủ
+        </h1>
+        <p class="text-xs text-slate-400">
+          Tạo tài khoản nhận ngay mã giảm giá và lưu thông số thẻo yêu thích
+        </p>
+      </div>
+
+      <!-- Quick Google Sign-Up Button -->
+      <div>
+        <button 
+          type="button" 
+          onclick="registerWithGoogle()"
+          class="w-full py-3 px-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-800 font-bold text-xs transition-all shadow-lg flex items-center justify-center gap-3 border border-slate-200 group active:scale-[0.98]"
+        >
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Đăng ký 1-chạm bằng tài khoản Google</span>
+        </button>
+      </div>
+
+      <!-- Divider -->
+      <div class="relative flex items-center justify-center">
+        <div class="border-t border-slate-800 w-full"></div>
+        <span class="bg-slate-900 px-3 text-[11px] text-slate-500 font-semibold uppercase tracking-wider relative z-10">hoặc điền form đăng ký</span>
+      </div>
+
+      <!-- Registration Form -->
+      <form onsubmit="onRegisterFormSubmit(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-300 mb-1.5">Họ và tên cần thủ *</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="reg-name" 
+              required 
+              placeholder="VD: Nguyễn Văn Cần Thủ" 
+              class="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-xs" 
+            />
+            <i data-lucide="user" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">Địa chỉ Email *</label>
+            <div class="relative">
+              <input 
+                type="email" 
+                id="reg-email" 
+                required 
+                placeholder="canthu@gmail.com" 
+                class="w-full pl-10 pr-3.5 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-xs" 
+              />
+              <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-bold text-slate-300 mb-1.5">Số điện thoại nhận hàng *</label>
+            <div class="relative">
+              <input 
+                type="tel" 
+                id="reg-phone" 
+                required 
+                placeholder="0988.xxx.xxx" 
+                class="w-full pl-10 pr-3.5 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-xs" 
+              />
+              <i data-lucide="phone" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block font-bold text-slate-300">Mật khẩu bảo mật *</label>
+            <span id="pass-strength-label" class="text-[10px] text-slate-500 font-semibold">Tối thiểu 6 ký tự</span>
+          </div>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="reg-password" 
+              required 
+              oninput="checkPasswordStrength(this.value)"
+              placeholder="Tạo mật khẩu an toàn" 
+              class="w-full pl-10 pr-10 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-xs" 
+            />
+            <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility('reg-password', this)" 
+              class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+
+          <!-- Strength Meter Bar -->
+          <div class="mt-2 h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
+            <div id="pass-strength-bar" class="h-full w-0 transition-all duration-300 bg-red-500 rounded-full"></div>
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1.5">Nhập lại mật khẩu *</label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="reg-confirm-password" 
+              required 
+              placeholder="Nhập lại chính xác mật khẩu trên" 
+              class="w-full pl-10 pr-10 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-xs" 
+            />
+            <i data-lucide="check-shield" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility('reg-confirm-password', this)" 
+              class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Terms Agreement -->
+        <div class="text-[11px] text-slate-400">
+          <label class="flex items-start gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="reg-terms" required checked class="w-3.5 h-3.5 mt-0.5 rounded bg-slate-950 border-slate-800 text-sky-600 focus:ring-0">
+            <span>Tôi đồng ý với <a href="#" class="text-sky-400 hover:underline">Điều khoản thành viên</a> và <a href="#" class="text-sky-400 hover:underline">Chính sách bảo mật</a> của Vua Thẻo Câu PRO.</span>
+          </label>
+        </div>
+
+        <!-- Error Msg Container -->
+        <div id="reg-error-box" class="hidden text-[11px] text-red-400 font-semibold bg-red-950/40 border border-red-800/40 p-3 rounded-xl flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i>
+          <span id="reg-error-text">Lỗi thông tin đăng ký!</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          id="btn-reg-submit"
+          class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-sky-600 to-teal-500 hover:from-amber-400 hover:to-teal-400 text-white font-black rounded-xl text-xs transition-all shadow-xl shadow-amber-500/20 flex items-center justify-center gap-2 active:scale-[0.99]"
+        >
+          <i data-lucide="user-plus" class="w-4 h-4"></i>
+          <span>HOÀN TẤT ĐĂNG KÝ CẦN THỦ</span>
+        </button>
+      </form>
+
+      <!-- Login Link -->
+      <div class="pt-2 text-center text-xs text-slate-400 border-t border-slate-800/80">
+        Bạn đã có tài khoản? 
+        <a href="login.html" class="font-bold text-sky-400 hover:text-sky-300 transition-colors ml-1">
+          Đăng nhập ngay →
+        </a>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="text-[10px] text-slate-500 text-center flex items-center justify-center gap-1.5 pt-1">
+        <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-400"></i>
+        <span>Mật khẩu được mã hóa băm PBKDF2 SHA-512 + Salt ngẫu nhiên trước khi lưu trữ</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Mini -->
+  <footer class="w-full max-w-7xl mx-auto px-4 py-6 text-center text-xs text-slate-500 z-10">
+    © 2026 Vua Thẻo Câu PRO • Đảm bảo bảo mật thông tin khách hàng tuyệt đối
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script>
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons({ root: btn });
+    }
+
+    function checkPasswordStrength(password) {
+      const bar = document.getElementById('pass-strength-bar');
+      const label = document.getElementById('pass-strength-label');
+      
+      let strength = 0;
+      if (password.length >= 6) strength += 1;
+      if (password.length >= 8) strength += 1;
+      if (/[A-Z]/.test(password)) strength += 1;
+      if (/[0-9]/.test(password)) strength += 1;
+      if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+
+      if (password.length === 0) {
+        bar.style.width = '0%';
+        label.innerText = 'Tối thiểu 6 ký tự';
+        label.className = 'text-[10px] text-slate-500 font-semibold';
+      } else if (strength <= 2) {
+        bar.style.width = '30%';
+        bar.className = 'h-full bg-red-500 rounded-full transition-all duration-300';
+        label.innerText = 'Độ mạnh: Yếu (nên thêm số / chữ hoa)';
+        label.className = 'text-[10px] text-red-400 font-semibold';
+      } else if (strength <= 4) {
+        bar.style.width = '65%';
+        bar.className = 'h-full bg-amber-500 rounded-full transition-all duration-300';
+        label.innerText = 'Độ mạnh: Khá tốt';
+        label.className = 'text-[10px] text-amber-400 font-semibold';
+      } else {
+        bar.style.width = '100%';
+        bar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-300';
+        label.innerText = 'Độ mạnh: Rất mạnh & an toàn';
+        label.className = 'text-[10px] text-emerald-400 font-semibold';
+      }
+    }
+
+    async function onRegisterFormSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById('reg-name').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const phone = document.getElementById('reg-phone').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirmPassword = document.getElementById('reg-confirm-password').value;
+      const btn = document.getElementById('btn-reg-submit');
+      const errBox = document.getElementById('reg-error-box');
+      const errText = document.getElementById('reg-error-text');
+
+      errBox.classList.add('hidden');
+
+      if (password.length < 6) {
+        errText.innerText = 'Mật khẩu phải từ 6 ký tự trở lên!';
+        errBox.classList.remove('hidden');
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        errText.innerText = 'Nhập lại mật khẩu không khớp với mật khẩu trên!';
+        errBox.classList.remove('hidden');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Đang mã hóa & tạo tài khoản...</span>`;
+      lucide.createIcons({ root: btn });
+
+      const res = await handleUserRegister({ name, email, phone, password });
+
+      if (res.success) {
+        showAuthToast('Chúc mừng bạn đã trở thành thành viên Cần Thủ PRO!', 'success');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 1000);
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="user-plus" class="w-4 h-4"></i> <span>HOÀN TẤT ĐĂNG KÝ CẦN THỦ</span>`;
+        lucide.createIcons({ root: btn });
+        errText.innerText = res.message || 'Đăng ký thất bại, vui lòng thử lại!';
+        errBox.classList.remove('hidden');
+      }
+    }
+
+    function registerWithGoogle() {
+      triggerMockGooglePrompt((res) => {
+        if (res && res.success) {
+          showAuthToast(res.message, 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 800);
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

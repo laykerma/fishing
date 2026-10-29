@@ -13,6 +13,8 @@ npm run dev
 
 Máy chủ sẽ tự động khởi động tại cổng `3000` và mở trình duyệt cho bạn:
 * 🌐 **Trang Bán Hàng (Client)**: [http://localhost:3000/index.html](http://localhost:3000/index.html)
+* 🔐 **Trang Đăng Nhập Cần Thủ**: [http://localhost:3000/login.html](http://localhost:3000/login.html)
+* 📝 **Trang Đăng Ký Cần Thủ**: [http://localhost:3000/register.html](http://localhost:3000/register.html)
 * 🔑 **Trang Quản Trị Admin**: [http://localhost:3000/admin.html](http://localhost:3000/admin.html)
   * Tài khoản mặc định: `admin`
   * Mật khẩu mặc định: `admin123`
@@ -30,6 +32,10 @@ Máy chủ sẽ tự động khởi động tại cổng `3000` và mở trình 
 ### 2. Hệ Thống RESTful API:
 | Phương thức | Đường dẫn API | Chức năng |
 | :--- | :--- | :--- |
+| `POST` | `/api/auth/register` | Đăng ký tài khoản cần thủ (Mã hóa PBKDF2 SHA-512 + Salt) |
+| `POST` | `/api/auth/login` | Đăng nhập tài khoản & cấp JWT Token bảo mật |
+| `POST` | `/api/auth/google` | Đăng nhập / Đăng ký nhanh 1-chạm bằng tài khoản Google |
+| `GET` | `/api/auth/me` | Lấy thông tin user hiện tại qua Bearer Token |
 | `GET` | `/api/products` | Lấy danh sách thẻo câu (hỗ trợ lọc theo danh mục) |
 | `POST` | `/api/products` | Thêm thẻo câu mới (Admin) |
 | `PUT` | `/api/products/:id` | Sửa giá tiền, ảnh, thông số thẻo (Admin) |

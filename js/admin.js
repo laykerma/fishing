@@ -60,7 +60,16 @@ function getAdminCredentials() {
 }
 
 function checkAdminAuth() {
-  const isAuth = sessionStorage.getItem('theopro_admin_auth') === 'true';
+  let isAuth = sessionStorage.getItem('theopro_admin_auth') === 'true';
+  if (!isAuth) {
+    try {
+      const curUser = JSON.parse(localStorage.getItem('theopro_user_info') || sessionStorage.getItem('theopro_user_info') || '{}');
+      if (curUser && curUser.role === 'admin') {
+        isAuth = true;
+        sessionStorage.setItem('theopro_admin_auth', 'true');
+      }
+    } catch (e) {}
+  }
   const loginScreen = document.getElementById('admin-login-screen');
   const appLayout = document.getElementById('admin-app-layout');
 

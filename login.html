@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng Nhập Tài Khoản - Vua Thẻo Câu PRO</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Google Font & Lucide Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Google Identity Services (Chính thức) -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased font-sans min-h-screen flex flex-col justify-between pattern-grid relative selection:bg-sky-500 selection:text-white">
+
+  <!-- Background Decorative Glowing Orbs -->
+  <div class="fixed top-1/4 left-1/4 w-96 h-96 bg-sky-600/15 rounded-full blur-3xl pointer-events-none"></div>
+  <div class="fixed bottom-1/4 right-1/4 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+  <!-- Header Mini -->
+  <header class="w-full max-w-7xl mx-auto px-4 py-6 flex items-center justify-between z-10">
+    <a href="index.html" class="flex items-center gap-3 group">
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 group-hover:scale-105 transition-transform">
+        <i data-lucide="anchor" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <div class="font-black text-lg tracking-tight text-white flex items-center gap-1.5 font-heading">
+          VUA THẺO CÂU <span class="text-[9px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.2 rounded uppercase">PRO</span>
+        </div>
+        <div class="text-[10px] text-slate-400 font-semibold">
+          Thẻo Buộc Sẵn & Đồ Câu Cao Cấp
+        </div>
+      </div>
+    </a>
+
+    <div class="flex items-center gap-3">
+      <a href="index.html" class="text-xs font-bold text-slate-400 hover:text-white transition-colors flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-900/60 border border-slate-800">
+        <i data-lucide="arrow-left" class="w-3.5 h-3.5"></i> Về Trang Mua Hàng
+      </a>
+    </div>
+  </header>
+
+  <!-- Main Login Card -->
+  <main class="w-full max-w-md mx-auto px-4 py-8 z-10">
+    <div class="bg-slate-900/90 backdrop-blur-2xl border border-slate-800 rounded-3xl p-8 shadow-2xl relative overflow-hidden space-y-6">
+      
+      <!-- Top Glow Line -->
+      <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-sky-500 via-teal-400 to-amber-400"></div>
+
+      <!-- Heading -->
+      <div class="text-center space-y-2">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-[11px] font-extrabold uppercase tracking-wider">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Cần Thủ Member
+        </div>
+        <h1 class="text-2xl font-black text-white font-heading tracking-tight">
+          Đăng Nhập Cần Thủ
+        </h1>
+        <p class="text-xs text-slate-400">
+          Tích điểm VIP, xem lại lịch sử đơn hàng và nhận ưu đãi riêng
+        </p>
+      </div>
+
+      <!-- Google Sign-In Button -->
+      <div>
+        <button 
+          type="button" 
+          onclick="loginWithGoogle()"
+          id="btn-google-login"
+          class="w-full py-3 px-4 rounded-2xl bg-white hover:bg-slate-100 text-slate-800 font-bold text-xs transition-all shadow-lg flex items-center justify-center gap-3 border border-slate-200 group active:scale-[0.98]"
+        >
+          <svg class="w-4 h-4 flex-shrink-0" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+          </svg>
+          <span>Đăng nhập nhanh bằng Google</span>
+        </button>
+      </div>
+
+      <!-- Divider -->
+      <div class="relative flex items-center justify-center">
+        <div class="border-t border-slate-800 w-full"></div>
+        <span class="bg-slate-900 px-3 text-[11px] text-slate-500 font-semibold uppercase tracking-wider relative z-10">hoặc bằng email</span>
+      </div>
+
+      <!-- Standard Login Form -->
+      <form onsubmit="onLoginFormSubmit(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-bold text-slate-300 mb-1.5">Email hoặc Số điện thoại *</label>
+          <div class="relative">
+            <input 
+              type="text" 
+              id="login-email" 
+              required 
+              placeholder="nhapten@gmail.com hoặc 0988..." 
+              class="w-full pl-10 pr-4 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-xs" 
+            />
+            <i data-lucide="mail" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+          </div>
+        </div>
+
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block font-bold text-slate-300">Mật khẩu *</label>
+            <a href="javascript:void(0)" onclick="forgotPasswordAlert()" class="text-[11px] text-sky-400 hover:text-sky-300 transition-colors">
+              Quên mật khẩu?
+            </a>
+          </div>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="login-password" 
+              required 
+              placeholder="Nhập mật khẩu của bạn" 
+              class="w-full pl-10 pr-10 py-3 bg-slate-950 border border-slate-800 rounded-xl text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors text-xs" 
+            />
+            <i data-lucide="lock" class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5"></i>
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility('login-password', this)" 
+              class="absolute right-3.5 top-3.5 text-slate-500 hover:text-slate-300 transition-colors"
+            >
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- Remember Me Checkbox -->
+        <div class="flex items-center justify-between text-[11px] text-slate-400">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" id="login-remember" checked class="w-3.5 h-3.5 rounded bg-slate-950 border-slate-800 text-sky-600 focus:ring-0">
+            <span>Ghi nhớ đăng nhập trên thiết bị này</span>
+          </label>
+        </div>
+
+        <!-- Error Msg Container -->
+        <div id="login-error-box" class="hidden text-[11px] text-red-400 font-semibold bg-red-950/40 border border-red-800/40 p-3 rounded-xl flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-4 h-4 flex-shrink-0"></i>
+          <span id="login-error-text">Sai thông tin đăng nhập!</span>
+        </div>
+
+        <!-- Submit Button -->
+        <button 
+          type="submit" 
+          id="btn-login-submit"
+          class="w-full py-3.5 bg-gradient-to-r from-sky-600 via-sky-500 to-teal-500 hover:from-sky-500 hover:to-teal-400 text-white font-extrabold rounded-xl text-xs transition-all shadow-xl shadow-sky-600/30 flex items-center justify-center gap-2 active:scale-[0.99]"
+        >
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>ĐĂNG NHẬP NGAY</span>
+        </button>
+      </form>
+
+      <!-- Register Link -->
+      <div class="pt-2 text-center text-xs text-slate-400 border-t border-slate-800/80">
+        Bạn chưa có tài khoản cần thủ? 
+        <a href="register.html" class="font-bold text-amber-400 hover:text-amber-300 transition-colors ml-1">
+          Đăng ký miễn phí ngay →
+        </a>
+      </div>
+
+      <!-- Security Notice -->
+      <div class="text-[10px] text-slate-500 text-center flex items-center justify-center gap-1.5 pt-1">
+        <i data-lucide="shield" class="w-3.5 h-3.5 text-teal-400"></i>
+        <span>Mật khẩu được băm mã hóa bảo mật PBKDF2 SHA-512 & Salt</span>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Mini -->
+  <footer class="w-full max-w-7xl mx-auto px-4 py-6 text-center text-xs text-slate-500 z-10">
+    © 2026 Vua Thẻo Câu PRO • Xưởng sản xuất thẻo câu & phụ kiện chuyên nghiệp hàng đầu Việt Nam
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script>
+    function togglePasswordVisibility(inputId, btn) {
+      const input = document.getElementById(inputId);
+      const icon = btn.querySelector('i');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      lucide.createIcons({ root: btn });
+    }
+
+    async function onLoginFormSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const remember = document.getElementById('login-remember').checked;
+      const btn = document.getElementById('btn-login-submit');
+      const errBox = document.getElementById('login-error-box');
+      const errText = document.getElementById('login-error-text');
+
+      errBox.classList.add('hidden');
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> <span>Đang xác thực bảo mật...</span>`;
+      lucide.createIcons({ root: btn });
+
+      const res = await handleUserLogin(email, password, remember);
+
+      if (res.success) {
+        showAuthToast(res.message, 'success');
+        // Nếu là admin thì có thể vào admin, còn không về trang chủ
+        setTimeout(() => {
+          if (res.user && res.user.role === 'admin') {
+            window.location.href = 'admin.html';
+          } else {
+            window.location.href = 'index.html';
+          }
+        }, 800);
+      } else {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="log-in" class="w-4 h-4"></i> <span>ĐĂNG NHẬP NGAY</span>`;
+        lucide.createIcons({ root: btn });
+        errText.innerText = res.message || 'Email hoặc mật khẩu không chính xác!';
+        errBox.classList.remove('hidden');
+      }
+    }
+
+    function loginWithGoogle() {
+      // Giả lập popup tài khoản Google chuẩn UX hoặc kết nối Google GSI
+      triggerMockGooglePrompt((res) => {
+        if (res && res.success) {
+          showAuthToast(res.message, 'success');
+          setTimeout(() => {
+            window.location.href = 'index.html';
+          }, 800);
+        }
+      });
+    }
+
+    function forgotPasswordAlert() {
+      alert('Chức năng cấp lại mật khẩu: Vui lòng nhắn tin Zalo Hotline 0988.776.655 kèm Số điện thoại đăng ký để được hỗ trợ reset ngay trong 1 phút!');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      // Nếu đã đăng nhập rồi thì báo và cho về trang chủ
+      const currentUser = getCurrentUser();
+      if (currentUser) {
+        showAuthToast(`Bạn đã đăng nhập với tài khoản: ${currentUser.name}`, 'info');
+      }
+    });
+  </script>
+</body>
+</html>
