@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vua Thẻo Câu - Thẻo Buộc Sẵn & Đồ Câu Cá Chuyên Nghiệp</title>
+  <meta name="description" content="Chuyên sỉ lẻ thẻo câu cá buộc sẵn, thẻo câu đài săn hàng, thẻo tàng hình fluorocarbon, cước thẻo Nhật Bản, lưỡi câu BKK bén ngót chống xoắn tuyệt đối.">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-sky-500 selection:text-white">
+
+  <!-- Top Announcement Bar -->
+  <header class="bg-slate-900 text-white text-xs py-2 px-4 border-b border-slate-800">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
+      <div class="flex items-center gap-2">
+        <span class="bg-amber-500 text-slate-950 font-black px-2 py-0.5 rounded text-[10px] uppercase tracking-wider">Ưu Đãi Hôm Nay</span>
+        <span class="text-slate-300">Tặng bảng quấn thẻo mini cho đơn từ 200k • FREESHIP toàn quốc từ 250k</span>
+      </div>
+      <div class="flex items-center gap-4 text-slate-300">
+        <a href="admin.html" target="_blank" class="hover:text-amber-300 text-amber-400 font-bold flex items-center gap-1 transition-colors text-xs">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Trang Admin
+        </a>
+        <span class="text-slate-600">|</span>
+        <button onclick="openOrderTrackingModal()" class="hover:text-amber-400 flex items-center gap-1 transition-colors text-xs font-semibold">
+          <i data-lucide="truck" class="w-3.5 h-3.5 text-sky-400"></i> Tra Cứu Đơn
+        </button>
+        <span class="hidden md:inline text-slate-600">|</span>
+        <a href="tel:0988776655" class="hover:text-amber-400 flex items-center gap-1 transition-colors">
+          <i data-lucide="phone-call" class="w-3.5 h-3.5 text-sky-400"></i> Hotline: <strong>0988.776.655</strong>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Navigation Header -->
+  <nav class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20 gap-4">
+        
+        <!-- Logo -->
+        <a href="#" class="flex items-center gap-3 group flex-shrink-0">
+          <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-700 via-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 group-hover:scale-105 transition-transform">
+            <i data-lucide="anchor" class="w-7 h-7"></i>
+          </div>
+          <div>
+            <div class="font-black text-xl md:text-2xl tracking-tight text-slate-900 flex items-center gap-1.5 font-heading">
+              VUA THẺO CÂU <span class="text-[10px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.5 rounded uppercase">PRO</span>
+            </div>
+            <div class="text-[11px] text-slate-500 font-semibold tracking-wide">
+              Thẻo Buộc Sẵn & Đồ Câu Chuyên Nghiệp
+            </div>
+          </div>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="hidden md:flex flex-1 max-w-md mx-4">
+          <div class="relative w-full">
+            <input 
+              type="text" 
+              id="search-input" 
+              placeholder="Tìm kiếm: Sode, BKK, Trắm đen, Rô phi, Toray, Hạt chặn..." 
+              class="w-full pl-10 pr-4 py-2.5 rounded-full border border-slate-200 bg-slate-50 text-xs text-slate-800 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent transition-all shadow-inner"
+            />
+            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+          </div>
+        </div>
+
+        <!-- Quick Nav & Actions -->
+        <div class="flex items-center gap-2.5">
+          <!-- DIY Rig shortcut -->
+          <a href="#xuong-tu-tom" class="hidden xl:flex items-center gap-1.5 text-xs font-bold text-amber-800 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3.5 py-2.5 rounded-xl transition-colors">
+            <i data-lucide="wrench" class="w-4 h-4 text-amber-600"></i>
+            <span>Tự Tóm Thẻo</span>
+          </a>
+
+          <!-- Rig Advisor shortcut -->
+          <a href="#advisor-section" class="hidden lg:flex items-center gap-1.5 text-xs font-bold text-sky-700 hover:text-sky-800 bg-sky-50 hover:bg-sky-100 px-3.5 py-2.5 rounded-xl transition-colors border border-sky-100">
+            <i data-lucide="compass" class="w-4 h-4 text-sky-600"></i>
+            <span>Chọn Size Thẻo</span>
+          </a>
+
+          <!-- Theme Toggle Button (Light / Dark mode) -->
+          <button 
+            onclick="toggleTheme()"
+            class="theme-toggle-btn flex items-center gap-1.5 px-3 py-2.5 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition-colors shadow-sm"
+            title="Chuyển chế độ Sáng / Tối"
+          >
+            <i data-lucide="moon" class="w-4 h-4"></i>
+            <span class="hidden xl:inline text-xs font-bold">Bật Tối</span>
+          </button>
+
+          <!-- Wishlist Button -->
+          <button 
+            onclick="setPriceFilter('all'); state.activeCategory = 'all'; renderCategories(); setCategory('all'); showToast('Hiển thị các sản phẩm đã yêu thích!', 'info');"
+            class="relative p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:text-red-500 hover:border-red-200 bg-white transition-colors"
+            title="Sản phẩm yêu thích"
+          >
+            <i data-lucide="heart" class="w-4 h-4"></i>
+            <span id="wishlist-badge" class="hidden absolute -top-1.5 -right-1.5 bg-red-500 text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center">
+              0
+            </span>
+          </button>
+
+          <!-- Cart Trigger Button -->
+          <button 
+            onclick="toggleCartDrawer(true)"
+            class="relative flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-4 py-2.5 rounded-xl font-bold text-xs transition-all shadow-md shadow-slate-900/20"
+          >
+            <i data-lucide="shopping-cart" class="w-4 h-4"></i>
+            <span class="hidden sm:inline">Giỏ Hàng</span>
+            <span class="cart-badge hidden bg-amber-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center -ml-1">
+              0
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Nav Sub-bar -->
+      <div class="hidden md:flex items-center justify-between py-2 border-t border-slate-100 text-xs font-semibold text-slate-600">
+        <div class="flex items-center gap-6">
+          <a href="#san-pham" class="hover:text-sky-600 transition-colors flex items-center gap-1">
+            <i data-lucide="grid" class="w-3.5 h-3.5 text-sky-600"></i> Tất Cả Sản Phẩm
+          </a>
+          <a href="#flash-sale" class="hover:text-red-600 text-red-600 font-bold transition-colors flex items-center gap-1">
+            <i data-lucide="flame" class="w-3.5 h-3.5 text-red-500 fill-current"></i> Flash Sale Giờ Vàng
+          </a>
+          <a href="#xuong-tu-tom" class="hover:text-amber-700 transition-colors flex items-center gap-1">
+            <i data-lucide="sliders" class="w-3.5 h-3.5 text-amber-500"></i> Đặt Tóm Theo Yêu Cầu
+          </a>
+          <a href="#bang-size" class="hover:text-sky-600 transition-colors flex items-center gap-1">
+            <i data-lucide="table" class="w-3.5 h-3.5 text-teal-600"></i> Bảng Tra Cứu Trục & Thẻo
+          </a>
+          <a href="#cam-nang" class="hover:text-sky-600 transition-colors flex items-center gap-1">
+            <i data-lucide="book-open" class="w-3.5 h-3.5 text-indigo-500"></i> Cẩm Nang Câu Đài
+          </a>
+        </div>
+        <div class="text-[11px] text-emerald-700 font-bold flex items-center gap-1 bg-emerald-50 px-2.5 py-1 rounded-full">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-600"></i> Đồng kiểm trước khi thanh toán
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Search & Theme Bar -->
+  <div class="md:hidden px-4 py-2.5 bg-white border-b border-slate-200 flex items-center gap-2">
+    <div class="relative flex-1">
+      <input 
+        type="text" 
+        oninput="document.getElementById('search-input').value = this.value; state.searchQuery = this.value; renderProducts();"
+        placeholder="Tìm thẻo rô phi, trắm chép, lưỡi BKK..." 
+        class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
+      />
+      <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+    </div>
+    <button 
+      onclick="toggleTheme()"
+      class="theme-toggle-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition-colors shadow-sm flex-shrink-0"
+      title="Đổi giao diện Sáng / Tối"
+    >
+      <i data-lucide="moon" class="w-4 h-4"></i>
+    </button>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="relative ocean-gradient text-white overflow-hidden py-14 lg:py-20 pattern-grid">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+        
+        <!-- Hero Text -->
+        <div class="lg:col-span-7 space-y-5">
+          <div class="inline-flex items-center gap-2 bg-sky-500/20 border border-sky-400/30 backdrop-blur-md px-3 py-1 rounded-full text-xs font-semibold text-sky-200">
+            <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+            <span>XƯỞNG TÓM THẺO CÂU ĐÀI & SĂN HÀNG HÀNG ĐẦU VIỆT NAM</span>
+          </div>
+
+          <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-white leading-tight font-heading">
+            THẺO BUỘC SẴN CHUẨN XÁC <br>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-sky-400 via-teal-300 to-amber-300">
+              SĂN HÀNG KHỦNG KHÔNG LO ĐỨT
+            </span>
+          </h1>
+
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed max-w-2xl font-normal">
+            Tinh tế từng nút thắt 7 vòng khóa kép. 100% cước Fluorocarbon Nhật Bản tàng hình dưới nước, phối hợp cùng dàn lưỡi Titan Vonfram tôi nhiệt siêu bén. Bao giật, bao bốc đầu cá khủng hồ dịch vụ và tự nhiên!
+          </p>
+
+          <!-- Key Highlights Badges -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 pt-1 text-xs">
+            <div class="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/10 flex items-center gap-2">
+              <i data-lucide="check-check" class="w-5 h-5 text-amber-400 flex-shrink-0"></i>
+              <div>
+                <strong class="block text-white text-xs">Buộc Tay</strong>
+                <span class="text-slate-300 text-[10px]">Chuẩn từng mm</span>
+              </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/10 flex items-center gap-2">
+              <i data-lucide="eye-off" class="w-5 h-5 text-sky-400 flex-shrink-0"></i>
+              <div>
+                <strong class="block text-white text-xs">Tàng Hình</strong>
+                <span class="text-slate-300 text-[10px]">Cước Carbon Nhật</span>
+              </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/10 flex items-center gap-2">
+              <i data-lucide="shield-check" class="w-5 h-5 text-emerald-400 flex-shrink-0"></i>
+              <div>
+                <strong class="block text-white text-xs">Chống Xoắn</strong>
+                <span class="text-slate-300 text-[10px]">Hạt silicon chữ T</span>
+              </div>
+            </div>
+            <div class="bg-white/10 backdrop-blur-sm p-2.5 rounded-xl border border-white/10 flex items-center gap-2">
+              <i data-lucide="package-check" class="w-5 h-5 text-purple-400 flex-shrink-0"></i>
+              <div>
+                <strong class="block text-white text-xs">Bảo Hành</strong>
+                <span class="text-slate-300 text-[10px]">Đổi mới 1-1</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CTAs -->
+          <div class="pt-2 flex flex-wrap items-center gap-3">
+            <a 
+              href="#san-pham"
+              class="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-xl shadow-xl shadow-amber-500/25 transition-all text-xs flex items-center gap-2 group"
+            >
+              <span>Xem Các Loại Thẻo Bán Chạy</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+            <a 
+              href="#xuong-tu-tom"
+              class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 backdrop-blur-md transition-all text-xs flex items-center gap-2"
+            >
+              <i data-lucide="wrench" class="w-4 h-4 text-amber-400"></i>
+              <span>Tự Tóm Thẻo Theo Yêu Cầu</span>
+            </a>
+          </div>
+
+          <!-- Stats -->
+          <div class="pt-3 border-t border-white/10 flex items-center gap-6 text-xs text-slate-300">
+            <div>
+              <strong class="block text-lg font-extrabold text-white">15,000+</strong>
+              <span class="text-[11px]">Vỉ thẻo đã bán</span>
+            </div>
+            <div>
+              <strong class="block text-lg font-extrabold text-amber-400">4.9 / 5.0 ⭐</strong>
+              <span class="text-[11px]">3,200+ đánh giá</span>
+            </div>
+            <div>
+              <strong class="block text-lg font-extrabold text-teal-300">100%</strong>
+              <span class="text-[11px]">Chính hãng</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Visual Showcase -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-sm lg:max-w-none">
+            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-sky-400 via-teal-400 to-amber-400 opacity-30 blur-2xl animate-subtle-pulse"></div>
+            
+            <div class="relative rounded-3xl overflow-hidden border border-white/20 bg-slate-900/60 backdrop-blur-xl p-4 shadow-2xl">
+              <div class="relative h-64 rounded-2xl overflow-hidden bg-slate-800">
+                <img 
+                  src="https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=800&q=80" 
+                  alt="Thẻo câu cá buộc sẵn" 
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent"></div>
+                <div class="absolute bottom-3 left-4 right-4">
+                  <span class="bg-amber-500 text-slate-950 text-[10px] font-black px-2 py-0.5 rounded uppercase">Thẻo Săn Hàng Đài 2026</span>
+                  <h3 class="text-white font-bold text-sm mt-1">Cấu Tạo Thẻo Đôi Chống Xoắn 7 Khóa Kép</h3>
+                  <p class="text-slate-300 text-[11px]">Mối buộc không rạn cước, lưỡi BKK Titan tôi nhiệt đâm xuyên.</p>
+                </div>
+              </div>
+
+              <!-- Mini feature list -->
+              <div class="mt-3 grid grid-cols-2 gap-2 text-xs">
+                <div class="bg-white/5 border border-white/10 rounded-xl p-2">
+                  <span class="text-sky-300 font-semibold block text-[10px]">Độ Dài Thẻo Chuẩn:</span>
+                  <span class="text-white font-bold text-xs">18cm - 45cm</span>
+                </div>
+                <div class="bg-white/5 border border-white/10 rounded-xl p-2">
+                  <span class="text-teal-300 font-semibold block text-[10px]">Lực Tải Kéo Đứt:</span>
+                  <span class="text-white font-bold text-xs">3.5kg - 28.0kg</span>
+                </div>
+              </div>
+
+              <div class="mt-3">
+                <button 
+                  onclick="openQuickView(2)"
+                  class="w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-white rounded-xl text-xs font-bold transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <i data-lucide="eye" class="w-4 h-4"></i> Xem Chi Tiết Thẻo Săn Hàng BKK
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Flash Sale Section (Giờ vàng giá sốc) -->
+  <section id="flash-sale" class="py-12 bg-gradient-to-b from-amber-50/60 to-white border-b border-amber-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-lg shadow-red-600/30 animate-bounce">
+            <i data-lucide="flame" class="w-6 h-6 fill-current"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h2 class="text-2xl font-black text-slate-900 tracking-tight font-heading">
+                FLASH SALE GIỜ VÀNG
+              </h2>
+              <span class="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">HOT</span>
+            </div>
+            <p class="text-xs text-slate-500 mt-0.5">Giá ưu đãi có hạn số lượng cho cần thủ trong ngày hôm nay</p>
+          </div>
+        </div>
+
+        <!-- Live Countdown Timer -->
+        <div class="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-4 py-2 rounded-2xl border border-amber-200 shadow-sm">
+          <span class="text-slate-500 text-[11px] mr-1">Kết thúc sau:</span>
+          <span id="flash-hours" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs">06</span>
+          <span>:</span>
+          <span id="flash-minutes" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs">42</span>
+          <span>:</span>
+          <span id="flash-seconds" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs">15</span>
+        </div>
+      </div>
+
+      <!-- Flash sale items grid -->
+      <div id="flash-sale-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Xưởng Tự Tóm Thẻo Theo Yêu Cầu (Custom Rig Configurator Tool) -->
+  <section id="xuong-tu-tom" class="py-14 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="inline-flex items-center gap-1.5 bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full mb-2">
+          <i data-lucide="wrench" class="w-3.5 h-3.5 text-amber-600"></i> ĐỘC QUYỀN TẠI VUA THẺO CÂU
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
+          Xưởng Tự Tóm Thẻo Theo Yêu Cầu Cần Thủ
+        </h2>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1.5">
+          Tự do cấu hình kích cỡ dây cước, loại lưỡi, độ dài và phụ kiện chống xoắn. Nghệ nhân làng nghề sẽ tóm tay đúng 100% quy cách của bạn!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Controls Configurator -->
+        <div class="lg:col-span-7 bg-slate-50 p-6 rounded-3xl border border-slate-200 space-y-5">
+          <!-- 1. Cước -->
+          <div>
+            <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-2">
+              1. Chọn Chất Liệu & Thương Hiệu Cước:
+            </label>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
+              <button onclick="updateDiyRig('material', 'Fluorocarbon Toray Nhật');" class="p-3 rounded-xl border border-sky-600 bg-sky-50 text-sky-900 font-bold text-left">
+                Fluorocarbon Toray
+                <span class="block text-[10px] text-sky-700 font-normal">Tàng hình 100% (+15k)</span>
+              </button>
+              <button onclick="updateDiyRig('material', 'PE Braided 8X Siêu Cường');" class="p-3 rounded-xl border border-slate-200 bg-white hover:border-sky-300 text-slate-700 font-bold text-left">
+                Dây Bện PE 8 Lõi
+                <span class="block text-[10px] text-slate-400 font-normal">Tải trâu bò 25kg (+25k)</span>
+              </button>
+              <button onclick="updateDiyRig('material', 'Nylon Monofilament Đức');" class="p-3 rounded-xl border border-slate-200 bg-white hover:border-sky-300 text-slate-700 font-bold text-left">
+                Nylon Nhập Khẩu Đức
+                <span class="block text-[10px] text-slate-400 font-normal">Mềm dẻo tiết kiệm</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Kích thước dây & Lưỡi -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                2. Cỡ Dây Cước:
+              </label>
+              <select onchange="updateDiyRig('lineSize', this.value);" class="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <option value="#0.8 (Tải 3.1kg)">#0.8 (Đường kính 0.148mm - Tải 3.1kg)</option>
+                <option value="#1.2 (Tải 4.5kg)">#1.2 (Đường kính 0.185mm - Tải 4.5kg)</option>
+                <option value="#1.5 (Tải 5.5kg)" selected>#1.5 (Đường kính 0.205mm - Tải 5.5kg)</option>
+                <option value="#2.0 (Tải 7.2kg)">#2.0 (Đường kính 0.235mm - Tải 7.2kg)</option>
+                <option value="#3.0 (Tải 10.5kg)">#3.0 (Đường kính 0.285mm - Tải 10.5kg)</option>
+                <option value="#5.0 (Tải 22.0kg)">#5.0 (Săn hàng khủng - Tải 22.0kg)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                3. Loại & Kích Thước Lưỡi:
+              </label>
+              <select onchange="updateDiyRig('hookModel', this.value);" class="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <option value="Lưỡi Sode #4 (Rô phi - Diếc)">Lưỡi Sode #4 (Rô phi - Diếc nhỏ)</option>
+                <option value="Lưỡi Sode #6 (Rô phi cúp thi đấu)">Lưỡi Sode #6 (Rô phi cúp thi đấu)</option>
+                <option value="Lưỡi Iseama #6 Có Ngạnh" selected>Lưỡi Iseama #6 Có Ngạnh (Trắm Chép)</option>
+                <option value="Lưỡi Iseama #8 Có Ngạnh">Lưỡi Iseama #8 Có Ngạnh (Chép củ)</option>
+                <option value="Lưỡi BKK Titan #10 (Trắm đen 8-15kg)">Lưỡi BKK Titan #10 (Trắm đen 8-15kg)</option>
+                <option value="Lưỡi BKK Titan #12 (Thủy quái 15-25kg)">Lưỡi BKK Titan #12 (Thủy quái 15-25kg)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- 3. Độ dài & Phụ kiện -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                4. Chiều Dài Thẻo Đôi:
+              </label>
+              <select onchange="updateDiyRig('rigLength', this.value);" class="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <option value="18cm (Lệch 3cm)">18cm (Lệch 2 lưỡi 3cm - Rô phi nhát)</option>
+                <option value="25cm (Lệch 4cm)" selected>25cm (Lệch 2 lưỡi 4cm - Tiêu chuẩn)</option>
+                <option value="35cm (Lệch 5cm)">35cm (Lệch 2 lưỡi 5cm - Chép, Trắm)</option>
+                <option value="45cm (Lệch 7cm)">45cm (Lệch 2 lưỡi 7cm - Săn hàng đầm sâu)</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-slate-800 uppercase tracking-wider mb-1.5">
+                5. Số Lượng Bộ Thẻo Đặt:
+              </label>
+              <select onchange="updateDiyRig('quantityPack', parseInt(this.value));" class="w-full text-xs font-semibold p-2.5 rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-sky-500">
+                <option value="10" selected>Vỉ 10 bộ thẻo đôi (20 lưỡi)</option>
+                <option value="20">Vỉ 20 bộ thẻo đôi (40 lưỡi - Tiết kiệm)</option>
+                <option value="50">Hộp 50 bộ thẻo đôi (Bao cả mùa câu)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Extra Options -->
+          <div class="pt-2 border-t border-slate-200 flex flex-wrap gap-4 text-xs font-semibold">
+            <label class="flex items-center gap-2 cursor-pointer text-slate-700">
+              <input type="checkbox" checked onchange="updateDiyRig('hasTBead', this.checked);" class="rounded text-sky-600 focus:ring-sky-500 w-4 h-4">
+              <span>Hạt silicon định vị chia thẻo chữ T chống xoắn (+5k)</span>
+            </label>
+            <label class="flex items-center gap-2 cursor-pointer text-slate-700">
+              <input type="checkbox" onchange="updateDiyRig('hasSwivel', this.checked);" class="rounded text-sky-600 focus:ring-sky-500 w-4 h-4">
+              <span>Khuyên xoay số 8 bạc đạn 360 độ (+5k)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Live Schematic Preview Card -->
+        <div class="lg:col-span-5 bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-6 shadow-2xl relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-4">
+              <div class="flex items-center gap-2 text-xs font-bold text-amber-400 uppercase tracking-widest">
+                <i data-lucide="scan-eye" class="w-4 h-4"></i> Mô Phỏng Thẻo Buộc Tay
+              </div>
+              <span class="text-[10px] bg-sky-500 text-white font-bold px-2 py-0.5 rounded">Tỉ Lệ 1:1</span>
+            </div>
+
+            <!-- Visual Schematic SVG -->
+            <div class="bg-slate-950/60 rounded-2xl p-4 border border-white/10 mb-4 text-center">
+              <svg viewBox="0 0 300 140" class="w-full h-32 mx-auto">
+                <!-- Top knot -->
+                <circle cx="150" cy="15" r="4" fill="#38bdf8" />
+                <text x="150" y="10" fill="#94a3b8" font-size="8" text-anchor="middle">Nút thắt số 8 khóa đôi</text>
+                
+                <!-- Main stem line -->
+                <line x1="150" y1="15" x2="150" y2="45" stroke="#38bdf8" stroke-width="2" class="rig-svg-line" />
+                
+                <!-- T-Bead -->
+                <rect x="144" y="45" width="12" height="8" rx="3" fill="#f59e0b" />
+                <text x="150" y="40" fill="#f59e0b" font-size="8" text-anchor="middle">Hạt chia chữ T</text>
+
+                <!-- 2 branch lines -->
+                <!-- Branch Left (Shorter) -->
+                <path d="M 144 50 Q 110 70 100 110" fill="none" stroke="#e0f2fe" stroke-width="1.5" stroke-dasharray="3" />
+                <path d="M 100 110 L 98 122 Q 95 128 102 125 L 105 118" fill="none" stroke="#f59e0b" stroke-width="2" />
+                <text x="75" y="125" fill="#f1f5f9" font-size="8">Lưỡi trên</text>
+
+                <!-- Branch Right (Longer) -->
+                <path d="M 156 50 Q 190 75 200 125" fill="none" stroke="#e0f2fe" stroke-width="1.5" stroke-dasharray="3" />
+                <path d="M 200 125 L 198 135 Q 195 140 202 138 L 205 132" fill="none" stroke="#f59e0b" stroke-width="2" />
+                <text x="225" y="135" fill="#f1f5f9" font-size="8">Lưỡi dưới (Neo bùn)</text>
+              </svg>
+            </div>
+
+            <!-- Specs summary -->
+            <div class="space-y-1.5 text-xs text-slate-300">
+              <div class="flex justify-between">
+                <span class="text-slate-400">Dây cước:</span>
+                <span class="font-bold text-white" id="diy-vis-line">Fluorocarbon Toray Nhật - #1.5</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Lưỡi câu:</span>
+                <span class="font-bold text-amber-400" id="diy-vis-hook">Lưỡi Iseama #6 Có Ngạnh</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Quy cách:</span>
+                <span class="font-semibold text-white" id="diy-vis-length">Chiều dài: 25cm (Lệch 4cm)</span>
+              </div>
+              <div class="flex justify-between">
+                <span class="text-slate-400">Chống xoắn:</span>
+                <span class="font-semibold text-teal-300" id="diy-vis-bead">✓ Có hạt silicon chữ T</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action & Price -->
+          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+            <div>
+              <span class="text-[11px] text-slate-400 block">Thành tiền trọn gói:</span>
+              <span class="text-2xl font-extrabold text-amber-400" id="diy-price-display">60.000₫</span>
+            </div>
+            <button 
+              onclick="addDiyRigToCart()"
+              class="px-5 py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs shadow-xl shadow-amber-400/20 transition-all flex items-center gap-1.5"
+            >
+              <i data-lucide="shopping-cart" class="w-4 h-4"></i> Thêm Bản Tự Tóm Vào Giỏ
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Rig Advisor Section (Trợ lý chọn thẻo theo loài cá) -->
+  <section id="advisor-section" class="py-14 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="inline-flex items-center gap-1.5 bg-sky-100 text-sky-800 text-xs font-bold px-3 py-1 rounded-full mb-2">
+          <i data-lucide="compass" class="w-3.5 h-3.5 text-sky-600"></i> TRỢ LÝ CẦN THỦ
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
+          Trợ Lý Chọn Thẻo Chuẩn Từng Loài Cá
+        </h2>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1.5">
+          Chọn loài cá mục tiêu bên dưới để nhận ngay cấu hình cước thẻo, mã lưỡi và mẹo câu tương ứng!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-5 space-y-2">
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">
+            Bước 1: Chọn loài cá bạn chuẩn bị đi câu:
+          </label>
+          <div id="advisor-tabs" class="space-y-2">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <div class="lg:col-span-7">
+          <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-2">
+            Bước 2: Cấu hình thẻo chuẩn xác được đề xuất:
+          </label>
+          <div id="advisor-result-card">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Catalog Section -->
+  <section id="san-pham" class="py-14 bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+        <div>
+          <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Danh Mục Sản Phẩm</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 font-heading tracking-tight mt-1">
+            Bộ Sưu Tập Thẻo Câu & Phụ Kiện
+          </h2>
+          <p class="text-slate-500 text-xs mt-1" id="products-count">
+            Hiển thị danh sách sản phẩm
+          </p>
+        </div>
+
+        <!-- Filter and Sort Bar -->
+        <div class="flex flex-wrap items-center gap-3">
+          <!-- Price range filters -->
+          <div class="flex items-center gap-1 bg-slate-100 p-1 rounded-xl">
+            <button onclick="setPriceFilter('all')" data-price="all" class="price-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 text-white shadow-sm">Tất cả</button>
+            <button onclick="setPriceFilter('under50')" data-price="under50" class="price-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200">Dưới 50k</button>
+            <button onclick="setPriceFilter('50to100')" data-price="50to100" class="price-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200">50k - 100k</button>
+            <button onclick="setPriceFilter('over100')" data-price="over100" class="price-filter-btn px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-slate-600 hover:bg-slate-100 border border-slate-200">Trên 100k</button>
+          </div>
+
+          <!-- Sorter -->
+          <select 
+            id="sort-select"
+            class="bg-white border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-sky-500 shadow-sm"
+          >
+            <option value="popular">Bán chạy nhất (Phổ biến)</option>
+            <option value="rating">Đánh giá cao nhất (5.0⭐)</option>
+            <option value="price-low">Giá thấp đến cao</option>
+            <option value="price-high">Giá cao đến thấp</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Category Filter Pills Bar -->
+      <div class="overflow-x-auto pb-4 mb-6 -mx-4 px-4 scrollbar-none">
+        <div id="category-filter-bar" class="flex items-center gap-2">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Products Grid -->
+      <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Bảng Tra Cứu Tương Quan Dây Trục & Thẻo (Full Rig Size Table) -->
+  <section id="bang-size" class="py-14 bg-slate-50 border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-8">
+        <span class="inline-flex items-center gap-1.5 bg-teal-100 text-teal-900 text-xs font-bold px-3 py-1 rounded-full mb-2">
+          <i data-lucide="table" class="w-3.5 h-3.5 text-teal-600"></i> TRA CỨU NHANH
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading">
+          Bảng Tương Quan Kích Cỡ Dây Trục & Dây Thẻo Chuẩn
+        </h2>
+        <p class="text-slate-500 text-xs mt-1">
+          Quy chuẩn vàng giúp cần thủ phối hợp dây trục, dây thẻo, cỡ phao và lưỡi câu hợp lý, bảo vệ an toàn cho ngọn cần.
+        </p>
+      </div>
+
+      <div class="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead>
+              <tr class="bg-slate-900 text-white uppercase text-[10px] tracking-wider font-extrabold">
+                <th class="p-3.5">Loài Cá & Trọng Lượng</th>
+                <th class="p-3.5">Cỡ Dây Trục</th>
+                <th class="p-3.5">Cỡ Dây Thẻo</th>
+                <th class="p-3.5">Loại Lưỡi Đề Xuất</th>
+                <th class="p-3.5">Chiều Dài Thẻo</th>
+                <th class="p-3.5">Tải Chì / Phao</th>
+              </tr>
+            </thead>
+            <tbody id="rig-size-table-body">
+              <!-- Rendered by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Big Promo Banner: Combo Tiết Kiệm -->
+  <section class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="rounded-3xl bg-gradient-to-r from-sky-900 via-sky-800 to-indigo-950 text-white p-8 md:p-10 relative overflow-hidden shadow-2xl">
+        <div class="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-amber-500/20 blur-3xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+          <div class="lg:col-span-8 space-y-3">
+            <span class="inline-flex items-center gap-1.5 bg-amber-400 text-slate-950 font-black text-xs px-3 py-1 rounded-full uppercase tracking-wider">
+              🔥 Gói Combo Tiết Kiệm Cần Thủ
+            </span>
+            <h3 class="text-2xl md:text-3xl font-extrabold text-white leading-tight font-heading">
+              Combo 5 Vỉ Thẻo Buộc Sẵn Tự Chọn <br class="hidden sm:inline">
+              TẶNG NGAY 1 Hộp Đựng Thẻo Mini Hợp Kim
+            </h3>
+            <p class="text-slate-300 text-xs md:text-sm max-w-xl">
+              Đầy đủ 50 bộ thẻo đôi phục vụ cả mùa câu đài thi đấu và dã ngoại. Tự do phối size cước theo ý thích, giảm ngay 71.000₫ và miễn phí vận chuyển tận nhà.
+            </p>
+            <div class="pt-1 flex flex-wrap items-baseline gap-3">
+              <span class="text-3xl font-extrabold text-amber-400">189.000₫</span>
+              <span class="text-sm text-slate-400 line-through">260.000₫</span>
+              <span class="bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded">Tiết kiệm 30%</span>
+            </div>
+          </div>
+          <div class="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-3">
+            <button 
+              onclick="openQuickView(11)"
+              class="w-full py-3.5 px-6 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl shadow-lg shadow-amber-400/25 transition-all text-xs text-center flex items-center justify-center gap-2"
+            >
+              <i data-lucide="zap" class="w-4 h-4"></i> ĐẶT COMBO NÀY NGAY
+            </button>
+            <button 
+              onclick="showToast('Mã voucher THEOPRO đã được lưu! Hãy áp dụng tại giỏ hàng.', 'success'); state.appliedCoupon = 'THEOPRO'; renderCartDrawer();"
+              class="w-full py-3 px-6 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition-all text-xs text-center flex items-center justify-center gap-2"
+            >
+              <i data-lucide="tag" class="w-4 h-4 text-amber-400"></i> Lấy Mã "THEOPRO" (-10%)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Knowledge Base & Tips Section (Cẩm nang tóm thẻo) -->
+  <section id="cam-nang" class="py-14 bg-slate-50 border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-2xl mx-auto mb-10">
+        <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Kinh Nghiệm & Kỹ Thuật</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading mt-1">
+          Cẩm Nang Thẻo Câu Đài & Săn Hàng
+        </h2>
+        <p class="text-slate-500 text-xs sm:text-sm mt-1.5">
+          Chia sẻ kinh nghiệm thực chiến từ các cần thủ vô địch giải đài: cách chọn size cước, bảng tương quan trục thẻo và mẹo chống xoắn rối.
+        </p>
+      </div>
+
+      <!-- Articles Grid -->
+      <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Customer Reviews Section -->
+  <section class="py-14 bg-white border-t border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+        <div>
+          <span class="text-xs font-bold text-emerald-600 uppercase tracking-wider">Đánh Giá Thực Tế</span>
+          <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight font-heading mt-1">
+            Cần Thủ Nói Gì Về Thẻo Của Chúng Tôi?
+          </h2>
+        </div>
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 bg-amber-50 text-amber-900 border border-amber-200 px-3 py-1.5 rounded-xl text-xs font-bold">
+            <i data-lucide="star" class="w-4 h-4 text-amber-500 fill-current"></i>
+            <span>4.9 / 5.0 (3,200+ đơn giao thành công)</span>
+          </div>
+          <button 
+            onclick="openReviewModal()"
+            class="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs rounded-xl shadow transition-colors flex items-center gap-1.5"
+          >
+            <i data-lucide="pen-tool" class="w-3.5 h-3.5"></i> Viết Đánh Giá
+          </button>
+        </div>
+      </div>
+
+      <div id="reviews-grid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Store Guarantee Banner -->
+  <section class="py-10 bg-slate-900 text-white border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center sm:text-left">
+        
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center flex-shrink-0 border border-sky-500/20">
+            <i data-lucide="package-check" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-white">Đồng Kiểm Khi Nhận</h4>
+            <p class="text-[11px] text-slate-400">Kiểm tra cước, lưỡi, số lượng trước khi thanh toán</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-teal-500/10 text-teal-400 flex items-center justify-center flex-shrink-0 border border-teal-500/20">
+            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-white">Bảo Hành 1 Đổi 1</h4>
+            <p class="text-[11px] text-slate-400">Đổi mới nếu phát hiện lỗi tuột nút thắt hoặc đứt ngầm</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center flex-shrink-0 border border-amber-500/20">
+            <i data-lucide="truck" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-white">Giao Hàng Siêu Tốc</h4>
+            <p class="text-[11px] text-slate-400">Nội thành 24h, toàn quốc 2-3 ngày đóng ống bảo vệ</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center flex-shrink-0 border border-purple-500/20">
+            <i data-lucide="headphones" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-xs text-white">Tư Vấn Chọn Thẻo 24/7</h4>
+            <p class="text-[11px] text-slate-400">Đội ngũ cần thủ kinh nghiệm hướng dẫn phối trục phao chuẩn</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-400 text-xs py-12 border-t border-slate-900">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-10">
+        
+        <!-- Brand Info -->
+        <div class="lg:col-span-2 space-y-3">
+          <div class="flex items-center gap-2 text-white font-black text-base">
+            <div class="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center text-white">
+              <i data-lucide="anchor" class="w-5 h-5"></i>
+            </div>
+            <span>VUA THẺO CÂU VIỆT NAM</span>
+          </div>
+          <p class="text-slate-400 leading-relaxed text-xs">
+            Hệ thống chuyên sản xuất và phân phối thẻo câu đài buộc sẵn, thẻo săn hàng titan, dây cước làm thẻo fluorocarbon chuẩn Nhật Bản cho mọi cần thủ trên toàn quốc.
+          </p>
+          <div class="pt-2 text-slate-300 space-y-1 text-xs">
+            <div>📍 <strong>Xưởng sản xuất:</strong> Khu Công Nghiệp Ngũ Hùng, Thanh Miện, Hải Dương</div>
+            <div>🏢 <strong>Chi nhánh Hà Nội:</strong> Số 48 Đường Hoàng Hoa Thám, Ba Đình, Hà Nội</div>
+            <div>🏢 <strong>Chi nhánh TP.HCM:</strong> Số 126 Đường Nguyễn Thị Thập, Quận 7, TP.HCM</div>
+            <div>📞 <strong>Hotline đặt hàng / Zalo:</strong> <span class="text-amber-400 font-bold">0988.776.655</span></div>
+          </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Danh Mục Thẻo</h4>
+          <ul class="space-y-2">
+            <li><a href="javascript:void(0)" onclick="setCategory('theo-dai')" class="hover:text-white transition-colors">Thẻo Đài Buộc Sẵn</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('theo-san-hang')" class="hover:text-white transition-colors">Thẻo Săn Hàng Thủy Quái</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('cuoc-theo')" class="hover:text-white transition-colors">Dây Thẻo Fluorocarbon</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('luoi-cau')" class="hover:text-white transition-colors">Lưỡi Câu BKK Sắc Bén</a></li>
+            <li><a href="javascript:void(0)" onclick="setCategory('phu-kien')" class="hover:text-white transition-colors">Hộp & Bảng Quấn Thẻo</a></li>
+          </ul>
+        </div>
+
+        <!-- Customer Care -->
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Hỗ Trợ Khách Hàng</h4>
+          <ul class="space-y-2">
+            <li><a href="javascript:void(0)" onclick="openOrderTrackingModal()" class="hover:text-white transition-colors">Tra cứu bưu phẩm vận chuyển</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Chính sách kiểm hàng: Quý khách được mở bưu phẩm kiểm tra cước, lưỡi, số lượng trước khi thanh toán tiền cho nhân viên giao hàng.')" class="hover:text-white transition-colors">Quy định kiểm tra hàng</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Chính sách đổi trả: 1 đổi 1 trong vòng 7 ngày nếu sản phẩm lỗi mối thắt hoặc dây bị tưa.')" class="hover:text-white transition-colors">Chính sách đổi trả 7 ngày</a></li>
+            <li><a href="javascript:void(0)" onclick="alert('Liên hệ phòng kinh doanh sỉ đại lý: 0988.776.655 (Zalo) để nhận bảng báo giá chiết khấu đến 40%.')" class="hover:text-white transition-colors">Chính sách sỉ cho đại lý đồ câu</a></li>
+          </ul>
+        </div>
+
+        <!-- Payment Badges -->
+        <div>
+          <h4 class="text-white font-bold text-xs uppercase tracking-wider mb-3">Thanh Toán Linh Hoạt</h4>
+          <p class="text-slate-400 mb-3 text-xs">Hỗ trợ nhận hàng trả tiền (COD) hoặc quét mã VietQR tự động qua app mọi ngân hàng.</p>
+          <div class="flex items-center gap-2">
+            <span class="bg-white/10 px-2 py-1 rounded text-[10px] font-bold text-white border border-white/10">COD</span>
+            <span class="bg-white/10 px-2 py-1 rounded text-[10px] font-bold text-white border border-white/10">VietQR</span>
+            <span class="bg-white/10 px-2 py-1 rounded text-[10px] font-bold text-white border border-white/10">MB Bank</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500 text-[11px]">
+        <div>© 2026 Vua Thẻo Câu - Bản quyền thuộc về Thẻo Pro Fishing Việt Nam.</div>
+        <div class="flex items-center gap-4">
+          <a href="admin.html" target="_blank" class="text-amber-400 hover:text-amber-300 font-bold flex items-center gap-1">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> Cổng Quản Trị Admin
+          </a>
+          <a href="#" class="hover:text-slate-300">Bảo mật thông tin</a>
+          <a href="#" class="hover:text-slate-300">Điều khoản dịch vụ</a>
+          <a href="#advisor-section" class="text-sky-400 hover:text-sky-300 font-semibold">Tư vấn size thẻo</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Contact & Shortcut Bar -->
+  <div class="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2.5">
+    <!-- Quick Advisor Floating Pill -->
+    <a 
+      href="#advisor-section" 
+      class="bg-slate-900/95 backdrop-blur text-white text-xs font-bold px-3.5 py-2 rounded-full shadow-lg border border-slate-700 hover:bg-slate-800 transition-all flex items-center gap-2"
+    >
+      <i data-lucide="compass" class="w-4 h-4 text-sky-400"></i>
+      <span class="hidden sm:inline">Trợ Lý Chọn Thẻo</span>
+    </a>
+
+    <!-- Zalo floating button -->
+    <a 
+      href="https://zalo.me" 
+      target="_blank" 
+      rel="noopener"
+      class="floating-contact flex items-center gap-2 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white px-4 py-3 rounded-full shadow-xl shadow-sky-600/30 text-xs font-bold transition-all"
+    >
+      <i data-lucide="message-circle" class="w-5 h-5"></i>
+      <span>Chat Zalo Tư Vấn</span>
+    </a>
+  </div>
+
+  <!-- Recent Live Purchase Popup (Bottom Left Social Proof) -->
+  <div id="recent-sale-popup" class="hidden fixed bottom-6 left-6 z-30">
+    <!-- Rendered by JS -->
+  </div>
+
+  <!-- Shopping Cart Drawer -->
+  <div id="cart-backdrop" onclick="toggleCartDrawer(false)" class="hidden fixed inset-0 bg-slate-950/60 z-50 modal-backdrop transition-opacity"></div>
+  <aside id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    <div class="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+      <div class="flex items-center gap-2">
+        <i data-lucide="shopping-cart" class="w-5 h-5 text-sky-600"></i>
+        <h3 class="font-bold text-slate-900 text-sm">Giỏ Hàng Của Bạn</h3>
+      </div>
+      <button onclick="toggleCartDrawer(false)" class="p-1 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-200 transition-colors">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress Bar -->
+    <div class="px-4 py-3 bg-sky-50/70 border-b border-sky-100">
+      <div class="text-xs text-slate-700 mb-1.5" id="freeship-text">
+        Mua thêm <strong class="text-sky-600">65.000₫</strong> để được <strong>FREESHIP</strong>!
+      </div>
+      <div class="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
+        <div id="freeship-progress-bar" class="bg-gradient-to-r from-sky-500 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: 45%;"></div>
+      </div>
+    </div>
+
+    <!-- Items List -->
+    <div id="cart-items-list" class="flex-1 overflow-y-auto p-4 space-y-2.5">
+      <!-- Rendered by JS -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-4 border-t border-slate-200 bg-slate-50/80 space-y-3">
+      <!-- Coupon Code Box -->
+      <div class="flex gap-2">
+        <input 
+          type="text" 
+          id="coupon-input" 
+          placeholder="Nhập mã: THEOPRO, FREESHIP" 
+          class="flex-1 px-3 py-2 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 uppercase font-semibold"
+        />
+        <button 
+          onclick="applyCoupon()"
+          class="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold rounded-xl transition-colors"
+        >
+          Áp Dụng
+        </button>
+      </div>
+
+      <!-- Pricing Summary -->
+      <div class="space-y-1.5 text-xs text-slate-600">
+        <div class="flex justify-between">
+          <span>Tạm tính:</span>
+          <span class="font-bold text-slate-800" id="cart-subtotal">0₫</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Phí vận chuyển:</span>
+          <span class="font-bold text-slate-800" id="cart-shipping">25.000₫</span>
+        </div>
+        <div id="cart-discount-row" class="hidden flex justify-between text-emerald-600 font-semibold">
+          <span>Giảm giá voucher:</span>
+          <span id="cart-discount-amount">-0₫</span>
+        </div>
+        <div class="flex justify-between text-xs font-extrabold text-slate-900 border-t border-slate-200 pt-2">
+          <span>Tổng thanh toán:</span>
+          <span class="text-sky-700 text-base" id="cart-total">0₫</span>
+        </div>
+      </div>
+
+      <button 
+        onclick="openCheckoutModal()"
+        class="w-full py-3.5 bg-sky-600 hover:bg-sky-700 text-white rounded-xl font-bold text-xs shadow-xl shadow-sky-600/25 transition-all flex items-center justify-center gap-2"
+      >
+        <i data-lucide="check-circle-2" class="w-4 h-4"></i> Tiến Hành Đặt Hàng
+      </button>
+    </div>
+  </aside>
+
+  <!-- Quick View Product Modal -->
+  <div id="product-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="fixed inset-0 bg-slate-950/70 modal-backdrop" onclick="closeQuickView()"></div>
+    <div class="relative bg-white rounded-3xl max-w-3xl w-full max-h-[92vh] overflow-y-auto shadow-2xl z-10 border border-slate-200">
+      <button onclick="closeQuickView()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div id="product-modal-content">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Tracking Modal -->
+  <div id="tracking-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="fixed inset-0 bg-slate-950/70 modal-backdrop" onclick="closeOrderTrackingModal()"></div>
+    <div class="relative bg-white rounded-3xl max-w-lg w-full max-h-[90vh] overflow-y-auto shadow-2xl z-10 border border-slate-200 p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div class="flex items-center gap-2">
+          <i data-lucide="truck" class="w-5 h-5 text-sky-600"></i>
+          <h3 class="font-extrabold text-base text-slate-900">Tra Cứu Tiến Độ Đơn Hàng</h3>
+        </div>
+        <button onclick="closeOrderTrackingModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-500">
+        Nhập số điện thoại đặt hàng hoặc mã đơn hàng (Ví dụ: <strong class="text-sky-600">0988776655</strong> hoặc <strong class="text-sky-600">THEO-882314</strong>) để kiểm tra hành trình bưu phẩm:
+      </p>
+
+      <div class="flex gap-2">
+        <input 
+          type="text" 
+          id="tracking-query" 
+          placeholder="Nhập SĐT hoặc Mã đơn..." 
+          class="flex-1 px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500 uppercase font-semibold"
+        />
+        <button 
+          onclick="searchOrder()"
+          class="px-4 py-2.5 bg-sky-600 hover:bg-sky-700 text-white text-xs font-bold rounded-xl transition-colors"
+        >
+          Tra Cứu
+        </button>
+      </div>
+
+      <div id="tracking-result">
+        <!-- Live result rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Write Review Modal -->
+  <div id="review-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="fixed inset-0 bg-slate-950/70 modal-backdrop" onclick="closeReviewModal()"></div>
+    <div class="relative bg-white rounded-3xl max-w-md w-full shadow-2xl z-10 border border-slate-200 p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <h3 class="font-extrabold text-base text-slate-900">Gửi Đánh Giá Của Bạn</h3>
+        <button onclick="closeReviewModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="submitNewReview(event)" class="space-y-3 text-xs">
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Họ tên của bạn *</label>
+          <input type="text" id="rev-author" placeholder="Ví dụ: Anh Dũng - Hải Phòng" required class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Sản phẩm đã mua</label>
+          <input type="text" id="rev-product" placeholder="Ví dụ: Thẻo Săn Hàng BKK Titan" class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500" />
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Mức độ hài lòng (Số sao)</label>
+          <div class="flex items-center gap-3">
+            <label class="flex items-center gap-1"><input type="radio" name="rev-star" value="5" checked class="text-amber-500"> 5 ⭐ (Tuyệt vời)</label>
+            <label class="flex items-center gap-1"><input type="radio" name="rev-star" value="4" class="text-amber-500"> 4 ⭐ (Hài lòng)</label>
+          </div>
+        </div>
+        <div>
+          <label class="block font-semibold text-slate-700 mb-1">Cảm nhận thực tế khi câu cá *</label>
+          <textarea id="rev-comment" rows="3" placeholder="Chia sẻ độ bén của lưỡi, lực tải cước, độ chống xoắn..." required class="w-full p-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-sky-500"></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 bg-sky-600 text-white rounded-xl font-bold hover:bg-sky-700 transition-colors">
+          Gửi Đánh Giá Ngay
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Checkout Flow Modal -->
+  <div id="checkout-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="fixed inset-0 bg-slate-950/70 modal-backdrop" onclick="closeCheckoutModal()"></div>
+    <div class="relative bg-white rounded-3xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl z-10 border border-slate-200">
+      <div id="checkout-modal-content">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Article / Guide Modal -->
+  <div id="article-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div class="fixed inset-0 bg-slate-950/70 modal-backdrop" onclick="closeArticleModal()"></div>
+    <div class="relative bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl z-10 border border-slate-200">
+      <button onclick="closeArticleModal()" class="absolute top-4 right-4 z-20 w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <div id="article-modal-content">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" class="fixed top-5 right-5 z-50 flex flex-col gap-2 max-w-sm pointer-events-none"></div>
+
+  <!-- App Scripts -->
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

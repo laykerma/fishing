@@ -1,0 +1,277 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Thẻo Đôi Buộc Sẵn Lưỡi Sode Tàng Hình - Chuyên Rô Phi & Diếc",
+      "category": "theo-dai",
+      "price": 35000,
+      "originalPrice": 50000,
+      "rating": 4.9,
+      "reviewsCount": 384,
+      "soldCount": 2450,
+      "badge": "Bán Chạy Nhất",
+      "badgeColor": "bg-amber-500",
+      "image": "https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=600&q=80",
+      "shortDesc": "Dây cước Carbon mềm tàng hình, mồi rơi tự nhiên, cá nhát mồi hút nhẹ là dính.",
+      "targetFish": ["Cá Rô Phi", "Cá Diếc", "Cá Mương"],
+      "style": "Câu Đài Thi Đấu & Tự Nhiên",
+      "specs": {
+        "lineMaterial": "Cước Fluorocarbon Coated Nhật Bản",
+        "lineSize": "#0.8 - #1.2 (Tải tĩnh 2.8kg - 4.2kg)",
+        "hookModel": "Lưỡi Sode Đen không rỉ, bén ngót",
+        "hookSize": "#3, #4, #5",
+        "rigLength": "Độ dài thẻo 18cm - Chênh lệch 2 lưỡi 3cm",
+        "craft": "Buộc tay thủ công 7 vòng khóa kép chống tuột",
+        "pack": "Vỉ 10 bộ thẻo đôi (20 lưỡi)"
+      },
+      "variants": [
+        { "name": "Cước #0.8 - Lưỡi Sode #3 (Rô phi nhỏ, Diếc tự nhiên)", "price": 35000 },
+        { "name": "Cước #1.0 - Lưỡi Sode #4 (Rô phi bàn tay, cá nhát)", "price": 35000 },
+        { "name": "Cước #1.2 - Lưỡi Sode #5 (Rô phi hồ dịch vụ cúp)", "price": 38000 }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Thẻo Đôi Săn Hàng BKK Titan Siêu Cường - Chuyên Trắm Đen 8kg - 25kg",
+      "category": "theo-san-hang",
+      "price": 85000,
+      "originalPrice": 110000,
+      "rating": 5.0,
+      "reviewsCount": 512,
+      "soldCount": 3120,
+      "badge": "Săn Hàng Cực Đại",
+      "badgeColor": "bg-red-600",
+      "image": "https://images.unsplash.com/photo-1529230117010-b6c436154f25?auto=format&fit=crop&w=600&q=80",
+      "shortDesc": "Dây PE bện 8 lõi phủ sáp kết hợp lưỡi BKK Titan không ngạnh, chống nổ cước khi bốc đầu cá khủng.",
+      "targetFish": ["Trắm Đen", "Trắm Cỏ Khủng", "Cá Tra Hồ Dịch Vụ"],
+      "style": "Câu Đài Săn Hàng / Hố Đấu",
+      "specs": {
+        "lineMaterial": "Dây PE Braided 8X chịu mài mòn cao",
+        "lineSize": "#3.0 - #5.0 (Tải tĩnh 16kg - 28kg)",
+        "hookModel": "BKK Titan cường lực rèn nguội siêu cứng",
+        "hookSize": "#9, #11, #13",
+        "rigLength": "Độ dài thẻo 35cm - Chênh lệch 2 lưỡi 5cm",
+        "craft": "Tết bím chống sốc đầu thẻo + hạt xoay bạc đạn",
+        "pack": "Vỉ 10 bộ thẻo đôi"
+      },
+      "variants": [
+        { "name": "PE #3.0 - Lưỡi BKK #9 (Cá 5kg - 10kg)", "price": 85000 },
+        { "name": "PE #4.0 - Lưỡi BKK #11 (Cá 8kg - 16kg)", "price": 89000 },
+        { "name": "PE #5.0 - Lưỡi BKK #13 (Thủy quái 15kg - 25kg+)", "price": 95000 }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Thẻo Đôi Iseama Có Ngạnh Chống Nổ - Chuyên Trắm Chép Hồ Dịch Vụ",
+      "category": "theo-dai",
+      "price": 45000,
+      "originalPrice": 60000,
+      "rating": 4.8,
+      "reviewsCount": 220,
+      "soldCount": 1850,
+      "badge": "Chống Xoắn 100%",
+      "badgeColor": "bg-emerald-600",
+      "image": "https://images.unsplash.com/photo-1509927083803-4bd519298ac4?auto=format&fit=crop&w=600&q=80",
+      "shortDesc": "Tích hợp hạt silicon chia đôi góc 60 độ, tự bung thẻo khi rơi mồi, không lo xoắn rối.",
+      "targetFish": ["Cá Chép", "Cá Trắm Cỏ", "Cá Trôi Củ"],
+      "style": "Câu Đài Cổ Điển & Hồ Dịch Vụ",
+      "specs": {
+        "lineMaterial": "Nylon Monofilament cao cấp nhập khẩu Đức",
+        "lineSize": "#1.5 - #2.5 (Tải tĩnh 5.5kg - 8.9kg)",
+        "hookModel": "Iseama đen có ngạnh, giữ cá cực chắc",
+        "hookSize": "#5, #7, #9",
+        "rigLength": "Độ dài thẻo 25cm - Chênh lệch 4cm",
+        "craft": "Có hạt định vị chữ T chống quấn dây",
+        "pack": "Vỉ 10 bộ thẻo đôi"
+      },
+      "variants": [
+        { "name": "Dây #1.5 - Lưỡi Iseama #5 (Chép 1-2kg)", "price": 45000 },
+        { "name": "Dây #2.0 - Lưỡi Iseama #7 (Chép trôi 2-4kg)", "price": 45000 },
+        { "name": "Dây #2.5 - Lưỡi Iseama #9 (Trắm chép 3-6kg)", "price": 48000 }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Cuộn Dây Thẻo Fluorocarbon 100% Toray Nhật Bản (Cuộn 50M)",
+      "category": "cuoc-theo",
+      "price": 145000,
+      "originalPrice": 190000,
+      "rating": 5.0,
+      "reviewsCount": 410,
+      "soldCount": 1920,
+      "badge": "Hàng Chuẩn Nhật",
+      "badgeColor": "bg-blue-600",
+      "image": "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=600&q=80",
+      "shortDesc": "Chỉ số khúc xạ ánh sáng tương đương nước, tàng hình 100%, lực nút thắt không đổi khi ngâm nước lâu.",
+      "targetFish": ["Đa năng mọi loại cá nước ngọt và nước mặn"],
+      "style": "Dây làm thẻo chuyên nghiệp",
+      "specs": {
+        "lineMaterial": "100% Fluorocarbon PVDF tinh khiết",
+        "lineSize": "Có đủ size #0.8, #1.0, #1.5, #2.0, #3.0",
+        "hookModel": "Không kèm lưỡi (Cuộn nguyên bản 50m)",
+        "hookSize": "Dùng tóm mọi loại lưỡi câu",
+        "rigLength": "Cuộn dài 50 mét chuẩn tiêu chuẩn Nhật",
+        "craft": "Cắt dây bằng rãnh gài chống bung cuộn",
+        "pack": "Hộp nhựa bảo quản chống tia UV"
+      },
+      "variants": [
+        { "name": "Size #0.8 (Đường kính 0.148mm - Tải 3.1kg)", "price": 145000 },
+        { "name": "Size #1.2 (Đường kính 0.185mm - Tải 4.8kg)", "price": 145000 },
+        { "name": "Size #2.0 (Đường kính 0.235mm - Tải 7.2kg)", "price": 155000 },
+        { "name": "Size #3.0 (Đường kính 0.285mm - Tải 10.5kg)", "price": 165000 }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Thẻo Lure Shock Leader Fluorocarbon Siêu Bền (Chuyên Lóc, Chẽm, Măng)",
+      "category": "cuoc-theo",
+      "price": 75000,
+      "originalPrice": 95000,
+      "rating": 4.9,
+      "reviewsCount": 189,
+      "soldCount": 1240,
+      "badge": "Chống Răng Sắc",
+      "badgeColor": "bg-purple-600",
+      "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80",
+      "shortDesc": "Độ dãn sốc hoàn hảo hấp thụ cú táp mồi hung bạo, chống ma sát răng cá và đá ngầm bén.",
+      "targetFish": ["Cá Lóc", "Cá Chẽm", "Cá Măng", "Cá Suối"],
+      "style": "Câu Lure & Jigging",
+      "specs": {
+        "lineMaterial": "Hard Fluorocarbon Carbon mật độ cao",
+        "lineSize": "#3.0, #4.0, #5.0 (Cuộn 30m bỏ túi)",
+        "hookModel": "Dùng nối giữa dây PE và Khóa Snap/Con mồi",
+        "hookSize": "Đa dụng",
+        "rigLength": "Cuộn 30m kèm chun kẹp dây tiện lợi",
+        "craft": "Công nghệ Nano kháng cọ xát",
+        "pack": "1 Cuộn 30 mét"
+      },
+      "variants": [
+        { "name": "Cuộn #3.0 (15LB / Tải 6.8kg - Lure Lóc đồng)", "price": 75000 },
+        { "name": "Cuộn #4.0 (20LB / Tải 9.1kg - Lure Chẽm hồ)", "price": 80000 },
+        { "name": "Cuộn #5.0 (25LB / Tải 11.4kg - Lure Ghềnh đá)", "price": 85000 }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Hộp Đựng Thẻo Câu Đài Hợp Kim Nhôm Cao Cấp 45cm (Chứa 60 Bộ Thẻo)",
+      "category": "phu-kien",
+      "price": 165000,
+      "originalPrice": 220000,
+      "rating": 4.9,
+      "reviewsCount": 310,
+      "soldCount": 1420,
+      "badge": "Chống Nước IPX5",
+      "badgeColor": "bg-sky-600",
+      "image": "https://images.unsplash.com/photo-1516214104703-d870798883c5?auto=format&fit=crop&w=600&q=80",
+      "shortDesc": "Khung nhôm xước sang trọng, đệm mút EVA mật độ cao giữ căng thẻo không bị gãy góc cước.",
+      "targetFish": ["Bảo vệ mọi loại thẻo câu đài"],
+      "style": "Phụ kiện thi đấu chuyên nghiệp",
+      "specs": {
+        "lineMaterial": "Hợp kim nhôm + Nam châm hít tự động + Mút EVA",
+        "lineSize": "Kích thước: 45cm x 9cm x 2.8cm",
+        "hookModel": "Cột móc hợp kim đồng chống rỉ sét",
+        "hookSize": "Chứa tối đa 60 bộ thẻo đôi dài tới 40cm",
+        "rigLength": "Thiết kế 2 mặt mở thông minh",
+        "craft": "Bản lề thép không gỉ cực bền",
+        "pack": "1 Hộp + 20 ghim cố định sơ cua"
+      },
+      "variants": [
+        { "name": "Màu Đen Nhám Titan (Sang trọng)", "price": 165000 },
+        { "name": "Màu Xanh Biển Ánh Kim (Hiện đại)", "price": 165000 },
+        { "name": "Màu Đỏ Carbon Thể Thao", "price": 165000 }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Combo 5 Vỉ Thẻo Đôi Tự Chọn (50 Bộ Thẻo) + Tặng 1 Hộp Đựng Thẻo Mini",
+      "category": "combo",
+      "price": 189000,
+      "originalPrice": 260000,
+      "rating": 5.0,
+      "reviewsCount": 890,
+      "soldCount": 4200,
+      "badge": "Siêu Tiết Kiệm -30%",
+      "badgeColor": "bg-red-500",
+      "image": "https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=600&q=80",
+      "shortDesc": "Tiết kiệm ngay 71k! Thoải mái chọn kích cỡ thẻo cho cả mùa câu, kèm quà tặng giá trị.",
+      "targetFish": ["Đầy đủ cho mọi loài cá nước ngọt"],
+      "style": "Gói ưu đãi toàn diện cho cần thủ",
+      "specs": {
+        "lineMaterial": "Dây Carbon Nhật + Thép cường lực BKK",
+        "lineSize": "Tùy chọn tự do trong đơn hàng",
+        "hookModel": "Đa dạng Sode / Iseama / Chinu",
+        "hookSize": "Đủ số từ nhỏ đến lớn",
+        "rigLength": "Chuẩn quy cách câu đài",
+        "craft": "Buộc tay nghệ nhân làng nghề",
+        "pack": "5 Vỉ Thẻo (50 bộ thẻo) + Hộp đựng mini trị giá 45k"
+      },
+      "variants": [
+        { "name": "Set Rô Phi: 3 Vỉ Sode + 2 Vỉ Iseama Nhỏ", "price": 189000 },
+        { "name": "Set Trắm Chép: 3 Vỉ Iseama + 2 Vỉ Săn Hàng BKK", "price": 199000 },
+        { "name": "Set Săn Hàng Khủng: 5 Vỉ PE Titan BKK Siêu Cường", "price": 219000 }
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "orderId": "THEO-882314",
+      "customer": {
+        "name": "Nguyễn Văn Tuấn",
+        "phone": "0988776655",
+        "address": "Số 12 Trần Hưng Đạo",
+        "city": "Hà Nội",
+        "notes": "Giao buổi sáng"
+      },
+      "items": [
+        { "productId": 1, "name": "Thẻo Đôi Buộc Sẵn Lưỡi Sode Tàng Hình (#1.0)", "price": 35000, "quantity": 3 }
+      ],
+      "totals": { "subtotal": 105000, "shipping": 25000, "discount": 0, "total": 130000 },
+      "paymentMethod": "vietqr",
+      "status": "shipping",
+      "createdAt": "29/10/2026, 09:15:30"
+    },
+    {
+      "orderId": "THEO-771923",
+      "customer": {
+        "name": "Trần Hoàng Lâm",
+        "phone": "0912345678",
+        "address": "Khu Đô Thị Ecopark",
+        "city": "Hưng Yên",
+        "notes": "Test lực tải kỹ giúp em"
+      },
+      "items": [
+        { "productId": 2, "name": "Thẻo Đôi Săn Hàng BKK Titan Siêu Cường (PE #4.0)", "price": 89000, "quantity": 2 },
+        { "productId": 6, "name": "Hộp Đựng Thẻo Hợp Kim Nhôm 45cm", "price": 165000, "quantity": 1 }
+      ],
+      "totals": { "subtotal": 343000, "shipping": 0, "discount": 0, "total": 343000 },
+      "paymentMethod": "cod",
+      "status": "completed",
+      "createdAt": "28/10/2026, 14:20:10"
+    },
+    {
+      "orderId": "THEO-661044",
+      "customer": {
+        "name": "Lê Văn Thắng",
+        "phone": "0978901234",
+        "address": "45 Lê Duẩn",
+        "city": "Đà Nẵng",
+        "notes": "Gói kỹ giúp mình"
+      },
+      "items": [
+        { "productId": 11, "name": "Combo 5 Vỉ Thẻo Đôi Tự Chọn", "price": 189000, "quantity": 1 }
+      ],
+      "totals": { "subtotal": 189000, "shipping": 25000, "discount": 18900, "total": 195100 },
+      "paymentMethod": "cod",
+      "status": "processing",
+      "createdAt": "29/10/2026, 11:05:40"
+    }
+  ],
+  "settings": {
+    "hotline": "0988.776.655",
+    "bankName": "MB Bank (Quân Đội)",
+    "bankAccount": "0988776655",
+    "bankOwner": "VUA THEO CAU VIET NAM",
+    "freeShipThreshold": 250000
+  }
+}
+

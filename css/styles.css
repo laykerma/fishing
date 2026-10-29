@@ -1,0 +1,274 @@
+/* Modern Fishing Rig Store Stylesheet - VUA THẺO CÂU PRO */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cabinet+Grotesk:wght@700;800;900&display=swap');
+
+:root {
+  --primary: #0284c7;
+  --primary-dark: #0369a1;
+  --accent: #10b981;
+  --accent-orange: #f97316;
+  --dark-bg: #0b1329;
+  --dark-card: #132247;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  color: #1e293b;
+  background-color: #f8fafc;
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h1, h2, h3, .font-heading {
+  font-family: 'Cabinet Grotesk', 'Plus Jakarta Sans', sans-serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Water Ripple & Waves */
+.ocean-gradient {
+  background: linear-gradient(135deg, #091a3c 0%, #0c2b5c 50%, #044b7a 100%);
+}
+
+.hero-glow {
+  background: radial-gradient(circle at 50% 30%, rgba(14, 165, 233, 0.25) 0%, rgba(2, 132, 199, 0.05) 50%, transparent 70%);
+}
+
+.card-hover {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(2, 132, 199, 0.12), 0 8px 10px -6px rgba(2, 132, 199, 0.1);
+}
+
+/* Animations */
+@keyframes subtle-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+.animate-subtle-pulse {
+  animation: subtle-pulse 3s infinite ease-in-out;
+}
+
+@keyframes flash-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(249, 115, 22, 0.8);
+  }
+}
+.flash-box-glow {
+  animation: flash-glow 2s infinite ease-in-out;
+}
+
+/* Line Pattern Texture */
+.pattern-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Drawer & Modal transitions */
+.modal-backdrop {
+  backdrop-filter: blur(8px);
+}
+
+/* Floating Hotline */
+.floating-contact {
+  animation: bounce-slight 2.5s infinite;
+}
+
+@keyframes bounce-slight {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Shimmer skeleton or glowing highlights */
+.shimmer-badge {
+  background: linear-gradient(90deg, #f97316 0%, #fb923c 50%, #f97316 100%);
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position: 200% center;
+  }
+}
+
+/* Recent purchase popup */
+.recent-sale-enter {
+  animation: slide-in-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.recent-sale-exit {
+  animation: slide-out-bottom 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slide-in-bottom {
+  from {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out-bottom {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100px);
+    opacity: 0;
+  }
+}
+
+/* DIY Rig Visualizer */
+.rig-svg-line {
+  stroke-dasharray: 4;
+  animation: dash 20s linear infinite;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 1000;
+  }
+}
+
+/* ========================================================
+   DARK THEME STYLES (Chế độ giao diện ban đêm cho Cần Thủ)
+   ======================================================== */
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #0b1120;
+  color: #f1f5f9;
+}
+
+html.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+html.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+html.dark nav {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border-color: rgba(51, 65, 85, 0.6) !important;
+}
+
+html.dark nav .border-t {
+  border-color: #1e293b !important;
+}
+
+html.dark .bg-white {
+  background-color: #111c34 !important;
+  color: #f1f5f9 !important;
+}
+
+html.dark .bg-slate-50 {
+  background-color: #0d1527 !important;
+}
+
+html.dark .bg-slate-100 {
+  background-color: #1e293b !important;
+}
+
+html.dark .bg-amber-50\/60, html.dark .bg-amber-50 {
+  background-color: #1c1917 !important;
+  border-color: #451a03 !important;
+}
+
+html.dark .text-slate-900 {
+  color: #ffffff !important;
+}
+
+html.dark .text-slate-800 {
+  color: #e2e8f0 !important;
+}
+
+html.dark .text-slate-700 {
+  color: #cbd5e1 !important;
+}
+
+html.dark .text-slate-600, html.dark .text-slate-500 {
+  color: #94a3b8 !important;
+}
+
+html.dark .border-slate-200, html.dark .border-slate-100, html.dark .border-slate-200\/80, html.dark .border-slate-200\/90 {
+  border-color: #1e293b !important;
+}
+
+html.dark input, html.dark select, html.dark textarea {
+  background-color: #131f38 !important;
+  border-color: #334155 !important;
+  color: #ffffff !important;
+}
+
+html.dark input::placeholder, html.dark textarea::placeholder {
+  color: #64748b !important;
+}
+
+html.dark #cart-drawer {
+  background-color: #0f172a !important;
+  border-color: #334155 !important;
+}
+
+html.dark #cart-drawer .bg-slate-50, html.dark #cart-drawer .bg-slate-50\/80 {
+  background-color: #131f38 !important;
+}
+
+html.dark #product-modal > div:nth-child(2),
+html.dark #tracking-modal > div:nth-child(2),
+html.dark #review-modal > div:nth-child(2),
+html.dark #checkout-modal > div:nth-child(2),
+html.dark #article-modal > div:nth-child(2) {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark #recent-sale-popup > div {
+  background-color: rgba(15, 23, 42, 0.95) !important;
+  border-color: #334155 !important;
+}
+
+html.dark tr:hover {
+  background-color: rgba(14, 165, 233, 0.1) !important;
+}
+
+html.dark .card-hover:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+}

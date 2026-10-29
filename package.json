@@ -1,0 +1,11 @@
+{
+  "name": "fishing-store",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Website Vua Thẻo Câu",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  }
+}
+
