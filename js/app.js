@@ -1012,7 +1012,18 @@ function setAdvisorFish(fishId) {
 // Order Tracking System
 function openOrderTrackingModal() {
   const modal = document.getElementById('tracking-modal');
-  if (modal) modal.classList.remove('hidden');
+  if (modal) {
+    modal.classList.remove('hidden');
+    // Nếu khách đã đăng nhập và có SĐT, tự động điền và tra cứu luôn
+    if (typeof getCurrentUser === 'function') {
+      const curUser = getCurrentUser();
+      const input = document.getElementById('tracking-query');
+      if (curUser && curUser.phone && input) {
+        input.value = curUser.phone;
+        searchOrder();
+      }
+    }
+  }
 }
 
 function closeOrderTrackingModal() {
