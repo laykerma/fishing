@@ -29,13 +29,8 @@
     }
   </script>
 
-  <!-- Lucide Icons (Có fallback đa CDN chống lag mạng) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.344.0/umd/lucide.min.js"></script>
-  <script>
-    if (typeof lucide === 'undefined') {
-      document.write('<script src="https://unpkg.com/lucide@latest"><\/script>');
-    }
-  </script>
+  <!-- Lucide Icons -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
 
   <!-- Custom Styles -->
   <link rel="stylesheet" href="css/styles.css">
@@ -460,7 +455,7 @@
   </section>
 
   <!-- Flash Sale Section (Giờ vàng giá sốc) -->
-  <section id="flash-sale" class="py-12 bg-gradient-to-b from-amber-50/60 to-white border-b border-amber-100">
+  <section id="flash-sale" class="py-12 bg-slate-900 border-b border-slate-800 text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-8">
         <div class="flex items-center gap-3">
@@ -469,23 +464,23 @@
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <h2 class="text-2xl font-black text-slate-900 tracking-tight font-heading">
+              <h2 class="text-2xl font-black text-white tracking-tight font-heading">
                 FLASH SALE GIỜ VÀNG
               </h2>
               <span class="bg-red-600 text-white text-[10px] font-black px-2 py-0.5 rounded-full uppercase">HOT</span>
             </div>
-            <p class="text-xs text-slate-500 mt-0.5">Giá ưu đãi có hạn số lượng cho cần thủ trong ngày hôm nay</p>
+            <p class="text-xs text-slate-400 mt-0.5">Giá ưu đãi có hạn số lượng cho cần thủ trong ngày hôm nay</p>
           </div>
         </div>
 
         <!-- Live Countdown Timer -->
-        <div class="flex items-center gap-1.5 text-xs font-bold text-slate-700 bg-white px-4 py-2 rounded-2xl border border-amber-200 shadow-sm">
-          <span class="text-slate-500 text-[11px] mr-1">Kết thúc sau:</span>
-          <span id="flash-hours" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs">06</span>
+        <div class="flex items-center gap-1.5 text-xs font-bold text-slate-200 bg-slate-950 px-4 py-2 rounded-2xl border border-slate-800 shadow-sm">
+          <span class="text-slate-400 text-[11px] mr-1">Kết thúc sau:</span>
+          <span id="flash-hours" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs border border-slate-800">06</span>
           <span>:</span>
-          <span id="flash-minutes" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs">42</span>
+          <span id="flash-minutes" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs border border-slate-800">42</span>
           <span>:</span>
-          <span id="flash-seconds" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs">15</span>
+          <span id="flash-seconds" class="bg-slate-900 text-amber-400 font-mono px-2 py-1 rounded text-xs border border-slate-800">15</span>
         </div>
       </div>
 
