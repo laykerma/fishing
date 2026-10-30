@@ -2,7 +2,7 @@
 <html lang="vi" class="dark">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Vua Thẻo Câu - Thẻo Buộc Sẵn & Đồ Câu Cá Chuyên Nghiệp</title>
   <meta name="description" content="Chuyên sỉ lẻ thẻo câu cá buộc sẵn, thẻo câu đài săn hàng, thẻo tàng hình fluorocarbon, cước thẻo Nhật Bản, lưỡi câu BKK bén ngót chống xoắn tuyệt đối.">
 
@@ -66,6 +66,9 @@
     <!-- Drawer Body (Cuộn được) -->
     <div class="flex-1 overflow-y-auto p-4 space-y-4 text-xs">
       
+      <!-- Cụm Tài Khoản Cần Thủ (Mobile & Menu Quick Access) -->
+      <div id="sidebar-user-slot"></div>
+
       <!-- Khối Ưu Đãi Đã Chuyển Vào Thanh Dọc -->
       <div class="p-3.5 rounded-2xl bg-gradient-to-br from-amber-500/10 via-sky-500/10 to-teal-500/10 border border-amber-500/20 text-slate-800 dark:text-slate-200 space-y-1.5">
         <div class="flex items-center gap-2 text-amber-600 dark:text-amber-400 font-bold text-xs">
@@ -194,15 +197,15 @@
   <!-- MAIN NAVIGATION HEADER (TINH GỌN, SẠCH SẼ) -->
   <!-- ========================================== -->
   <nav class="sticky top-0 z-40 bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-colors">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between h-20 gap-3 sm:gap-4">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
         
         <!-- Cụm Bên Trái: Nút Hamburger Menu + Logo Shop -->
-        <div class="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
+        <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
           <!-- Nút Mở Thanh Dọc Bên Trái -->
           <button 
             onclick="toggleSidebarDrawer(true)"
-            class="p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 hover:border-sky-300 dark:hover:border-sky-700 transition-all shadow-sm flex items-center justify-center group"
+            class="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 hover:bg-sky-50 dark:hover:bg-slate-800 hover:text-sky-600 dark:hover:text-sky-400 hover:border-sky-300 dark:hover:border-sky-700 transition-all shadow-sm flex items-center justify-center group"
             title="Mở Danh Mục Tiện Ích"
             aria-label="Mở Menu Tiện Ích"
           >
@@ -210,13 +213,13 @@
           </button>
 
           <!-- Logo Brand -->
-          <a href="#" class="flex items-center gap-2.5 group flex-shrink-0">
-            <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-sky-700 via-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 group-hover:scale-105 transition-transform">
-              <i data-lucide="anchor" class="w-6 h-6"></i>
+          <a href="#" class="flex items-center gap-2 group flex-shrink-0">
+            <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-sky-700 via-sky-600 to-teal-400 flex items-center justify-center text-white shadow-lg shadow-sky-600/30 group-hover:scale-105 transition-transform flex-shrink-0">
+              <i data-lucide="anchor" class="w-5 h-5 sm:w-6 sm:h-6"></i>
             </div>
             <div>
-              <div class="font-black text-xl tracking-tight text-slate-900 dark:text-white flex items-center gap-1.5 font-heading">
-                VUA THẺO CÂU <span class="text-[9px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.2 rounded uppercase">PRO</span>
+              <div class="font-black text-base sm:text-xl tracking-tight text-slate-900 dark:text-white flex items-center gap-1 font-heading leading-tight">
+                VUA THẺO <span class="hidden xs:inline">CÂU</span> <span class="text-[9px] bg-amber-400 text-slate-950 font-black px-1.5 py-0.5 rounded uppercase">PRO</span>
               </div>
               <div class="text-[10px] text-slate-500 dark:text-slate-400 font-semibold tracking-wide hidden sm:block">
                 Thẻo Buộc Sẵn Chuyên Nghiệp
@@ -239,12 +242,12 @@
         </div>
 
         <!-- Cụm Bên Phải: Nút Sáng/Tối -> Nút Yêu Thích -> Giỏ Hàng -> Đăng Nhập & Đăng Ký (ngoài cùng) -->
-        <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
+        <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
           
-          <!-- Nút Đổi Sáng / Tối (Chỉ Logo Icon, Không Có Chữ) -->
+          <!-- Nút Đổi Sáng / Tối (Ẩn trên mobile, đã có ở thanh tìm kiếm mobile) -->
           <button 
             onclick="toggleTheme()"
-            class="theme-toggle-btn p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm flex items-center justify-center"
+            class="theme-toggle-btn p-2.5 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-amber-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm hidden sm:flex items-center justify-center"
             title="Chuyển chế độ Sáng / Tối"
           >
             <i data-lucide="moon" class="w-4 h-4"></i>
@@ -265,26 +268,32 @@
           <!-- Giỏ Hàng (Nằm Bên Trái Đăng Nhập) -->
           <button 
             onclick="toggleCartDrawer(true)"
-            class="relative flex items-center gap-2 bg-slate-900 dark:bg-sky-600 hover:bg-slate-800 dark:hover:bg-sky-500 text-white px-3.5 py-2.5 rounded-2xl font-bold text-xs transition-all shadow-md shadow-slate-900/15"
+            class="relative flex items-center gap-1.5 bg-slate-900 dark:bg-sky-600 hover:bg-slate-800 dark:hover:bg-sky-500 text-white px-2.5 sm:px-3.5 py-2 sm:py-2.5 rounded-xl sm:rounded-2xl font-bold text-xs transition-all shadow-md shadow-slate-900/15"
             title="Xem giỏ hàng"
           >
             <i data-lucide="shopping-cart" class="w-4 h-4"></i>
             <span class="hidden sm:inline">Giỏ Hàng</span>
-            <span class="cart-badge hidden bg-amber-400 text-slate-950 text-[10px] font-black w-5 h-5 rounded-full flex items-center justify-center -ml-0.5">
+            <span class="cart-badge hidden bg-amber-400 text-slate-950 text-[10px] font-black w-4.5 h-4.5 rounded-full flex items-center justify-center -ml-0.5">
               0
             </span>
           </button>
 
           <!-- Đăng Nhập & Đăng Ký (Ở BÊN PHẢI CÙNG CỦA HEADER) -->
-          <div class="header-user-slot">
-            <div class="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+          <div class="header-user-slot flex-shrink-0">
+            <div class="hidden sm:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
               <a href="login.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all shadow-sm">
                 <i data-lucide="log-in" class="w-3.5 h-3.5 text-sky-500"></i>
                 <span>Đăng Nhập</span>
               </a>
               <a href="register.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 hover:from-sky-500 hover:to-teal-400 text-white text-xs font-black transition-all shadow-md shadow-sky-600/20">
                 <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
-                <span class="hidden sm:inline">Đăng Ký</span>
+                <span>Đăng Ký</span>
+              </a>
+            </div>
+            <div class="flex sm:hidden items-center">
+              <a href="login.html" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-sky-50 dark:bg-slate-900 border border-sky-200 dark:border-slate-800 text-sky-600 dark:text-sky-400 text-xs font-bold">
+                <i data-lucide="user" class="w-3.5 h-3.5"></i>
+                <span class="text-[11px]">Vào</span>
               </a>
             </div>
           </div>
@@ -296,19 +305,19 @@
   </nav>
 
   <!-- Mobile Search & Theme Bar -->
-  <div class="md:hidden px-4 py-2.5 bg-white border-b border-slate-200 flex items-center gap-2">
+  <div class="md:hidden px-3.5 py-2.5 bg-slate-900 border-b border-slate-800 flex items-center gap-2">
     <div class="relative flex-1">
       <input 
         type="text" 
         oninput="document.getElementById('search-input').value = this.value; state.searchQuery = this.value; renderProducts();"
         placeholder="Tìm thẻo rô phi, trắm chép, lưỡi BKK..." 
-        class="w-full pl-9 pr-4 py-2 rounded-xl border border-slate-200 bg-slate-50 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
+        class="w-full pl-9 pr-3 py-2 rounded-xl border border-slate-800 bg-slate-950 text-xs text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-sky-500"
       />
       <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
     </div>
     <button 
       onclick="toggleTheme()"
-      class="theme-toggle-btn p-2 rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-100 transition-colors shadow-sm flex-shrink-0"
+      class="theme-toggle-btn p-2 rounded-xl border border-slate-800 bg-slate-800 text-amber-400 hover:bg-slate-700 transition-colors shadow-sm flex-shrink-0 flex items-center justify-center"
       title="Đổi giao diện Sáng / Tối"
     >
       <i data-lucide="moon" class="w-4 h-4"></i>
@@ -371,17 +380,17 @@
           </div>
 
           <!-- CTAs -->
-          <div class="pt-2 flex flex-wrap items-center gap-3">
+          <div class="pt-2 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <a 
               href="#san-pham"
-              class="px-5 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-xl shadow-xl shadow-amber-500/25 transition-all text-xs flex items-center gap-2 group"
+              class="px-5 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black rounded-xl shadow-xl shadow-amber-500/25 transition-all text-xs flex items-center justify-center gap-2 group text-center"
             >
               <span>Xem Các Loại Thẻo Bán Chạy</span>
               <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
             </a>
             <a 
               href="#xuong-tu-tom"
-              class="px-5 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 backdrop-blur-md transition-all text-xs flex items-center gap-2"
+              class="px-5 py-3.5 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 backdrop-blur-md transition-all text-xs flex items-center justify-center gap-2 text-center"
             >
               <i data-lucide="wrench" class="w-4 h-4 text-amber-400"></i>
               <span>Tự Tóm Thẻo Theo Yêu Cầu</span>
@@ -660,14 +669,14 @@
           </div>
 
           <!-- Action & Price -->
-          <div class="mt-6 pt-4 border-t border-white/10 flex items-center justify-between">
+          <div class="mt-6 pt-4 border-t border-white/10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
             <div>
               <span class="text-[11px] text-slate-400 block">Thành tiền trọn gói:</span>
               <span class="text-2xl font-extrabold text-amber-400" id="diy-price-display">60.000₫</span>
             </div>
             <button 
               onclick="addDiyRigToCart()"
-              class="px-5 py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs shadow-xl shadow-amber-400/20 transition-all flex items-center gap-1.5"
+              class="w-full sm:w-auto px-5 py-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-black rounded-xl text-xs shadow-xl shadow-amber-400/20 transition-all flex items-center justify-center gap-1.5"
             >
               <i data-lucide="shopping-cart" class="w-4 h-4"></i> Thêm Bản Tự Tóm Vào Giỏ
             </button>
@@ -1023,13 +1032,13 @@
   </footer>
 
   <!-- Floating Contact & Shortcut Bar -->
-  <div class="fixed bottom-6 right-6 z-30 flex flex-col items-end gap-2.5">
+  <div class="fixed bottom-3 right-3 sm:bottom-6 sm:right-6 z-30 flex flex-col items-end gap-2">
     <!-- Quick Advisor Floating Pill -->
     <a 
       href="#advisor-section" 
-      class="bg-slate-900/95 backdrop-blur text-white text-xs font-bold px-3.5 py-2 rounded-full shadow-lg border border-slate-700 hover:bg-slate-800 transition-all flex items-center gap-2"
+      class="bg-slate-900/95 backdrop-blur text-white text-xs font-bold px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full shadow-lg border border-slate-700 hover:bg-slate-800 transition-all flex items-center gap-1.5"
     >
-      <i data-lucide="compass" class="w-4 h-4 text-sky-400"></i>
+      <i data-lucide="compass" class="w-3.5 h-3.5 text-sky-400"></i>
       <span class="hidden sm:inline">Trợ Lý Chọn Thẻo</span>
     </a>
 
@@ -1038,15 +1047,15 @@
       href="https://zalo.me/0988776655" 
       target="_blank" 
       rel="noopener"
-      class="floating-contact flex items-center gap-2 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white px-4 py-3 rounded-full shadow-xl shadow-sky-600/30 text-xs font-bold transition-all"
+      class="floating-contact flex items-center gap-1.5 sm:gap-2 bg-gradient-to-r from-sky-600 to-sky-500 hover:from-sky-500 hover:to-sky-400 text-white px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-xl shadow-sky-600/30 text-xs font-bold transition-all"
     >
-      <i data-lucide="message-circle" class="w-5 h-5"></i>
-      <span>Chat Zalo Tư Vấn</span>
+      <i data-lucide="message-circle" class="w-4 h-4 sm:w-5 sm:h-5"></i>
+      <span>Chat Zalo</span>
     </a>
   </div>
 
   <!-- Recent Live Purchase Popup (Bottom Left Social Proof) -->
-  <div id="recent-sale-popup" class="hidden fixed bottom-6 left-6 z-30">
+  <div id="recent-sale-popup" class="hidden fixed bottom-3 left-3 right-3 sm:right-auto sm:bottom-6 sm:left-6 z-30 pointer-events-none max-w-sm">
     <!-- Rendered by JS -->
   </div>
 

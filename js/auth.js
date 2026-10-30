@@ -325,12 +325,12 @@ function updateHeaderUserUI() {
     if (user) {
       slot.innerHTML = `
         <div class="relative group">
-          <button class="flex items-center gap-2 p-1.5 sm:px-3 sm:py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-sky-500 transition-all text-xs font-bold text-slate-800 dark:text-white shadow-sm">
+          <button class="flex items-center gap-1.5 sm:gap-2 p-1 sm:px-3 sm:py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-sky-500 transition-all text-xs font-bold text-slate-800 dark:text-white shadow-sm">
             <img src="${user.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}" class="w-6 h-6 rounded-full object-cover ring-2 ring-sky-500/40" alt="Avatar">
             <span class="hidden md:inline max-w-[110px] truncate text-left">
               ${user.name}
             </span>
-            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 group-hover:rotate-180 transition-transform"></i>
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400 group-hover:rotate-180 transition-transform hidden sm:inline"></i>
           </button>
 
           <!-- Dropdown Menu -->
@@ -361,19 +361,70 @@ function updateHeaderUserUI() {
       `;
     } else {
       slot.innerHTML = `
-        <div class="flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
+        <div class="hidden sm:flex items-center gap-1.5 p-1 rounded-2xl bg-slate-100/90 dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 shadow-sm">
           <a href="login.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-white dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200 text-xs font-bold transition-all shadow-sm">
             <i data-lucide="log-in" class="w-3.5 h-3.5 text-sky-500"></i>
             <span>Đăng Nhập</span>
           </a>
           <a href="register.html" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 hover:from-sky-500 hover:to-teal-400 text-white text-xs font-black transition-all shadow-md shadow-sky-600/20">
             <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
-            <span class="hidden sm:inline">Đăng Ký</span>
+            <span>Đăng Ký</span>
+          </a>
+        </div>
+        <div class="flex sm:hidden items-center">
+          <a href="login.html" class="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-sky-50 dark:bg-slate-900 border border-sky-200 dark:border-slate-800 text-sky-600 dark:text-sky-400 text-xs font-bold" title="Đăng Nhập">
+            <i data-lucide="user" class="w-3.5 h-3.5"></i>
+            <span class="text-[11px]">Vào</span>
           </a>
         </div>
       `;
     }
   });
+
+  // Cập nhật thẻ người dùng ở thanh Menu Sidebar
+  const sidebarUserSlot = document.getElementById('sidebar-user-slot');
+  if (sidebarUserSlot) {
+    if (user) {
+      sidebarUserSlot.innerHTML = `
+        <div class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-between gap-3 shadow-sm">
+          <div class="flex items-center gap-3 overflow-hidden">
+            <img src="${user.avatar || 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=80&q=80'}" class="w-9 h-9 rounded-full object-cover ring-2 ring-sky-500/40 flex-shrink-0" alt="Avatar">
+            <div class="overflow-hidden">
+              <div class="font-bold text-xs text-slate-900 dark:text-white truncate">${user.name}</div>
+              <div class="text-[10px] text-slate-400 truncate">${user.email}</div>
+            </div>
+          </div>
+          <button onclick="logoutUser()" class="p-2 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors flex-shrink-0" title="Đăng Xuất">
+            <i data-lucide="log-out" class="w-4 h-4"></i>
+          </button>
+        </div>
+      `;
+    } else {
+      sidebarUserSlot.innerHTML = `
+        <div class="p-3.5 rounded-2xl bg-slate-100/90 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2.5 shadow-sm">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center font-bold">
+              <i data-lucide="user" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <div class="font-bold text-xs text-slate-900 dark:text-white">Tài Khoản Cần Thủ</div>
+              <div class="text-[10px] text-slate-400">Đăng nhập để nhận ưu đãi & lưu đơn</div>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <a href="login.html" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-xs font-bold transition-all text-center">
+              <i data-lucide="log-in" class="w-3.5 h-3.5"></i>
+              <span>Đăng Nhập</span>
+            </a>
+            <a href="register.html" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 text-xs font-bold transition-all text-center">
+              <i data-lucide="user-plus" class="w-3.5 h-3.5"></i>
+              <span>Đăng Ký</span>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+  }
 
   if (window.lucide && typeof lucide.createIcons === 'function') {
     try {
