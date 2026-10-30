@@ -324,11 +324,26 @@ html.dark .card-hover:hover {
   #tracking-modal > div:nth-child(2),
   #review-modal > div:nth-child(2),
   #checkout-modal > div:nth-child(2),
-  #article-modal > div:nth-child(2) {
+  #article-modal > div:nth-child(2),
+  #admin-product-modal > div:nth-child(2),
+  #admin-order-detail-modal > div:nth-child(2) {
     width: calc(100vw - 16px) !important;
     max-width: calc(100vw - 16px) !important;
     margin: 8px auto !important;
     padding: 16px !important;
+  }
+
+  /* Admin mobile tweaks */
+  #admin-app-layout {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    overflow-x: hidden !important;
+  }
+
+  #admin-app-layout main {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
   }
 
   /* Smooth horizontal scrolling for tables and filters without breaking layout */

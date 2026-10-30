@@ -162,9 +162,24 @@ async function loadAdminData() {
   }
 }
 
+// Toggle Sidebar Mobile Drawer
+function toggleAdminSidebar(show) {
+  const sidebar = document.getElementById('admin-sidebar');
+  const backdrop = document.getElementById('admin-sidebar-backdrop');
+  if (!sidebar) return;
+  if (show) {
+    sidebar.classList.remove('-translate-x-full');
+    if (backdrop) backdrop.classList.remove('hidden');
+  } else {
+    sidebar.classList.add('-translate-x-full');
+    if (backdrop) backdrop.classList.add('hidden');
+  }
+}
+
 // Switch Tab
 function switchTab(tabName) {
   adminState.currentTab = tabName;
+  toggleAdminSidebar(false); // Đóng menu mobile khi chọn tab
 
   document.querySelectorAll('.admin-tab-btn').forEach(btn => {
     if (btn.dataset.tab === tabName) {
