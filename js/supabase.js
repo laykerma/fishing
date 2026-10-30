@@ -8,6 +8,16 @@ const SUPABASE_CONFIG = {
   anonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt0aXVueXp0eHlqcnZuZXV1bnRhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMzMzY0MTksImV4cCI6MjEwODkxMjQxOX0.rkHo76ENiE8-_um2pghExm-uoEHEVnLQGKuk4z3hhI0'
 };
 
+// Khởi tạo Supabase JS SDK nếu có thư viện
+let sbClient = null;
+function getSupabaseClient() {
+  if (!sbClient && window.supabase && typeof window.supabase.createClient === 'function') {
+    sbClient = window.supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.anonKey);
+    window.sbClient = sbClient;
+  }
+  return sbClient;
+}
+
 const supabaseHeaders = {
   'apikey': SUPABASE_CONFIG.anonKey,
   'Authorization': `Bearer ${SUPABASE_CONFIG.anonKey}`,
@@ -159,9 +169,131 @@ async function dbLoginUser(email, password) {
   return null;
 }
 
+// ==========================================
+// 3. GOOGLE OAUTH THẬT (GOOGLE SIGN-IN)
+// ==========================================
+async function dbSignInWithGoogle() {
+  const client = getSupabaseClient();
+  if (!client) {
+    alert('Thư viện Supabase SDK chưa tải xong, vui lòng thử lại sau 2 giây.');
+    return;
+  }
+
+  // Tự động chuyển hướng về trang chủ sau khi xác thực Google thành công
+  const redirectUrl = window.location.origin + window.location.pathname.replace(/\/(login|register)\.html$/, '/index.html');
+  
+  const { data, error } = await client.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: redirectUrl,
+      queryParams: {
+        access_type: 'offline',
+        prompt: 'consent'
+      }
+    }
+  });
+
+  if (error) {
+    console.error('Google OAuth error:', error);
+    if (error.message && error.message.includes('not enabled')) {
+      alert('Chưa kích hoạt Google Provider trong Supabase!\n\nVui lòng vào Supabase Dashboard -> Authentication -> Providers -> Bật Google và nhập Google Client ID & Secret.');
+    } else {
+      alert('Lỗi đăng nhập Google: ' + error.message);
+    }
+  }
+  return { data, error };
+}
+
+// Lắng nghe và đồng bộ phiên đăng nhập Google sau khi redirect về trang
+async function initSupabaseAuthListener() {
+  const client = getSupabaseClient();
+  if (!client) return;
+
+  try {
+    const { data: { session } } = await client.auth.getSession();
+    if (session && session.user) {
+      const sbUser = session.user;
+      const email = sbUser.email;
+      const name = sbUser.user_metadata?.full_name || sbUser.user_metadata?.name || email.split('@')[0];
+      const avatar = sbUser.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`;
+
+      const userObj = {
+        id: sbUser.id,
+        name,
+        email,
+        phone: sbUser.phone || '',
+        role: 'customer',
+        avatar,
+        authProvider: 'google',
+        createdAt: sbUser.created_at || new Date().toISOString()
+      };
+
+      // Đồng bộ thông tin người dùng vào bảng public.users
+      fetch(`${SUPABASE_CONFIG.url}/rest/v1/users`, {
+        method: 'POST',
+        headers: {
+          ...supabaseHeaders,
+          'Prefer': 'resolution=merge-duplicates'
+        },
+        body: JSON.stringify({
+          name: userObj.name,
+          email: userObj.email,
+          avatar: userObj.avatar,
+          auth_provider: 'google',
+          role: 'customer'
+        })
+      }).catch(e => console.warn('Sync google user error:', e));
+
+      if (typeof setAuthSession === 'function') {
+        setAuthSession(session.access_token, userObj, true);
+      }
+      if (typeof updateHeaderUserUI === 'function') {
+        updateHeaderUserUI();
+      }
+    }
+
+    client.auth.onAuthStateChange(async (event, session) => {
+      if (event === 'SIGNED_IN' && session && session.user) {
+        const sbUser = session.user;
+        const email = sbUser.email;
+        const name = sbUser.user_metadata?.full_name || sbUser.user_metadata?.name || email.split('@')[0];
+        const avatar = sbUser.user_metadata?.avatar_url || `https://api.dicebear.com/7.x/bottts/svg?seed=${encodeURIComponent(name)}`;
+
+        const userObj = {
+          id: sbUser.id,
+          name,
+          email,
+          phone: sbUser.phone || '',
+          role: 'customer',
+          avatar,
+          authProvider: 'google',
+          createdAt: sbUser.created_at || new Date().toISOString()
+        };
+
+        if (typeof setAuthSession === 'function') {
+          setAuthSession(session.access_token, userObj, true);
+        }
+        if (typeof updateHeaderUserUI === 'function') {
+          updateHeaderUserUI();
+        }
+      }
+    });
+  } catch (err) {
+    console.warn('Supabase auth listener error:', err);
+  }
+}
+
+// Tự động kích hoạt listener khi trang load
+document.addEventListener('DOMContentLoaded', () => {
+  initSupabaseAuthListener();
+});
+
 // Xuất các hàm ra toàn cục window để các file khác dùng được
 window.dbCreateOrder = dbCreateOrder;
 window.dbGetOrders = dbGetOrders;
 window.dbUpdateOrderStatus = dbUpdateOrderStatus;
 window.dbRegisterUser = dbRegisterUser;
 window.dbLoginUser = dbLoginUser;
+window.dbSignInWithGoogle = dbSignInWithGoogle;
+window.getSupabaseClient = getSupabaseClient;
+

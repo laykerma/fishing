@@ -200,6 +200,7 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase.js"></script>
   <script src="js/auth.js"></script>
   <script>
@@ -252,15 +253,7 @@
     }
 
     function loginWithGoogle() {
-      // Giả lập popup tài khoản Google chuẩn UX hoặc kết nối Google GSI
-      triggerMockGooglePrompt((res) => {
-        if (res && res.success) {
-          showAuthToast(res.message, 'success');
-          setTimeout(() => {
-            window.location.href = 'index.html';
-          }, 800);
-        }
-      });
+      triggerRealGoogleLogin();
     }
 
     function forgotPasswordAlert() {
