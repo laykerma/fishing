@@ -147,9 +147,19 @@ function handleChangeAdminPassword(e) {
 }
 
 // Load data
-function loadAdminData() {
+async function loadAdminData() {
   adminState.products = getStoredProducts();
   adminState.orders = getStoredOrders();
+
+  if (typeof dbGetOrders === 'function') {
+    const cloudOrders = await dbGetOrders();
+    if (cloudOrders && cloudOrders.length > 0) {
+      adminState.orders = cloudOrders;
+      saveStoredOrders(cloudOrders);
+      if (adminState.currentTab === 'dashboard') renderAdminDashboard();
+      if (adminState.currentTab === 'orders') renderAdminOrders();
+    }
+  }
 }
 
 // Switch Tab
@@ -556,6 +566,10 @@ function updateOrderStatus(orderId, newStatus) {
   if (order) {
     order.status = newStatus;
     saveStoredOrders(adminState.orders);
+
+    if (typeof dbUpdateOrderStatus === 'function') {
+      dbUpdateOrderStatus(orderId, newStatus);
+    }
 
     if (window.location.protocol.startsWith('http')) {
       fetch(`/api/orders/${orderId}/status`, {

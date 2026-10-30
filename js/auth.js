@@ -81,7 +81,19 @@ function showAuthToast(message, type = 'info') {
 async function handleUserRegister(formData) {
   const { name, email, phone, password } = formData;
 
-  // Thử gửi qua Backend REST API
+  // 1. Thử đăng ký trực tiếp lên Supabase Cloud Database
+  if (typeof dbRegisterUser === 'function') {
+    const cloudRes = await dbRegisterUser(name, email, phone, password);
+    if (cloudRes && cloudRes.success) {
+      const token = 'sb_token_' + btoa(JSON.stringify(cloudRes.user));
+      setAuthSession(token, cloudRes.user, true);
+      return cloudRes;
+    } else if (cloudRes && !cloudRes.success) {
+      return cloudRes;
+    }
+  }
+
+  // 2. Thử gửi qua Backend REST API
   try {
     const res = await fetch('/api/auth/register', {
       method: 'POST',
@@ -132,6 +144,18 @@ async function handleUserRegister(formData) {
 // 3. LOGIN USER (ĐĂNG NHẬP THƯỜNG)
 // ==========================================
 async function handleUserLogin(emailOrPhone, password, remember = true) {
+  // 1. Thử đăng nhập qua Supabase Cloud Database
+  if (typeof dbLoginUser === 'function') {
+    const cloudRes = await dbLoginUser(emailOrPhone, password);
+    if (cloudRes && cloudRes.success) {
+      const token = 'sb_token_' + btoa(JSON.stringify(cloudRes.user));
+      setAuthSession(token, cloudRes.user, remember);
+      return cloudRes;
+    } else if (cloudRes && !cloudRes.success) {
+      return cloudRes;
+    }
+  }
+
   try {
     const res = await fetch('/api/auth/login', {
       method: 'POST',

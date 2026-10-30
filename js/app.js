@@ -1525,6 +1525,11 @@ function submitOrder() {
   orders.unshift(state.checkoutData);
   saveStoredOrders(orders);
 
+  // Đồng bộ lên Supabase Cloud Database vĩnh viễn
+  if (typeof dbCreateOrder === 'function') {
+    dbCreateOrder(state.checkoutData);
+  }
+
   // Đồng bộ lưu vào Backend API
   if (window.location.protocol.startsWith('http')) {
     fetch('/api/orders', {
