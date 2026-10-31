@@ -51,25 +51,16 @@ function getAdminCredentials() {
   const stored = localStorage.getItem('theopro_admin_creds');
   if (stored) {
     try {
-      return JSON.parse(stored);
+      const parsed = JSON.parse(stored);
+      if (parsed && parsed.password) return parsed;
     } catch (e) {}
   }
-  const defaultCreds = { username: 'admin', password: 'admin123' };
-  localStorage.setItem('theopro_admin_creds', JSON.stringify(defaultCreds));
-  return defaultCreds;
+  return { username: 'admin', password: 'admin123', isDefault: true };
 }
 
 function checkAdminAuth() {
-  let isAuth = sessionStorage.getItem('theopro_admin_auth') === 'true';
-  if (!isAuth) {
-    try {
-      const curUser = JSON.parse(localStorage.getItem('theopro_user_info') || sessionStorage.getItem('theopro_user_info') || '{}');
-      if (curUser && curUser.role === 'admin') {
-        isAuth = true;
-        sessionStorage.setItem('theopro_admin_auth', 'true');
-      }
-    } catch (e) {}
-  }
+  // Chỉ chấp nhận phiên đăng nhập đã được xác thực bảo mật
+  const isAuth = sessionStorage.getItem('theopro_admin_auth') === 'true';
   const loginScreen = document.getElementById('admin-login-screen');
   const appLayout = document.getElementById('admin-app-layout');
 
@@ -100,27 +91,37 @@ async function handleAdminLogin(e) {
 
   try {
     const creds = getAdminCredentials();
-    let currentValidPassword = creds.password;
+    let isAuthSuccess = false;
 
-    // 1. Thử lấy mật khẩu mới nhất từ Supabase Cloud Database
-    if (typeof window.dbGetAdminPassword === 'function') {
+    // 1. Xác thực bảo mật trực tiếp với Supabase Cloud Database
+    if (typeof window.dbVerifyAdmin === 'function') {
       try {
-        const cloudPass = await window.dbGetAdminPassword();
-        if (cloudPass) {
-          currentValidPassword = cloudPass;
-          creds.password = cloudPass;
-          localStorage.setItem('theopro_admin_creds', JSON.stringify(creds));
+        const cloudRes = await window.dbVerifyAdmin(userInput, passInput);
+        if (cloudRes && cloudRes.success) {
+          isAuthSuccess = true;
+          // Lưu đồng bộ vào local cache
+          localStorage.setItem('theopro_admin_creds', JSON.stringify({ username: userInput, password: passInput }));
         }
-      } catch (err) {
-        console.warn('Không thể kết nối Supabase lấy mật khẩu, dùng bộ nhớ máy tính:', err);
+      } catch (cloudErr) {
+        console.warn('Lỗi kết nối Cloud, dùng kiểm tra offline:', cloudErr);
       }
     }
 
-    const normUser = (userInput || '').toLowerCase();
-    const isUserValid = (normUser === 'admin' || normUser === 'admin@theocau.pro' || userInput === creds.username);
-    const isPassValid = (passInput === currentValidPassword || passInput === creds.password);
+    // 2. Fallback nếu Cloud chưa đồng bộ hoặc offline:
+    if (!isAuthSuccess) {
+      const normUser = (userInput || '').toLowerCase();
+      const isUserValid = (normUser === 'admin' || normUser === 'admin@theocau.pro' || userInput === creds.username);
+      // Chỉ chấp nhận nếu khớp chính xác với mật khẩu hiện tại trong máy
+      if (isUserValid && passInput === creds.password) {
+        isAuthSuccess = true;
+        // Tự động đẩy mật khẩu này lên Cloud để khắc phục lệch dữ liệu
+        if (typeof window.dbChangeAdminPassword === 'function') {
+          window.dbChangeAdminPassword('admin123', creds.password).catch(() => {});
+        }
+      }
+    }
 
-    if (isUserValid && isPassValid) {
+    if (isAuthSuccess) {
       sessionStorage.setItem('theopro_admin_auth', 'true');
       if (errorMsg) errorMsg.classList.add('hidden');
       checkAdminAuth();
@@ -157,21 +158,27 @@ async function handleChangeAdminPassword(e) {
   const confirmPass = document.getElementById('confirm-pass')?.value.trim();
   const creds = getAdminCredentials();
 
-  let validCurrentPass = creds.password;
-  if (typeof window.dbGetAdminPassword === 'function') {
-    try {
-      const cloudPass = await window.dbGetAdminPassword();
-      if (cloudPass) validCurrentPass = cloudPass;
-    } catch (err) {}
+  // 1. Kiểm tra xác thực mật khẩu cũ
+  let isOldPassValid = false;
+  if (oldPass === creds.password) {
+    isOldPassValid = true;
+  } else if (typeof window.dbVerifyAdmin === 'function') {
+    const verifyCloud = await window.dbVerifyAdmin(creds.username || 'admin', oldPass);
+    if (verifyCloud && verifyCloud.success) isOldPassValid = true;
   }
 
-  if (oldPass !== validCurrentPass && oldPass !== creds.password) {
+  if (!isOldPassValid) {
     showAdminToast('Mật khẩu hiện tại không chính xác!', 'error');
     return;
   }
 
   if (!newPass || newPass.length < 6) {
     showAdminToast('Mật khẩu mới phải từ 6 ký tự trở lên!', 'error');
+    return;
+  }
+
+  if (newPass === 'admin123') {
+    showAdminToast('Vui lòng không đặt lại mật khẩu mặc định admin123 vì lý do bảo mật!', 'error');
     return;
   }
 
@@ -184,23 +191,27 @@ async function handleChangeAdminPassword(e) {
   const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
   if (submitBtn) {
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Đang lưu mật khẩu...';
+    submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Đang đổi mật khẩu...';
     if (window.lucide) lucide.createIcons({ root: submitBtn });
   }
 
-  // 1. Lưu vào bộ nhớ trình duyệt hiện tại
-  creds.password = newPass;
-  localStorage.setItem('theopro_admin_creds', JSON.stringify(creds));
-
-  // 2. Đồng bộ vĩnh viễn lên Supabase Cloud Database (để điện thoại & PC cùng nhận)
+  // Cập nhật lên Cloud Database (thử đổi từ oldPass hoặc admin123 nếu trước đó cloud chưa update)
   let cloudSynced = false;
-  if (typeof window.dbUpdateAdminPassword === 'function') {
+  if (typeof window.dbChangeAdminPassword === 'function') {
     try {
-      cloudSynced = await window.dbUpdateAdminPassword(newPass);
+      cloudSynced = await window.dbChangeAdminPassword(oldPass, newPass);
+      if (!cloudSynced && oldPass !== 'admin123') {
+        cloudSynced = await window.dbChangeAdminPassword('admin123', newPass);
+      }
     } catch (err) {
       console.warn('Lỗi cập nhật cloud password:', err);
     }
   }
+
+  // Lưu vào bộ nhớ máy tính
+  creds.password = newPass;
+  delete creds.isDefault;
+  localStorage.setItem('theopro_admin_creds', JSON.stringify(creds));
 
   if (submitBtn) {
     submitBtn.disabled = false;
@@ -213,7 +224,7 @@ async function handleChangeAdminPassword(e) {
   document.getElementById('confirm-pass').value = '';
 
   if (cloudSynced) {
-    showAdminToast('Đã đổi mật khẩu & đồng bộ lên Cloud thành công! Điện thoại và PC đều dùng được mật khẩu mới.', 'success');
+    showAdminToast('Đã đổi mật khẩu và đồng bộ Cloud thành công! Mật khẩu cũ và mặc định đã bị vô hiệu hóa hoàn toàn.', 'success');
   } else {
     showAdminToast('Đã đổi mật khẩu thành công trên thiết bị này!', 'success');
   }

@@ -88,11 +88,7 @@ export default async function handler(req, res) {
   if (url.includes('/api/auth/login') && method === 'POST') {
     const { email, password } = body || {};
     const normInput = (email || '').trim().toLowerCase();
-    if ((normInput === 'admin' || normInput === 'admin@theocau.pro') && password === 'admin123') {
-      const adminUser = { id: 9999, name: 'Chủ Shop Admin', email: 'admin@theocau.pro', role: 'admin' };
-      return res.status(200).json({ success: true, token: generateToken(adminUser), user: adminUser });
-    }
-    const user = (db.users || []).find(u => u.email === normInput || u.phone === normInput);
+    const user = (db.users || []).find(u => u.email === normInput || u.phone === normInput || (normInput === 'admin' && u.role === 'admin'));
     if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
       return res.status(401).json({ success: false, message: 'Sai email hoặc mật khẩu' });
     }

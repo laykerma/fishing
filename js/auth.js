@@ -183,25 +183,43 @@ async function handleUserLogin(emailOrPhone, password, remember = true) {
   const localUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
   const inputNorm = emailOrPhone.trim().toLowerCase();
   
-  // Tài khoản admin (đối chiếu mật khẩu cập nhật)
-  let adminPass = 'admin123';
-  try {
-    const creds = JSON.parse(localStorage.getItem('theopro_admin_creds') || '{}');
-    if (creds && creds.password) adminPass = creds.password;
-  } catch (e) {}
+  // Kiểm tra tài khoản Quản Trị Viên (Admin)
+  if (inputNorm === 'admin' || inputNorm === 'admin@theocau.pro') {
+    let isAdminValid = false;
+    // 1. Đối chiếu trực tiếp qua Cloud Supabase
+    if (typeof window.dbVerifyAdmin === 'function') {
+      try {
+        const cloudVerify = await window.dbVerifyAdmin(inputNorm, password);
+        if (cloudVerify && cloudVerify.success) isAdminValid = true;
+      } catch (err) {}
+    }
 
-  if ((inputNorm === 'admin' || inputNorm === 'admin@theocau.pro') && (password === adminPass || password === 'admin123')) {
-    const adminUser = {
-      id: 9999,
-      name: 'Chủ Shop Admin',
-      email: 'admin@theocau.pro',
-      phone: '0988776655',
-      role: 'admin',
-      avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
-    };
-    const mockToken = 'mock_admin_token_' + Date.now();
-    setAuthSession(mockToken, adminUser, remember);
-    return { success: true, message: 'Đăng nhập thành công với quyền Chủ Shop!', user: adminUser };
+    // 2. Đối chiếu qua mật khẩu quản trị đã lưu trên máy
+    if (!isAdminValid) {
+      try {
+        const creds = JSON.parse(localStorage.getItem('theopro_admin_creds') || '{}');
+        if (creds && creds.password && password === creds.password) {
+          isAdminValid = true;
+        }
+      } catch (e) {}
+    }
+
+    if (isAdminValid) {
+      const adminUser = {
+        id: 9999,
+        name: 'Chủ Shop Admin',
+        email: 'admin@theocau.pro',
+        phone: '0988776655',
+        role: 'admin',
+        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
+      };
+      const mockToken = 'mock_admin_token_' + Date.now();
+      sessionStorage.setItem('theopro_admin_auth', 'true');
+      setAuthSession(mockToken, adminUser, remember);
+      return { success: true, message: 'Đăng nhập thành công với quyền Chủ Shop!', user: adminUser };
+    } else {
+      return { success: false, message: 'Mật khẩu tài khoản quản trị không chính xác!' };
+    }
   }
 
   const user = localUsers.find(u => (u.email === inputNorm || u.phone === inputNorm));

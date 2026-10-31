@@ -173,31 +173,52 @@ async function dbLoginUser(email, password) {
   return null;
 }
 
-async function dbGetAdminPassword() {
+// Xác thực Admin bảo mật trên Cloud: CHỈ kiểm tra khớp, TUYỆT ĐỐI không trả password_hash về client
+async function dbVerifyAdmin(userInput, password) {
   try {
-    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?role=eq.admin&select=email,password_hash`, {
+    const norm = (userInput || '').trim().toLowerCase();
+    const isNameAdmin = (norm === 'admin' || norm === 'admin@theocau.pro');
+    let filter = `role=eq.admin&password_hash=eq.${encodeURIComponent(password)}`;
+    if (!isNameAdmin) {
+      filter = `email=eq.${encodeURIComponent(norm)}&role=eq.admin&password_hash=eq.${encodeURIComponent(password)}`;
+    }
+    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?${filter}&select=id,name,email,role,avatar`, {
       headers: supabaseHeaders
     });
     if (res.ok) {
       const rows = await res.json();
-      if (rows.length > 0 && rows[0].password_hash) {
-        return rows[0].password_hash;
+      if (rows && rows.length > 0) {
+        return { success: true, user: rows[0] };
       }
     }
   } catch (err) {
-    console.warn('Lỗi đọc mật khẩu admin từ Supabase:', err);
+    console.warn('Lỗi xác thực admin Supabase:', err);
   }
-  return null;
+  return { success: false };
 }
 
-async function dbUpdateAdminPassword(newPassword) {
+// Cập nhật mật khẩu Admin an toàn: Chỉ cho đổi khi mật khẩu cũ (oldPassword) khớp trên Cloud
+async function dbChangeAdminPassword(oldPassword, newPassword) {
   try {
-    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?role=eq.admin`, {
+    // 1. Kiểm tra mật khẩu cũ trên Cloud trước
+    const checkFilter = `role=eq.admin&password_hash=eq.${encodeURIComponent(oldPassword)}`;
+    const checkRes = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?${checkFilter}&select=id`, {
+      headers: supabaseHeaders
+    });
+    if (!checkRes.ok) return false;
+    const existing = await checkRes.json();
+    if (!existing || existing.length === 0) {
+      // Mật khẩu cũ không khớp trên Cloud
+      return false;
+    }
+
+    // 2. Thực hiện cập nhật sang mật khẩu mới
+    const updateRes = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?role=eq.admin&id=eq.${existing[0].id}`, {
       method: 'PATCH',
       headers: supabaseHeaders,
       body: JSON.stringify({ password_hash: newPassword })
     });
-    return res.ok;
+    return updateRes.ok;
   } catch (err) {
     console.warn('Lỗi cập nhật mật khẩu admin lên Supabase:', err);
     return false;
@@ -329,8 +350,8 @@ window.dbGetOrders = dbGetOrders;
 window.dbUpdateOrderStatus = dbUpdateOrderStatus;
 window.dbRegisterUser = dbRegisterUser;
 window.dbLoginUser = dbLoginUser;
-window.dbGetAdminPassword = dbGetAdminPassword;
-window.dbUpdateAdminPassword = dbUpdateAdminPassword;
+window.dbVerifyAdmin = dbVerifyAdmin;
+window.dbChangeAdminPassword = dbChangeAdminPassword;
 window.dbSignInWithGoogle = dbSignInWithGoogle;
 window.getSupabaseClient = getSupabaseClient;
 

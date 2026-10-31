@@ -205,22 +205,7 @@ const server = http.createServer(async (req, res) => {
     if (!db.users) db.users = [];
 
     const normInput = email.trim().toLowerCase();
-
-    // Tài khoản admin hệ thống mặc định
-    if ((normInput === 'admin' || normInput === 'admin@theocau.pro') && password === 'admin123') {
-      const adminUser = {
-        id: 9999,
-        name: 'Chủ Shop Admin',
-        email: 'admin@theocau.pro',
-        phone: '0988776655',
-        role: 'admin',
-        avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80'
-      };
-      const token = generateToken(adminUser);
-      return sendJSON(res, 200, { success: true, message: 'Đăng nhập thành công với quyền Chủ Shop!', token, user: adminUser });
-    }
-
-    const user = db.users.find(u => u.email === normInput || u.phone === normInput);
+    const user = db.users.find(u => u.email === normInput || u.phone === normInput || (normInput === 'admin' && u.role === 'admin'));
     if (!user || !user.passwordHash || !verifyPassword(password, user.passwordHash)) {
       return sendJSON(res, 401, { success: false, message: 'Tài khoản hoặc mật khẩu không chính xác' });
     }
