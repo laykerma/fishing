@@ -1854,4 +1854,21 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSort();
   initRecentSalesNotification();
   safeCreateIcons();
+
+  // Phím tắt nhanh dành riêng cho Chủ Shop: Nhấn Ctrl + Shift + A để mở Quản Trị
+  window.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'A' || e.key === 'a')) {
+      e.preventDefault();
+      window.location.href = 'admin.html';
+    }
+  });
+
+  // Nhấp đúp vào Logo để chuyển nhanh vào trang Quản Trị
+  const brandLogo = document.querySelector('nav a[href="#"]');
+  if (brandLogo) {
+    brandLogo.addEventListener('dblclick', (e) => {
+      e.preventDefault();
+      window.location.href = 'admin.html';
+    });
+  }
 });
