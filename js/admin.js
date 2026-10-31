@@ -438,6 +438,107 @@ function renderAdminProducts() {
   lucide.createIcons({ root: container });
 }
 
+// ==========================================
+// HÀM XỬ LÝ & NÉN ẢNH TỪ ĐIỆN THOẠI (CANVAS COMPRESSOR)
+// ==========================================
+function compressImage(file, maxWidth = 1000, maxHeight = 1000, quality = 0.75) {
+  return new Promise((resolve, reject) => {
+    if (!file || !file.type.startsWith('image/')) {
+      return reject(new Error('Vui lòng chọn tệp hình ảnh'));
+    }
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+
+        if (width > height) {
+          if (width > maxWidth) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          }
+        } else {
+          if (height > maxHeight) {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.onerror = () => reject(new Error('Không thể tải ảnh'));
+      img.src = e.target.result;
+    };
+    reader.onerror = () => reject(new Error('Lỗi đọc dữ liệu tệp'));
+    reader.readAsDataURL(file);
+  });
+}
+
+function setProductImageState(imgUrl) {
+  const input = document.getElementById('prod-form-image');
+  const preview = document.getElementById('prod-image-preview');
+  const placeholder = document.getElementById('prod-image-placeholder');
+  const removeBtn = document.getElementById('btn-remove-prod-image');
+  const urlInput = document.getElementById('prod-form-url-input');
+
+  if (input) input.value = imgUrl || '';
+  if (urlInput) urlInput.value = (imgUrl && imgUrl.startsWith('http')) ? imgUrl : '';
+
+  if (imgUrl) {
+    if (preview) {
+      preview.src = imgUrl;
+      preview.classList.remove('hidden');
+    }
+    if (placeholder) placeholder.classList.add('hidden');
+    if (removeBtn) removeBtn.classList.remove('hidden');
+  } else {
+    if (preview) {
+      preview.src = '';
+      preview.classList.add('hidden');
+    }
+    if (placeholder) placeholder.classList.remove('hidden');
+    if (removeBtn) removeBtn.classList.add('hidden');
+  }
+}
+
+function clearProductImage() {
+  setProductImageState('');
+  const fileInput = document.getElementById('prod-file-input');
+  if (fileInput) fileInput.value = '';
+}
+
+function toggleImageUrlInput() {
+  const wrap = document.getElementById('prod-url-wrap');
+  if (wrap) wrap.classList.toggle('hidden');
+}
+
+function handleProductUrlInput(val) {
+  setProductImageState(val.trim());
+}
+
+async function handleProductImageUpload(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  try {
+    showAdminToast('Đang nén & tối ưu ảnh chụp từ điện thoại...', 'info');
+    const compressedDataUrl = await compressImage(file, 900, 900, 0.75);
+    setProductImageState(compressedDataUrl);
+    showAdminToast('Đã tải ảnh chụp thành công!', 'success');
+  } catch (err) {
+    console.error('Lỗi đọc ảnh:', err);
+    showAdminToast('Lỗi khi đọc file ảnh: ' + err.message, 'error');
+  }
+}
+
 function openAddProductModal() {
   adminState.editingProductId = null;
   document.getElementById('product-modal-title').textContent = 'Thêm Mới Thẻo Câu Cá';
@@ -446,13 +547,15 @@ function openAddProductModal() {
   document.getElementById('prod-form-category').value = 'theo-dai';
   document.getElementById('prod-form-price').value = '';
   document.getElementById('prod-form-orig-price').value = '';
-  document.getElementById('prod-form-image').value = 'https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=600&q=80';
   document.getElementById('prod-form-badge').value = 'Mới Ra Mắt';
   document.getElementById('prod-form-desc').value = '';
   document.getElementById('prod-form-line').value = '#1.5 (Tải 5.5kg)';
   document.getElementById('prod-form-hook').value = 'Iseama #6 Có Ngạnh';
 
+  setProductImageState('https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=600&q=80');
+
   document.getElementById('admin-product-modal').classList.remove('hidden');
+  lucide.createIcons();
 }
 
 function openEditProductModal(productId) {
@@ -467,13 +570,15 @@ function openEditProductModal(productId) {
   document.getElementById('prod-form-category').value = product.category || 'theo-dai';
   document.getElementById('prod-form-price').value = product.price;
   document.getElementById('prod-form-orig-price').value = product.originalPrice || '';
-  document.getElementById('prod-form-image').value = product.image;
   document.getElementById('prod-form-badge').value = product.badge || '';
   document.getElementById('prod-form-desc').value = product.shortDesc || '';
   document.getElementById('prod-form-line').value = product.specs?.lineSize || '';
   document.getElementById('prod-form-hook').value = product.specs?.hookModel || '';
 
+  setProductImageState(product.image || '');
+
   document.getElementById('admin-product-modal').classList.remove('hidden');
+  lucide.createIcons();
 }
 
 function closeProductModal() {
@@ -895,6 +1000,8 @@ function renderAdminSettings() {
   document.getElementById('set-bank-acc').value = bankAcc;
   document.getElementById('set-bank-name').value = bankName;
   document.getElementById('set-bank-owner').value = bankOwner;
+
+  renderAdminHeroBanners();
 }
 
 function saveSettingsSubmit(e) {
@@ -910,6 +1017,151 @@ function saveSettingsSubmit(e) {
   localStorage.setItem('theopro_bank_owner', bankOwner);
 
   showAdminToast('Đã lưu cấu hình cửa hàng thành công!', 'success');
+}
+
+// ==========================================
+// 6. QUẢN LÝ ẢNH BANNER TRÌNH CHIẾU TRANG CHỦ (HERO SHOWCASE)
+// ==========================================
+const DEFAULT_HERO_SLIDES = [
+  {
+    tag: '🔥 Thẻo Săn Hàng Đài 2026',
+    title: 'Cấu Tạo Thẻo Đôi Chống Xoắn 7 Khóa Kép',
+    desc: 'Mối buộc không rạn cước, dàn lưỡi BKK Titan tôi nhiệt đâm xuyên cá trắm chép 8-25kg.',
+    image: 'https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=1000&q=80',
+    spec1Title: 'Độ Dài Thẻo Chuẩn:',
+    spec1Val: '18cm - 45cm (Lệch 4cm)',
+    spec2Title: 'Lực Tải Kéo Đứt:',
+    spec2Val: '3.5kg - 28.0kg',
+    btnText: 'Xem Chi Tiết Thẻo Săn Hàng BKK',
+    actionType: 'quickview',
+    actionValue: 2
+  },
+  {
+    tag: '✨ Tàng Hình Toray Nhật Bản',
+    title: 'Thẻo Rô Phi Thi Đấu Lưỡi Sode Bén Ngót',
+    desc: '100% cước Fluorocarbon Nhật Bản tàng hình dưới nước, cá nhát mồi hút phao cực bén.',
+    image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=1000&q=80',
+    spec1Title: 'Cước Tàng Hình:',
+    spec1Val: 'Toray 100% Carbon',
+    spec2Title: 'Mã Lưỡi Thi Đấu:',
+    spec2Val: 'Sode #4 - Sode #6',
+    btnText: 'Xem Chi Tiết Thẻo Rô Phi',
+    actionType: 'quickview',
+    actionValue: 1
+  },
+  {
+    tag: '🛠️ Nghệ Nhân Tóm Tay Thủ Công',
+    title: 'Xưởng Tự Tóm Thẻo Theo Yêu Cầu Cần Thủ',
+    desc: 'Tự do chọn cỡ cước, loại lưỡi, chiều dài lệch và hạt silicon chia chữ T chống xoắn.',
+    image: 'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=1000&q=80',
+    spec1Title: 'Quy Cách Tự Chọn:',
+    spec1Val: 'Tự phối 100% kích cỡ',
+    spec2Title: 'Cam Kết Chất Lượng:',
+    spec2Val: 'Bảo hành đổi mới 1-1',
+    btnText: 'Tự Cấu Hình Thẻo Của Bạn',
+    actionType: 'scroll',
+    actionValue: '#xuong-tu-tom'
+  }
+];
+
+function getHeroBannersData() {
+  const stored = localStorage.getItem('theopro_hero_banners');
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {}
+  }
+  return JSON.parse(JSON.stringify(DEFAULT_HERO_SLIDES));
+}
+
+function renderAdminHeroBanners() {
+  const container = document.getElementById('admin-banner-slides-list');
+  if (!container) return;
+
+  const slides = getHeroBannersData();
+  container.innerHTML = slides.map((slide, idx) => `
+    <div class="p-3.5 sm:p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
+      <div class="flex items-center justify-between">
+        <span class="font-bold text-white text-xs flex items-center gap-1.5">
+          <span class="w-5 h-5 rounded-full bg-sky-500/20 text-sky-400 font-extrabold flex items-center justify-center text-[10px]">${idx + 1}</span>
+          Slide ${idx + 1}: ${slide.title || 'Slide Banner'}
+        </span>
+        <span class="text-[10px] text-slate-400 bg-slate-900 px-2 py-0.5 rounded font-semibold">${slide.tag || ''}</span>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <!-- Thumbnail Preview -->
+        <div class="w-full sm:w-48 h-28 rounded-xl overflow-hidden border border-slate-700 bg-slate-900 flex-shrink-0 relative group">
+          <img id="banner-preview-${idx}" src="${slide.image}" class="w-full h-full object-cover" alt="Slide ${idx + 1}" />
+        </div>
+
+        <!-- Controls -->
+        <div class="flex-1 space-y-2">
+          <input 
+            type="file" 
+            id="banner-file-input-${idx}" 
+            accept="image/*" 
+            class="hidden" 
+            onchange="handleBannerImageUpload(${idx}, event)" 
+          />
+
+          <button 
+            type="button" 
+            onclick="document.getElementById('banner-file-input-${idx}').click()" 
+            class="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-sky-600 to-teal-500 hover:from-sky-500 hover:to-teal-400 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-95 transition-all"
+          >
+            <i data-lucide="camera" class="w-4 h-4"></i>
+            <span>📸 Chụp ảnh / Chọn ảnh từ điện thoại</span>
+          </button>
+
+          <div>
+            <label class="block text-[10px] text-slate-400 mb-0.5 font-semibold">Tiêu đề slide trình chiếu:</label>
+            <input 
+              type="text" 
+              value="${slide.title || ''}" 
+              onchange="handleBannerTextChange(${idx}, 'title', this.value)"
+              class="w-full p-2 rounded-lg bg-slate-900 border border-slate-800 text-white text-xs focus:outline-none focus:border-sky-500" 
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  lucide.createIcons({ root: container });
+}
+
+async function handleBannerImageUpload(index, event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+
+  try {
+    showAdminToast(`Đang nén & tối ưu ảnh slide ${index + 1}...`, 'info');
+    const compressedDataUrl = await compressImage(file, 1200, 800, 0.78);
+    const slides = getHeroBannersData();
+    slides[index].image = compressedDataUrl;
+    localStorage.setItem('theopro_hero_banners', JSON.stringify(slides));
+    renderAdminHeroBanners();
+    showAdminToast(`Đã thay đổi ảnh slide ${index + 1} thành công! Ra trang chủ để xem ngay.`, 'success');
+  } catch (err) {
+    console.error('Lỗi upload banner:', err);
+    showAdminToast('Lỗi khi tải ảnh: ' + err.message, 'error');
+  }
+}
+
+function handleBannerTextChange(index, field, value) {
+  const slides = getHeroBannersData();
+  slides[index][field] = value.trim();
+  localStorage.setItem('theopro_hero_banners', JSON.stringify(slides));
+  showAdminToast('Đã lưu nội dung slide banner!', 'success');
+}
+
+function resetDefaultHeroBanners() {
+  if (!confirm('Khôi phục lại 3 ảnh banner mẫu ban đầu của xưởng?')) return;
+  localStorage.removeItem('theopro_hero_banners');
+  renderAdminHeroBanners();
+  showAdminToast('Đã khôi phục banner về ảnh gốc!', 'info');
 }
 
 // Global search input listener

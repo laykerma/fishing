@@ -1751,12 +1751,24 @@ const HERO_SHOWCASE_SLIDES = [
   }
 ];
 
+function getHeroSlides() {
+  const custom = localStorage.getItem('theopro_hero_banners');
+  if (custom) {
+    try {
+      const parsed = JSON.parse(custom);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {}
+  }
+  return HERO_SHOWCASE_SLIDES;
+}
+
 let heroSlideIndex = 0;
 let heroSlideTimer = null;
 
 function setHeroSlide(index) {
-  heroSlideIndex = (index + HERO_SHOWCASE_SLIDES.length) % HERO_SHOWCASE_SLIDES.length;
-  const slide = HERO_SHOWCASE_SLIDES[heroSlideIndex];
+  const slides = getHeroSlides();
+  heroSlideIndex = (index + slides.length) % slides.length;
+  const slide = slides[heroSlideIndex];
 
   const imgEl = document.getElementById('hero-slide-img');
   const tagEl = document.getElementById('hero-slide-tag');
@@ -1805,7 +1817,8 @@ function prevHeroSlide() {
 }
 
 function handleHeroSlideAction() {
-  const slide = HERO_SHOWCASE_SLIDES[heroSlideIndex];
+  const slides = getHeroSlides();
+  const slide = slides[heroSlideIndex];
   if (!slide) return;
   if (slide.actionType === 'quickview') {
     openQuickView(slide.actionValue);
