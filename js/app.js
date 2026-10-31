@@ -1706,9 +1706,138 @@ function initTheme() {
   applyTheme(savedTheme);
 }
 
+// ==========================================
+// HERO SHOWCASE DYNAMIC SLIDER
+// ==========================================
+const HERO_SHOWCASE_SLIDES = [
+  {
+    tag: '🔥 Thẻo Săn Hàng Đài 2026',
+    title: 'Cấu Tạo Thẻo Đôi Chống Xoắn 7 Khóa Kép',
+    desc: 'Mối buộc không rạn cước, dàn lưỡi BKK Titan tôi nhiệt đâm xuyên cá trắm chép 8-25kg.',
+    image: 'https://images.unsplash.com/photo-1544943910-4c1dc44a0462?auto=format&fit=crop&w=1000&q=80',
+    spec1Title: 'Độ Dài Thẻo Chuẩn:',
+    spec1Val: '18cm - 45cm (Lệch 4cm)',
+    spec2Title: 'Lực Tải Kéo Đứt:',
+    spec2Val: '3.5kg - 28.0kg',
+    btnText: 'Xem Chi Tiết Thẻo Săn Hàng BKK',
+    actionType: 'quickview',
+    actionValue: 2
+  },
+  {
+    tag: '✨ Tàng Hình Toray Nhật Bản',
+    title: 'Thẻo Rô Phi Thi Đấu Lưỡi Sode Bén Ngót',
+    desc: '100% cước Fluorocarbon Nhật Bản tàng hình dưới nước, cá nhát mồi hút phao cực bén.',
+    image: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=1000&q=80',
+    spec1Title: 'Cước Tàng Hình:',
+    spec1Val: 'Toray 100% Carbon',
+    spec2Title: 'Mã Lưỡi Thi Đấu:',
+    spec2Val: 'Sode #4 - Sode #6',
+    btnText: 'Xem Chi Tiết Thẻo Rô Phi',
+    actionType: 'quickview',
+    actionValue: 1
+  },
+  {
+    tag: '🛠️ Nghệ Nhân Tóm Tay Thủ Công',
+    title: 'Xưởng Tự Tóm Thẻo Theo Yêu Cầu Cần Thủ',
+    desc: 'Tự do chọn cỡ cước, loại lưỡi, chiều dài lệch và hạt silicon chia chữ T chống xoắn.',
+    image: 'https://images.unsplash.com/photo-1498654896293-37aacf113fd9?auto=format&fit=crop&w=1000&q=80',
+    spec1Title: 'Quy Cách Tự Chọn:',
+    spec1Val: 'Tự phối 100% kích cỡ',
+    spec2Title: 'Cam Kết Chất Lượng:',
+    spec2Val: 'Bảo hành đổi mới 1-1',
+    btnText: 'Tự Cấu Hình Thẻo Của Bạn',
+    actionType: 'scroll',
+    actionValue: '#xuong-tu-tom'
+  }
+];
+
+let heroSlideIndex = 0;
+let heroSlideTimer = null;
+
+function setHeroSlide(index) {
+  heroSlideIndex = (index + HERO_SHOWCASE_SLIDES.length) % HERO_SHOWCASE_SLIDES.length;
+  const slide = HERO_SHOWCASE_SLIDES[heroSlideIndex];
+
+  const imgEl = document.getElementById('hero-slide-img');
+  const tagEl = document.getElementById('hero-slide-tag');
+  const titleEl = document.getElementById('hero-slide-title');
+  const descEl = document.getElementById('hero-slide-desc');
+  const spec1Title = document.getElementById('hero-spec1-title');
+  const spec1Val = document.getElementById('hero-spec1-val');
+  const spec2Title = document.getElementById('hero-spec2-title');
+  const spec2Val = document.getElementById('hero-spec2-val');
+  const btnText = document.getElementById('hero-slide-btn-text');
+
+  if (imgEl) {
+    imgEl.classList.remove('hero-slide-enter');
+    void imgEl.offsetWidth; // trigger reflow
+    imgEl.src = slide.image;
+    imgEl.classList.add('hero-slide-enter');
+  }
+  if (tagEl) tagEl.textContent = slide.tag;
+  if (titleEl) titleEl.textContent = slide.title;
+  if (descEl) descEl.textContent = slide.desc;
+  if (spec1Title) spec1Title.textContent = slide.spec1Title;
+  if (spec1Val) spec1Val.textContent = slide.spec1Val;
+  if (spec2Title) spec2Title.textContent = slide.spec2Title;
+  if (spec2Val) spec2Val.textContent = slide.spec2Val;
+  if (btnText) btnText.textContent = slide.btnText;
+
+  // Update dots
+  const dots = document.querySelectorAll('.hero-dot');
+  dots.forEach((dot, idx) => {
+    if (idx === heroSlideIndex) {
+      dot.className = 'hero-dot w-6 h-1.5 rounded-full bg-amber-400 transition-all';
+    } else {
+      dot.className = 'hero-dot w-2 h-1.5 rounded-full bg-white/40 hover:bg-white/80 transition-all';
+    }
+  });
+
+  safeCreateIcons();
+}
+
+function nextHeroSlide() {
+  setHeroSlide(heroSlideIndex + 1);
+}
+
+function prevHeroSlide() {
+  setHeroSlide(heroSlideIndex - 1);
+}
+
+function handleHeroSlideAction() {
+  const slide = HERO_SHOWCASE_SLIDES[heroSlideIndex];
+  if (!slide) return;
+  if (slide.actionType === 'quickview') {
+    openQuickView(slide.actionValue);
+  } else if (slide.actionType === 'scroll') {
+    const target = document.querySelector(slide.actionValue);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+
+function initHeroSlider() {
+  setHeroSlide(0);
+  if (heroSlideTimer) clearInterval(heroSlideTimer);
+  heroSlideTimer = setInterval(() => {
+    nextHeroSlide();
+  }, 4500);
+
+  const box = document.getElementById('hero-showcase-box');
+  if (box) {
+    box.addEventListener('mouseenter', () => {
+      if (heroSlideTimer) clearInterval(heroSlideTimer);
+    });
+    box.addEventListener('mouseleave', () => {
+      if (heroSlideTimer) clearInterval(heroSlideTimer);
+      heroSlideTimer = setInterval(() => nextHeroSlide(), 4500);
+    });
+  }
+}
+
 // Init
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
+  initHeroSlider();
   renderCategories();
   renderProducts();
   renderFlashSale();

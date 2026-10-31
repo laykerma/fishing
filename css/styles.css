@@ -128,6 +128,61 @@ h1, h2, h3, .font-heading {
   }
 }
 
+/* Hero Showcase Floating & Dynamic Animations */
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-8px) rotate(1deg);
+  }
+}
+
+@keyframes float-reverse {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(7px) rotate(-1deg);
+  }
+}
+
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 4.5s ease-in-out infinite;
+}
+
+@keyframes glow-rotate {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+  100% {
+    filter: hue-rotate(360deg);
+  }
+}
+
+.animate-glow-rotate {
+  animation: glow-rotate 12s linear infinite;
+}
+
+.hero-slide-enter {
+  animation: hero-fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* Shimmer skeleton or glowing highlights */
 .shimmer-badge {
   background: linear-gradient(90deg, #f97316 0%, #fb923c 50%, #f97316 100%);
