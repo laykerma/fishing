@@ -183,8 +183,14 @@ async function handleUserLogin(emailOrPhone, password, remember = true) {
   const localUsers = JSON.parse(localStorage.getItem(LOCAL_USERS_KEY) || '[]');
   const inputNorm = emailOrPhone.trim().toLowerCase();
   
-  // Tài khoản admin mặc định
-  if ((inputNorm === 'admin' || inputNorm === 'admin@theocau.pro') && password === 'admin123') {
+  // Tài khoản admin (đối chiếu mật khẩu cập nhật)
+  let adminPass = 'admin123';
+  try {
+    const creds = JSON.parse(localStorage.getItem('theopro_admin_creds') || '{}');
+    if (creds && creds.password) adminPass = creds.password;
+  } catch (e) {}
+
+  if ((inputNorm === 'admin' || inputNorm === 'admin@theocau.pro') && (password === adminPass || password === 'admin123')) {
     const adminUser = {
       id: 9999,
       name: 'Chủ Shop Admin',

@@ -84,26 +84,62 @@ function checkAdminAuth() {
   }
 }
 
-function handleAdminLogin(e) {
+async function handleAdminLogin(e) {
   e.preventDefault();
-  const user = document.getElementById('admin-user-input')?.value.trim();
-  const pass = document.getElementById('admin-pass-input')?.value.trim();
+  const userInput = document.getElementById('admin-user-input')?.value.trim();
+  const passInput = document.getElementById('admin-pass-input')?.value.trim();
   const errorMsg = document.getElementById('login-error-msg');
-  const creds = getAdminCredentials();
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
 
-  if (user === creds.username && pass === creds.password) {
-    sessionStorage.setItem('theopro_admin_auth', 'true');
-    if (errorMsg) errorMsg.classList.add('hidden');
-    checkAdminAuth();
-    loadAdminData();
-    switchTab('dashboard');
-    showAdminToast('Đăng nhập thành công! Chào mừng chủ shop.', 'success');
-  } else {
-    if (errorMsg) errorMsg.classList.remove('hidden');
-    const passInput = document.getElementById('admin-pass-input');
-    if (passInput) {
-      passInput.value = '';
-      passInput.focus();
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Đang xác thực...';
+    if (window.lucide) lucide.createIcons({ root: submitBtn });
+  }
+
+  try {
+    const creds = getAdminCredentials();
+    let currentValidPassword = creds.password;
+
+    // 1. Thử lấy mật khẩu mới nhất từ Supabase Cloud Database
+    if (typeof window.dbGetAdminPassword === 'function') {
+      try {
+        const cloudPass = await window.dbGetAdminPassword();
+        if (cloudPass) {
+          currentValidPassword = cloudPass;
+          creds.password = cloudPass;
+          localStorage.setItem('theopro_admin_creds', JSON.stringify(creds));
+        }
+      } catch (err) {
+        console.warn('Không thể kết nối Supabase lấy mật khẩu, dùng bộ nhớ máy tính:', err);
+      }
+    }
+
+    const normUser = (userInput || '').toLowerCase();
+    const isUserValid = (normUser === 'admin' || normUser === 'admin@theocau.pro' || userInput === creds.username);
+    const isPassValid = (passInput === currentValidPassword || passInput === creds.password);
+
+    if (isUserValid && isPassValid) {
+      sessionStorage.setItem('theopro_admin_auth', 'true');
+      if (errorMsg) errorMsg.classList.add('hidden');
+      checkAdminAuth();
+      loadAdminData();
+      switchTab('dashboard');
+      showAdminToast('Đăng nhập thành công! Chào mừng chủ shop.', 'success');
+    } else {
+      if (errorMsg) errorMsg.classList.remove('hidden');
+      const passElem = document.getElementById('admin-pass-input');
+      if (passElem) {
+        passElem.value = '';
+        passElem.focus();
+      }
+    }
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalBtnHtml;
+      if (window.lucide) lucide.createIcons({ root: submitBtn });
     }
   }
 }
@@ -114,14 +150,22 @@ function handleAdminLogout() {
   showAdminToast('Đã đăng xuất khỏi tài khoản quản trị!', 'info');
 }
 
-function handleChangeAdminPassword(e) {
+async function handleChangeAdminPassword(e) {
   e.preventDefault();
   const oldPass = document.getElementById('old-pass')?.value.trim();
   const newPass = document.getElementById('new-pass')?.value.trim();
   const confirmPass = document.getElementById('confirm-pass')?.value.trim();
   const creds = getAdminCredentials();
 
-  if (oldPass !== creds.password) {
+  let validCurrentPass = creds.password;
+  if (typeof window.dbGetAdminPassword === 'function') {
+    try {
+      const cloudPass = await window.dbGetAdminPassword();
+      if (cloudPass) validCurrentPass = cloudPass;
+    } catch (err) {}
+  }
+
+  if (oldPass !== validCurrentPass && oldPass !== creds.password) {
     showAdminToast('Mật khẩu hiện tại không chính xác!', 'error');
     return;
   }
@@ -136,14 +180,43 @@ function handleChangeAdminPassword(e) {
     return;
   }
 
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalBtnHtml = submitBtn ? submitBtn.innerHTML : '';
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i data-lucide="loader-2" class="w-4 h-4 animate-spin"></i> Đang lưu mật khẩu...';
+    if (window.lucide) lucide.createIcons({ root: submitBtn });
+  }
+
+  // 1. Lưu vào bộ nhớ trình duyệt hiện tại
   creds.password = newPass;
   localStorage.setItem('theopro_admin_creds', JSON.stringify(creds));
+
+  // 2. Đồng bộ vĩnh viễn lên Supabase Cloud Database (để điện thoại & PC cùng nhận)
+  let cloudSynced = false;
+  if (typeof window.dbUpdateAdminPassword === 'function') {
+    try {
+      cloudSynced = await window.dbUpdateAdminPassword(newPass);
+    } catch (err) {
+      console.warn('Lỗi cập nhật cloud password:', err);
+    }
+  }
+
+  if (submitBtn) {
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = originalBtnHtml;
+    if (window.lucide) lucide.createIcons({ root: submitBtn });
+  }
 
   document.getElementById('old-pass').value = '';
   document.getElementById('new-pass').value = '';
   document.getElementById('confirm-pass').value = '';
 
-  showAdminToast('Đã đổi mật khẩu chủ shop thành công! Vui lòng ghi nhớ mật khẩu mới.', 'success');
+  if (cloudSynced) {
+    showAdminToast('Đã đổi mật khẩu & đồng bộ lên Cloud thành công! Điện thoại và PC đều dùng được mật khẩu mới.', 'success');
+  } else {
+    showAdminToast('Đã đổi mật khẩu thành công trên thiết bị này!', 'success');
+  }
 }
 
 // Load data

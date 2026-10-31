@@ -144,8 +144,12 @@ async function dbRegisterUser(name, email, phone, password) {
 async function dbLoginUser(email, password) {
   try {
     const normInput = email.trim().toLowerCase();
-    // Hỗ trợ tìm qua Email hoặc Số điện thoại
-    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?or=(email.eq.${encodeURIComponent(normInput)},phone.eq.${encodeURIComponent(normInput)})&select=*`, {
+    // Hỗ trợ tìm qua Email, Số điện thoại hoặc tên 'admin'
+    let filterQuery = `or=(email.eq.${encodeURIComponent(normInput)},phone.eq.${encodeURIComponent(normInput)})`;
+    if (normInput === 'admin') {
+      filterQuery = `or=(email.eq.admin@theocau.pro,role.eq.admin)`;
+    }
+    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?${filterQuery}&select=*`, {
       headers: supabaseHeaders
     });
 
@@ -167,6 +171,37 @@ async function dbLoginUser(email, password) {
     console.warn('Lỗi đăng nhập Supabase:', err);
   }
   return null;
+}
+
+async function dbGetAdminPassword() {
+  try {
+    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?role=eq.admin&select=email,password_hash`, {
+      headers: supabaseHeaders
+    });
+    if (res.ok) {
+      const rows = await res.json();
+      if (rows.length > 0 && rows[0].password_hash) {
+        return rows[0].password_hash;
+      }
+    }
+  } catch (err) {
+    console.warn('Lỗi đọc mật khẩu admin từ Supabase:', err);
+  }
+  return null;
+}
+
+async function dbUpdateAdminPassword(newPassword) {
+  try {
+    const res = await fetch(`${SUPABASE_CONFIG.url}/rest/v1/users?role=eq.admin`, {
+      method: 'PATCH',
+      headers: supabaseHeaders,
+      body: JSON.stringify({ password_hash: newPassword })
+    });
+    return res.ok;
+  } catch (err) {
+    console.warn('Lỗi cập nhật mật khẩu admin lên Supabase:', err);
+    return false;
+  }
 }
 
 // ==========================================
@@ -294,6 +329,8 @@ window.dbGetOrders = dbGetOrders;
 window.dbUpdateOrderStatus = dbUpdateOrderStatus;
 window.dbRegisterUser = dbRegisterUser;
 window.dbLoginUser = dbLoginUser;
+window.dbGetAdminPassword = dbGetAdminPassword;
+window.dbUpdateAdminPassword = dbUpdateAdminPassword;
 window.dbSignInWithGoogle = dbSignInWithGoogle;
 window.getSupabaseClient = getSupabaseClient;
 
